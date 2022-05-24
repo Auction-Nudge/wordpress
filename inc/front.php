@@ -1,4 +1,9 @@
 <?php
+
+function an_init() {
+	add_shortcode(an_get_config('shortcode'), 'an_shortcode');
+}
+add_action('init', 'an_init');
 	
 /**
  * ======================================================== 
@@ -39,7 +44,6 @@ function an_shortcode($shortcode_attrs){
 	
 	return $out;
 }
-add_shortcode(an_get_config('shortcode'), 'an_shortcode');
 
 /**
  * Build the snippet

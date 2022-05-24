@@ -2,9 +2,9 @@
 Contributors: morehawes
 Tags: eBay, widget, embed, feed, integration, display, sidebar, integrate, listings, item, items, search, pagination, profile, feedback, free, products, ad, ads, adverts, banner, banners, shop, store, advertise, advertising, on your own site, automatic, automatically, update, category, keywords, seller, user, username, links, images, pictures, international, US, UK, Canada, Australia, Belgium, Germany, France, Spain, Austria, Italy, Netherlands, Ireland, Switzerland, ebay.com, ebay.co.uk, ebay.ca, ebay.com.au, ebay.be, ebay.de, ebay.fr, ebay.at, ebay.it, ebay.nl, ebay.ie, ebay.pl, ebay.es, ebay.ch, Auction Nudge, auctionnudge.com, plugin, widgets
 Requires at least: 3.2
-Tested up to: 5.7
+Tested up to: 6.0
 Requires PHP: 5.2
-Stable tag: 6.2.1
+Stable tag: 6.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -176,6 +176,13 @@ The following links should help with most questions and issues:
 6. Setting a default eBay username & eBay site will save you from entering them each time you want to add Auction Nudge to your page.
 
 == Changelog ==
+
+= 6.2.2 =
+
+* Release date: May 24th, 2022
+
+Minor bug fixes. Thanks to <a href="https://wordpress.org/support/users/bkjproductions/">bkjproductions</a> for letting me know about <a href="https://wordpress.org/support/topic/undefined-offset-in-parameters-php/">this one</a>.
+
 
 = 6.2.1 =
 

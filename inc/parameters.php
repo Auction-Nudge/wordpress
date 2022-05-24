@@ -110,8 +110,11 @@ function an_request_parameters_from_request_string($request_string) {
 
 	$request_string = trim($request_string, '/');
 	$request_explode = explode('/', $request_string);
-	for($i = 0; $i < sizeof($request_explode); $i+=2) {
-		$request_parameters[$request_explode[$i]] = $request_explode[$i+1];
+	
+	if(is_array($request_explode)) {	//Thanks! https://wordpress.org/support/topic/undefined-offset-in-parameters-php/
+		for($i = 0; $i < sizeof($request_explode); $i+=2) {
+			$request_parameters[$request_explode[$i]] = $request_explode[$i+1];
+		}	
 	}
 	
 	return $request_parameters;
