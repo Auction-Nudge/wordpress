@@ -1,6 +1,52 @@
+/* Tooltips */
+a.an-tooltip {
+  display: inline-block;
+  padding: 0 5px;
+  text-decoration: none;
+  cursor: help;
+  background: #F9F9F9;
+  color: #444;
+  border: 1px solid #DDDDDD;
+  border-radius: 50%;
+}
+#tooltip-active {
+  position: absolute;
+  max-width: 240px;
+  border: 1px solid #333;
+  background-color: #161616;
+  border-radius: 5px;
+  padding: 10px;
+  color: #fff;
+}
+/* Meta Box */
 #an-custom-field-container {
   max-width: 440px;
   min-height: 370px;
+  /* Tool Tabs */
+  /* Help */
+}
+#an-custom-field-container ul#an-tab-links {
+  list-style-type: none;
+  border-bottom: 1px solid #DDDDDD;
+}
+#an-custom-field-container ul#an-tab-links li {
+  display: inline-block;
+}
+#an-custom-field-container ul#an-tab-links li:first-child {
+  margin-left: 10px;
+}
+#an-custom-field-container ul#an-tab-links li a {
+  padding: 7px 12px 6px 12px;
+  color: #444;
+  text-decoration: none;
+  border: 1px solid #DDDDDD;
+  border-bottom: none;
+  background: #F9F9F9;
+}
+#an-custom-field-container ul#an-tab-links li a:hover,
+#an-custom-field-container ul#an-tab-links li a.active {
+  padding-bottom: 7px;
+  background: #fff;
 }
 #an-custom-field-container .an-custom-field-help {
   padding: 10px;
@@ -16,6 +62,12 @@
 #an-custom-field-container .an-custom-field-help a.button {
   float: right;
   margin-left: 40px;
+}
+/* Meta Box & Widgets */
+#an-custom-field-container,
+.an-widget-container {
+  /* Groups */
+  /* Inputs */
 }
 #an-custom-field-container fieldset.an-parameter-group,
 .an-widget-container fieldset.an-parameter-group {
@@ -38,66 +90,38 @@
 .an-widget-container fieldset.an-parameter-group .an-parameter-group-content p {
   margin: 10px 0 0 0;
 }
-#an-custom-field-container fieldset.an-parameter-group .an-parameter-group-content .control-group,
-.an-widget-container fieldset.an-parameter-group .an-parameter-group-content .control-group {
+#an-custom-field-container .control-group,
+.an-widget-container .control-group {
   position: relative;
   margin: 3px 0;
   padding: 3px;
   width: 400px;
 }
-#an-custom-field-container fieldset.an-parameter-group .an-parameter-group-content .control-group.alt,
-.an-widget-container fieldset.an-parameter-group .an-parameter-group-content .control-group.alt {
+#an-custom-field-container .control-group.alt,
+.an-widget-container .control-group.alt {
   background: #999;
 }
-#an-custom-field-container fieldset.an-parameter-group .an-parameter-group-content .control-group label,
-.an-widget-container fieldset.an-parameter-group .an-parameter-group-content .control-group label {
+#an-custom-field-container .control-group label,
+.an-widget-container .control-group label {
   display: block;
   padding: 3px;
   float: left;
   width: 190px;
   font-weight: bold;
 }
-#an-custom-field-container fieldset.an-parameter-group .an-parameter-group-content .control-group .controls select,
-.an-widget-container fieldset.an-parameter-group .an-parameter-group-content .control-group .controls select,
-#an-custom-field-container fieldset.an-parameter-group .an-parameter-group-content .control-group .controls input[type="text"],
-.an-widget-container fieldset.an-parameter-group .an-parameter-group-content .control-group .controls input[type="text"] {
+#an-custom-field-container .control-group .controls select,
+.an-widget-container .control-group .controls select,
+#an-custom-field-container .control-group .controls input[type="text"],
+.an-widget-container .control-group .controls input[type="text"] {
   width: 180px;
 }
-#an-custom-field-container fieldset.an-parameter-group .an-parameter-group-content .control-group .controls a,
-.an-widget-container fieldset.an-parameter-group .an-parameter-group-content .control-group .controls a {
+#an-custom-field-container .control-group .controls a.an-tooltip,
+.an-widget-container .control-group .controls a.an-tooltip {
+  position: absolute;
+  top: 6px;
+  right: 0;
   cursor: help;
   text-decoration: none;
-}
-/* Custom fields tabs */
-ul#an-tab-links {
-  list-style-type: none;
-  border-bottom: 1px solid #DDDDDD;
-}
-ul#an-tab-links li {
-  display: inline-block;
-}
-ul#an-tab-links li a {
-  padding: 7px 12px 6px 12px;
-  color: #444;
-  text-decoration: none;
-  border: 1px solid #DDDDDD;
-  border-bottom: none;
-  background: #F9F9F9;
-}
-ul#an-tab-links li:first-child {
-  margin-left: 10px;
-}
-ul#an-tab-links li a:hover,
-ul#an-tab-links li a.active {
-  padding-bottom: 7px;
-  background: #fff;
-}
-/* Individual Fields */
-.an-parameter-group-keyword label {
-  width: 160px;
-}
-.an-parameter-group-keyword input[type="text"] {
-  width: 220px;
 }
 /* Settings Page */
 #an-options-container {
@@ -138,51 +162,6 @@ ul#an-tab-links li a.active {
   border-width: 1px;
   border-color: #DDDDDD;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07) inset;
-}
-/* Help Popup */
-#an-help-popup {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-}
-#an-help-popup p {
-  font-size: 12px;
-}
-#an-help-popup pre {
-  padding: 5px;
-  font-size: 12px;
-  border: 1px solid #999;
-  background: #f7f7f7;
-}
-#an-help-popup code {
-  font-size: 11px;
-}
-#an-help-popup .video iframe {
-  width: 585px;
-  height: 330px;
-}
-/* Tooltips */
-a.an-tooltip {
-  display: inline-block;
-  padding: 0 5px;
-  text-decoration: none;
-  cursor: help;
-  background: #F9F9F9;
-  color: #444;
-  border: 1px solid #DDDDDD;
-  border-radius: 50%;
-}
-.control-group a.an-tooltip {
-  position: absolute;
-  top: 6px;
-  right: 0;
-}
-#tooltip-active {
-  position: absolute;
-  max-width: 500px;
-  border: 1px solid #333;
-  background-color: #161616;
-  border-radius: 5px;
-  padding: 10px;
-  color: #fff;
 }
 /* Adblock Message */
 #an-adblock-detected {
