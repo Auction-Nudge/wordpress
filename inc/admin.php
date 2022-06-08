@@ -222,7 +222,7 @@ function an_create_custom_field_form() {
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
 	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you want the listings to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="listings"]</textarea></p><p><small><b>Note:</b> Only one set of eBay listings can be loaded per page.</small></p>' . "\n";
+	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you would like the listings to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="listings"]</textarea></p><p><small><b>Note:</b> Only one set of eBay listings can be loaded per page.</small></p>' . "\n";
 	$out .= '	</div>' . "\n";
 	
 	$out .= '</div>' . "\n";			
@@ -253,7 +253,7 @@ function an_create_custom_field_form() {
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
 	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you want the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="profile"]</textarea></p><p><small><b>Note:</b> Only one profile can be loaded per page.</small></p>' . "\n";
+	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you would like the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="profile"]</textarea></p><p><small><b>Note:</b> Only one profile can be loaded per page.</small></p>' . "\n";
 
 	$out .= '	</div>' . "\n";
 
@@ -268,7 +268,7 @@ function an_create_custom_field_form() {
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
 	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you want the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea></p><p><small><b>Note:</b> Only one set of feedback can be loaded per page.</small></p>' . "\n";
+	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you would like the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea></p><p><small><b>Note:</b> Only one set of feedback can be loaded per page.</small></p>' . "\n";
 
 	$out .= '	</div>' . "\n";
 
@@ -565,7 +565,7 @@ add_action('admin_init', 'an_admin_settings');
  * eBay defaults
  */
 function an_ebay_defaults_text() {
-	echo '<p>Entering a default eBay username and site here will save you from re-entering them on each page, post or widget where you want to use Auction Nudge.</p>' . "\n";
+	echo '<p>Entering a default eBay username and site here will save you from re-entering them every time.</p>' . "\n";
 }
 
 /**

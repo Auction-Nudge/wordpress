@@ -22,7 +22,7 @@
 	margin: 0 0 12px 0;
 }
 #an-custom-field-container .an-custom-field-help textarea {
-	width: 100%;
+	width: 300px;
 }
 #an-custom-field-container .an-custom-field-help a.button {
 	float: right;
