@@ -24,32 +24,20 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name){
 		return false;
 	}
 	$tool_key = str_replace(array('listings', 'ads'), array('item', 'ad'), $shortcode_attrs['tool']);
+	unset($shortcode_attrs['tool']);
+	
+	// 1 - Defaults from Config / Settings
+ 	$request_parameters = an_request_parameters_defaults($tool_key);
 
-	//Get defaults for this tool
- 	$shortcode_defaults = an_shortcode_parameters_defaults($tool_key);
+	// 2 - Post Meta
+	$meta_parameters = an_get_post_meta($post->ID);
+	$meta_parameters = an_request_parameters_from_assoc_array($tool_key, $meta_parameters);
+	$request_parameters = shortcode_atts($request_parameters, $meta_parameters);
 
-	//Get Shortcode parameters
-	$shortcode_parameters = shortcode_atts($shortcode_defaults, $shortcode_attrs, an_get_config('shortcode'));
-	
-	//Convert to request parameters
-	$request_parameters = an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_parameters);
+	// 3 - Shortcode attribtues
+	$shortcode_attrs = an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_attrs);
+	$request_parameters = shortcode_atts($request_parameters, $shortcode_attrs);
 
-	an_debug($request_parameters);
-	
-	//Get post meta
-	$post_meta = get_post_meta($post->ID);
-	
-	//We don't have the data we need...
-	if(! array_key_exists('item_siteid', $post_meta)) {
-		//Woocommerce enabled and this is a shop page...
-		if(function_exists('is_woocommerce') && is_woocommerce() && function_exists('is_shop') && is_shop()) {
-			$post_meta = get_post_meta(woocommerce_get_page_id('shop'));
-		}		
-	}
-	
-	//Get request parameters
-	$request_parameters = an_request_parameters_from_assoc_array($tool_key, $post_meta);
-	
 	//Get snippet
 	$out = an_build_snippet($tool_key, $request_parameters);
 	

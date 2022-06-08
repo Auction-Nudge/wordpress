@@ -145,3 +145,18 @@ function an_debug($thing, $die = true) {
 		die;
 	}
 }
+
+function an_get_post_meta($post_id) {
+
+	$post_meta = get_post_meta($post_id);
+	
+	//We don't have the data we need...
+	if(! array_key_exists('item_siteid', $post_meta)) {
+		//Woocommerce enabled and this is a shop page...
+		if(function_exists('is_woocommerce') && is_woocommerce() && function_exists('is_shop') && is_shop()) {
+			$post_meta = get_post_meta(woocommerce_get_page_id('shop'));
+		}		
+	}
+	
+	return $post_meta;
+}

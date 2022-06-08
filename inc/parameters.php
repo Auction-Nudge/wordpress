@@ -187,10 +187,9 @@ function an_update_widget_instance($tool_key, $instance_in) {
 /**
  * Build array of default shortcode parameters
  *
- * ====== Lowercase! ======
  *
  */
-function an_shortcode_parameters_defaults($tool_key) {
+function an_request_parameters_defaults($tool_key) {
 	$parameters_defaults = array();	
 	$options = get_option('an_options');
 	
@@ -198,10 +197,11 @@ function an_shortcode_parameters_defaults($tool_key) {
 	
 	//Iterate over each parameter for the tool
 	foreach(an_get_config($tool_key . '_parameters') as $param_defition) {	
-		$param_name = an_unprefix($param_defition['name']);
+// 		$param_name = an_unprefix($param_defition['name']);
+		$param_name = $param_defition['name'];
 		
 		// ====== Lowercase! ======
-		$param_name = strtolower($param_name);
+//  		$param_name = strtolower($param_name);
 		
 		//Is there a default?
 		$param_default = (isset($param_defition['default'])) ? $param_defition['default'] : '';
@@ -234,11 +234,13 @@ function an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_par
 	$request_parameters = [];
 	
 	foreach(an_get_config($tool_key . '_parameters') as $param_key => $param_defition) {
-		$param_name = an_unprefix($param_defition['name']);
+		$param_name = $param_defition['name'];
+		
+		$shortcode_name = an_unprefix(strtolower($param_name));
 		
 		//Does a lowercase equivalent exist?
-		if(array_key_exists(strtolower($param_name), $shortcode_parameters)) {
-			$request_parameters[$param_name] = $shortcode_parameters[strtolower($param_name)];
+		if(array_key_exists($shortcode_name, $shortcode_parameters)) {
+			$request_parameters[$param_name] = $shortcode_parameters[$shortcode_name];
 		}
 	}
 	

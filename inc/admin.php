@@ -198,7 +198,7 @@ function an_create_custom_field_form() {
 	$post_type_name = (isset($post_type_object->labels->singular_name)) ? $post_type_object->labels->singular_name : 'Post';
 	
 	//Get post meta	
-	$post_meta = get_post_meta($post->ID);
+	$post_meta = an_get_post_meta($post->ID);
 	
 	$out = '<div id="an-custom-field-container">' . "\n";
 	
