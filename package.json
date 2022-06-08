@@ -1,0 +1,15 @@
+{
+  "name": "Auction Nudge",
+  "version": "6.2.2",
+	"homepage": "https://www.auctionnudge.com/wordpress-plugin/about",
+  "description": "Auction Nudge for WordPress",
+  "author": "Joe Hawes",
+  "main": "Gruntfile.js",
+  "devDependencies": {
+    "grunt": "^1.1.0",
+    "grunt-contrib-cssmin": "^3.0.0",
+    "grunt-contrib-less": "^2.0.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-wp-readme-to-markdown": "^2.0.1"
+  }
+}
