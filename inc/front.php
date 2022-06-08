@@ -1,7 +1,9 @@
 <?php
 
 function an_init() {
-	add_shortcode(an_get_config('shortcode'), 'an_shortcode');
+	if(! is_admin()) {
+		add_shortcode(an_get_config('shortcode'), 'an_shortcode');
+	}
 }
 add_action('init', 'an_init');
 	
@@ -14,16 +16,25 @@ add_action('init', 'an_init');
 /**
  * Shortcode
  */
-function an_shortcode($shortcode_attrs){
+function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name){
 	global $post;
-	
+
 	//Get tool key
-	if(is_array($shortcode_attrs) && in_array($shortcode_attrs['tool'], array('listings', 'ads', 'profile', 'feedback'))) {
-		$tool_key = $shortcode_attrs['tool'];
-		$tool_key = str_replace(array('listings', 'ads'), array('item', 'ad'), $tool_key);
-	} else {
-		$tool_key = 'item';
+	if(! isset($shortcode_attrs['tool']) || ! in_array($shortcode_attrs['tool'], array('listings', 'ads', 'profile', 'feedback'))) {
+		return false;
 	}
+	$tool_key = str_replace(array('listings', 'ads'), array('item', 'ad'), $shortcode_attrs['tool']);
+
+	//Get defaults for this tool
+ 	$shortcode_defaults = an_shortcode_parameters_defaults($tool_key);
+
+	//Get Shortcode parameters
+	$shortcode_parameters = shortcode_atts($shortcode_defaults, $shortcode_attrs, an_get_config('shortcode'));
+	
+	//Convert to request parameters
+	$request_parameters = an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_parameters);
+
+	an_debug($request_parameters);
 	
 	//Get post meta
 	$post_meta = get_post_meta($post->ID);

@@ -183,3 +183,64 @@ function an_update_widget_instance($tool_key, $instance_in) {
 	
 	return $instance_out;
 }
+
+/**
+ * Build array of default shortcode parameters
+ *
+ * ====== Lowercase! ======
+ *
+ */
+function an_shortcode_parameters_defaults($tool_key) {
+	$parameters_defaults = array();	
+	$options = get_option('an_options');
+	
+	//Config
+	
+	//Iterate over each parameter for the tool
+	foreach(an_get_config($tool_key . '_parameters') as $param_defition) {	
+		$param_name = an_unprefix($param_defition['name']);
+		
+		// ====== Lowercase! ======
+		$param_name = strtolower($param_name);
+		
+		//Is there a default?
+		$param_default = (isset($param_defition['default'])) ? $param_defition['default'] : '';
+
+		$parameters_defaults[$param_name] = $param_default;
+		
+		switch($param_name) {
+			case 'sellerid' :
+
+				if(array_key_exists('an_ebay_user', $options) && ! empty($options['an_ebay_user'])) {
+					$parameters_defaults['sellerid'] = $options['an_ebay_user'];
+				}
+
+				break;
+
+			case 'siteid' :
+
+				if(array_key_exists('an_ebay_site', $options) && ! empty($options['an_ebay_site'])) {
+					$parameters_defaults['siteid'] = $options['an_ebay_site'];
+				}
+
+				break;				
+		}		
+	}	
+
+	return $parameters_defaults;
+}
+
+function an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_parameters = []) {
+	$request_parameters = [];
+	
+	foreach(an_get_config($tool_key . '_parameters') as $param_key => $param_defition) {
+		$param_name = an_unprefix($param_defition['name']);
+		
+		//Does a lowercase equivalent exist?
+		if(array_key_exists(strtolower($param_name), $shortcode_parameters)) {
+			$request_parameters[$param_name] = $shortcode_parameters[strtolower($param_name)];
+		}
+	}
+	
+	return $request_parameters;
+}
