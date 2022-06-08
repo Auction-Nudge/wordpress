@@ -165,22 +165,22 @@ The following links should help with most questions and issues:
 ## Screenshots ##
 
 ### 1. Once installed on your site, Auction Nudge will always display your active eBay listings. ###
-![Once installed on your site, Auction Nudge will always display your active eBay listings.](https://ps.w.org/auction-nudge---your-ebay-on-your-site/assets/screenshot-1.jpg)
+![Once installed on your site, Auction Nudge will always display your active eBay listings.](https://ps.w.org/auction-nudge/assets/screenshot-1.png)
 
 ### 2. You can also display your eBay profile. ###
-![You can also display your eBay profile.](https://ps.w.org/auction-nudge---your-ebay-on-your-site/assets/screenshot-2.jpg)
+![You can also display your eBay profile.](https://ps.w.org/auction-nudge/assets/screenshot-2.png)
 
 ### 3. As well as your most recent eBay feedback. ###
-![As well as your most recent eBay feedback.](https://ps.w.org/auction-nudge---your-ebay-on-your-site/assets/screenshot-3.jpg)
+![As well as your most recent eBay feedback.](https://ps.w.org/auction-nudge/assets/screenshot-3.png)
 
 ### 4. Setup the tools using the Auction Nudge box that appears under the content editor, then add the shortcode to the content editor. ###
-![Setup the tools using the Auction Nudge box that appears under the content editor, then add the shortcode to the content editor.](https://ps.w.org/auction-nudge---your-ebay-on-your-site/assets/screenshot-4.jpg)
+![Setup the tools using the Auction Nudge box that appears under the content editor, then add the shortcode to the content editor.](https://ps.w.org/auction-nudge/assets/screenshot-4.png)
 
 ### 5. Widgets are available for each tool. ###
-![Widgets are available for each tool.](https://ps.w.org/auction-nudge---your-ebay-on-your-site/assets/screenshot-5.jpg)
+![Widgets are available for each tool.](https://ps.w.org/auction-nudge/assets/screenshot-5.png)
 
 ### 6. Setting a default eBay username & eBay site will save you from entering them each time you want to add Auction Nudge to your page. ###
-![Setting a default eBay username & eBay site will save you from entering them each time you want to add Auction Nudge to your page.](https://ps.w.org/auction-nudge---your-ebay-on-your-site/assets/screenshot-6.jpg)
+![Setting a default eBay username & eBay site will save you from entering them each time you want to add Auction Nudge to your page.](https://ps.w.org/auction-nudge/assets/screenshot-6.png)
 
 
 ## Changelog ##
