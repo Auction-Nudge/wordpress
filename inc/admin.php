@@ -193,6 +193,10 @@ function an_create_custom_fields_box() {
 function an_create_custom_field_form() {	
 	global $post;
 	
+	//Post type
+	$post_type_object = get_post_type_object(get_post_type($post));	
+	$post_type_name = (isset($post_type_object->labels->singular_name)) ? $post_type_object->labels->singular_name : 'Post';
+	
 	//Get post meta	
 	$post_meta = get_post_meta($post->ID);
 	
@@ -211,15 +215,16 @@ function an_create_custom_field_form() {
 	
 	//Item tool
 	$out .= '<div id="listings-tab" class="an-custom-field-tab">' . "\n";			
-	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<p>Use these options to specify which of your eBay items to display within your page/post.</p><p>Add the following shortcode within your content editor to specify where the items will appear:</p><p>[' . an_get_config('shortcode') . ' tool="listings"]</p><p><small><b>Note:</b> Only one set of eBay listings can be loaded per page.</small></p>' . "\n";
-	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '	</div>' . "\n";
-	$out .= '	<h2>Your eBay Listings</h2>' . "\n";						
+// 	$out .= '	<h2>Your eBay Listings</h2>' . "\n";						
 	
 	//Get stored post meta values
 	$tool_parameters = an_request_parameters_from_assoc_array('item', $post_meta, false);
 	$out .= an_create_tool_custom_fields('item', $tool_parameters);
+
+	$out .= '	<div class="an-custom-field-help">' . "\n";
+	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
+	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you want the listings to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="listings"]</textarea></p><p><small><b>Note:</b> Only one set of eBay listings can be loaded per page.</small></p>' . "\n";
+	$out .= '	</div>' . "\n";
 	
 	$out .= '</div>' . "\n";			
 

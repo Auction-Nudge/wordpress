@@ -10,17 +10,23 @@
  *
  */
 #an-custom-field-container {
+	max-width: 440px;
 	min-height: 370px;
 }
 #an-custom-field-container .an-custom-field-help {
-	float: right;
 	padding: 10px;
-	width: 220px;
 	border: 1px solid #DDDDDD;
 	background: #F9F9F9;
 }
 #an-custom-field-container .an-custom-field-help p {
 	margin: 0 0 12px 0;
+}
+#an-custom-field-container .an-custom-field-help textarea {
+	width: 100%;
+}
+#an-custom-field-container .an-custom-field-help a.button {
+	float: right;
+	margin-left: 40px;
 }
 #an-custom-field-container fieldset {
 	margin-bottom: 20px;
@@ -32,7 +38,7 @@
 #an-custom-field-container fieldset legend {
 	display: block;
 	padding: 7px;
-	width: 400px;
+	width: 420px;
 	font-weight: bold;
 	font-size: 14px;
 	border: 1px solid #DDDDDD;
@@ -44,7 +50,7 @@
 	width: 95%;
 }
 #an-custom-field-container .an-parameter-group {
-	width: 400px;
+	width: 420px;
 }
 .an-widget-container .an-parameter-group-content p {
 	margin: 10px 0 0 0;
