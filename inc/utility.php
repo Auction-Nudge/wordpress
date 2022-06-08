@@ -132,3 +132,16 @@ function an_create_input($field, $set_value) {
 	
 	return $out;
 }
+
+function an_debug($thing, $die = true) {
+	if(! defined('WP_DEBUG') || ! WP_DEBUG) {
+		return;	
+	}
+		
+	echo '<pre>';
+	print_r($thing);
+	echo '</pre>';
+	if($die) {
+		die;
+	}
+}
