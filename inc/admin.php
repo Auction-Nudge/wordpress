@@ -261,15 +261,16 @@ function an_create_custom_field_form() {
 
 	//Feedback tool
 	$out .= '<div id="feedback-tab" class="an-custom-field-tab" style="display:none">' . "\n";			
-	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<p>Use these options to specify how your eBay feedback will appear within your page/post.</p><p>Add the following shortcode within your content editor to specify where the items will appear:</p><p>[' . an_get_config('shortcode') . ' tool="feedback"]</p><p><small><b>Note:</b> Only one set of feedback can be loaded per page.</small></p>' . "\n";
-	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '	</div>' . "\n";
-	$out .= '	<h2>Your eBay Feedback</h2>' . "\n";						
 
 	//Get stored post meta values
 	$tool_parameters = an_request_parameters_from_assoc_array('feedback', $post_meta, false);
 	$out .= an_create_tool_custom_fields('feedback', $tool_parameters);
+
+	$out .= '	<div class="an-custom-field-help">' . "\n";
+	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
+	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you want the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea></p><p><small><b>Note:</b> Only one set of feedback can be loaded per page.</small></p>' . "\n";
+
+	$out .= '	</div>' . "\n";
 
 	$out .= '</div>' . "\n";			
 						
