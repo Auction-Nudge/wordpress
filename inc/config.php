@@ -38,11 +38,11 @@ $an_plugin_config = array(
 	'item_parameter_groups' => array(
 		'feed'  => array(
 			'name' => 'Feed options',
-			'description' => 'Enter your eBay username'
+			'description' => ''
 		),
 		'display'  => array(
 			'name' => 'Display options',
-			'description' => 'Customise your feed'
+			'description' => ''
 		),
 		'advanced'  => array(
 			'name' => 'Advanced options',

@@ -287,7 +287,9 @@ function an_create_tool_custom_fields($tool_key, $tool_params, $field_name_forma
 	$out = '';
 
 	$current_group = false;
+	
 	//Iterate over each field
+	$count = 0;
 	foreach(an_get_config($tool_key . '_parameters') as $field) {
 		//Does this tool have groups?
 		if($tool_has_groups = (an_get_config($tool_key . '_parameter_groups') !== false)) {
@@ -344,7 +346,10 @@ function an_create_tool_custom_fields($tool_key, $tool_params, $field_name_forma
 		}		
 		
 		//Get the input
-		$out .= an_create_custom_field_input($field, $set_value);	
+		$add_class = ($count % 2) ? 'alt' : '';
+		$out .= an_create_custom_field_input($field, $set_value, $add_class);	
+		
+		$count++;
 	}
 	
 	if($tool_has_groups) {
@@ -358,14 +363,14 @@ function an_create_tool_custom_fields($tool_key, $tool_params, $field_name_forma
 /**
  * Create the custom fields inputs
  */
-function an_create_custom_field_input($field, $set_value = false) {
+function an_create_custom_field_input($field, $set_value = false, $add_class = '') {
 	$out = '';
 	
 	//ID
 	$field['id'] = an_unprefix($field['id']);
 
 	//Container
-	$out .= '<div class="control-group" id="' . $field['id'] . '-container">' . "\n";
+	$out .= '<div class="control-group ' . $add_class . '" id="' . $field['id'] . '-container">' . "\n";
 
 	//Label
 	$out .= '	<label class="control-label" for="' . $field['name'] . '">' . $field['title'] .  '</label>' . "\n";

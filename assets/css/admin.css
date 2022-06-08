@@ -49,6 +49,7 @@ a.an-tooltip {
   background: #fff;
 }
 #an-custom-field-container .an-custom-field-help {
+  margin: 20px 0 0 0;
   padding: 10px;
   border: 1px solid #DDDDDD;
   background: #F9F9F9;
@@ -97,9 +98,9 @@ a.an-tooltip {
   padding: 3px;
   width: 400px;
 }
-#an-custom-field-container .control-group.alt,
-.an-widget-container .control-group.alt {
-  background: #999;
+#an-custom-field-container .control-group:nth-child(2n),
+.an-widget-container .control-group:nth-child(2n) {
+  background: #f9f9f9 !important;
 }
 #an-custom-field-container .control-group label,
 .an-widget-container .control-group label {
