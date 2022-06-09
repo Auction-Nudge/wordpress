@@ -4,7 +4,7 @@ Tags: eBay, widget, embed, feed, integration, display, sidebar, integrate, listi
 Requires at least: 3.2
 Tested up to: 6.0
 Requires PHP: 5.2
-Stable tag: 6.2.2
+Stable tag: 6.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -176,6 +176,13 @@ The following links should help with most questions and issues:
 6. Setting a default eBay username & eBay site will save you from entering them each time you want to add Auction Nudge to your page.
 
 == Changelog ==
+
+= 6.2.3 =
+
+* Release date: June 9th, 2022
+
+Meta Box layout updates.
+
 
 = 6.2.2 =
 
