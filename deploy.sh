@@ -9,19 +9,13 @@
 # Accompanying Tutorial Here:
 # @link https://ericbusch.net/?p=106
 
-# EDIT THIS LINE
 SVNUSER="morehawes" # Your WordPress.org SVN Username
-
-# No editing required below this line.
-
-#prompt for plugin slug
-echo -e "Plugin Slug: \c"
-read PLUGINSLUG
+PLUGINSLUG="auction-nudge" # Your WordPress.org SVN Username
+MAINFILE="auctionnudge.php" # this should be the name of your main php file in the wordpress plugin
 
 # main config, set off of plugin slug
 CURRENTDIR=`pwd`
 CURRENTDIR="$CURRENTDIR"
-MAINFILE="auctionnudge.php" # this should be the name of your main php file in the wordpress plugin
 
 # git config
 GITPATH="$CURRENTDIR/" # this file should be in the base of your git repository
@@ -64,9 +58,10 @@ echo
 echo "Creating local copy of SVN repo ..."
 svn co $SVNURL $SVNPATH
 
-echo "Ignoring github specific files and deployment script"
+echo "Ignoring specific files and deployment script"
 svn propset svn:ignore "deploy.sh
 README.md
+Gruntfile.js
 node_modules/
 package.json
 package-lock.json
@@ -76,15 +71,6 @@ package-lock.json
 #export git -> SVN
 echo "Exporting the HEAD of master from git to the trunk of SVN"
 git checkout-index -a -f --prefix=$SVNPATH/trunk/
-
-#if submodule exist, recursively check out their indexes
-if [ -f ".gitmodules" ]
-then
-echo "Exporting the HEAD of each submodule from git to the trunk of SVN"
-git submodule init
-git submodule update
-git submodule foreach --recursive 'git checkout-index -a -f --prefix=$SVNPATH/trunk/$path/'
-fi
 
 echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
