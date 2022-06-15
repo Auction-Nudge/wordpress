@@ -81,6 +81,23 @@ function an_legacy_features() {
 		update_option('an_options', $an_settings);
 	}
 
+	//Widgets disable
+	if(! array_key_exists('an_widget_disable', $an_settings)) {
+		//Check post meta
+		$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "options` WHERE option_name LIKE 'widget_an_%_widget' AND option_value LIKE '%_siteid%'", ARRAY_A);
+
+		//If post meta
+		if(sizeof($results) > 0) {
+			//Don't disable
+			$an_settings['an_widget_disable'] = false;				
+		} else {
+			//Disable
+			$an_settings['an_widget_disable'] = true;								
+		}
+		
+		update_option('an_options', $an_settings);
+	}
+
 	//ADs disable?
 	if(! array_key_exists('an_ads_disable', $an_settings)) {
 		//Check post meta
