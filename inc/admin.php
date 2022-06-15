@@ -47,10 +47,10 @@ function an_options_validate($input) {
  * Get plugin options
  */
 function an_get_option($option_key) {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
-	if(is_array($options) && array_key_exists($option_key, $options)) {
-		return $options[$option_key];		
+	if(is_array($an_settings) && array_key_exists($option_key, $an_settings)) {
+		return $an_settings[$option_key];		
 	} else {
 		return false;		
 	}
@@ -62,59 +62,54 @@ function an_get_option($option_key) {
 function an_legacy_features() {
 	global $wpdb;
 		
-	$an_options = get_option('an_options');
-	
-	//Not yet set
-	if(! is_array($an_options)) {
-		$an_options = [];
-	}
+	$an_settings = an_get_settings();
 	
 	//Meta disable
-	if(! array_key_exists('an_meta_disable', $an_options)) {
+	if(! array_key_exists('an_meta_disable', $an_settings)) {
 		//Check post meta
 		$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "postmeta` WHERE `meta_key` REGEXP '^(item_|profile_|feedback|ad_)(.*)'", ARRAY_A);			
 
 		//If post meta
 		if(sizeof($results) > 0) {
 			//Don't disable
-			$an_options['an_meta_disable'] = false;				
+			$an_settings['an_meta_disable'] = false;				
 		} else {
 			//Disable
-			$an_options['an_meta_disable'] = true;								
+			$an_settings['an_meta_disable'] = true;								
 		}
 		
-		update_option('an_options', $an_options);
+		update_option('an_options', $an_settings);
 	}
 
 	//ADs disable?
-	if(! array_key_exists('an_ads_disable', $an_options)) {
+	if(! array_key_exists('an_ads_disable', $an_settings)) {
 		//Check post meta
 		$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "postmeta` WHERE `meta_key` LIKE '%ad_SellerID%'", ARRAY_A);			
 
 		//If post meta
 		if(sizeof($results) > 0) {
 			//Don't disable
-			$an_options['an_ads_disable'] = false;				
+			$an_settings['an_ads_disable'] = false;				
 		//If no page meta
 		} else {
-			//Then check for widget meta WITH DATA
-			$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "options` WHERE option_name LIKE 'widget_an_%_widget' AND option_value LIKE '%siteid%'", ARRAY_A);
+			//Then check for an Ad widget meta WITH DATA
+			$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "options` WHERE option_name LIKE 'widget_an_ads_widget' AND option_value LIKE '%ad_SellerID%'", ARRAY_A);
 			
 			//If widget meta		
 			if(sizeof($results) > 0) {
 				//Don't disable
-				$an_options['an_ads_disable'] = false;				
+				$an_settings['an_ads_disable'] = false;				
 			//No widget meta either
 			} else {
 				//Disable
-				$an_options['an_ads_disable'] = true;								
+				$an_settings['an_ads_disable'] = true;								
 			}
 		}
 		
-		update_option('an_options', $an_options);
+		update_option('an_options', $an_settings);
 	}
 }
-add_action('admin_init', 'an_legacy_disable');
+add_action('admin_init', 'an_legacy_features');
 
 /**
  * Username change
@@ -204,8 +199,10 @@ add_filter('plugin_action_links_auction-nudge/auctionnudge.php', 'an_add_action_
  * Create the custom fields box
  */
 function an_create_custom_fields_box() {
+	$an_settings = an_get_settings();
 	
-	if() {
+	//Not if disabled
+	if(isset($an_settings['an_meta_disable']) && $an_settings['an_meta_disable']) {
 		return false;	
 	}
 
@@ -490,13 +487,13 @@ function an_options_page() {
 	settings_fields('an_options');
 	
 	//Preserve value
-	$an_options = get_option('an_options');	
-	$an_ads_disable = ($an_options['an_ads_disable']) ? 1 : 0;
+	$an_settings = an_get_settings();	
+	$an_ads_disable = ($an_settings['an_ads_disable']) ? 1 : 0;
 	echo '<input type="hidden" id="an_ads_disable" name="an_options[an_ads_disable]" value="' . $an_ads_disable . '" />';
 
 	//Propagate username change?
-	if(isset($an_options['an_username_propagate']) && $an_options['an_username_propagate'] == 'true') {
-		an_propagate_username_change($an_options['an_ebay_user']);
+	if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
+		an_propagate_username_change($an_settings['an_ebay_user']);
 	}
 	
 	//Which group of options are we showing?
@@ -604,11 +601,11 @@ function an_ebay_defaults_text() {
  * Output eBay ID option
  */
 function an_ebay_user_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
 	//Option set?
-	if(is_array($options) && array_key_exists('an_ebay_user', $options)) {
-		$ebay_user_setting = $options['an_ebay_user'];
+	if(is_array($an_settings) && array_key_exists('an_ebay_user', $an_settings)) {
+		$ebay_user_setting = $an_settings['an_ebay_user'];
 	} else {
 		$ebay_user_setting = '';
 	}
@@ -625,11 +622,11 @@ function an_ebay_user_setting() {
  * Output eBay site option
  */
 function an_ebay_site_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 
 	//Option set?
-	if(is_array($options) && array_key_exists('an_ebay_site', $options)) {
-		$ebay_site_setting = $options['an_ebay_site'];
+	if(is_array($an_settings) && array_key_exists('an_ebay_site', $an_settings)) {
+		$ebay_site_setting = $an_settings['an_ebay_site'];
 	} else {
 		$ebay_site_setting = '0';
 	}
@@ -671,9 +668,9 @@ function an_css_text() {
  * Output CSS option
  */
 function an_css_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
-	$an_css_rules = isset($options['an_css_rules']) ? $options['an_css_rules'] : '';
+	$an_css_rules = isset($an_settings['an_css_rules']) ? $an_settings['an_css_rules'] : '';
 	
 	echo '<textarea id="an_css_rules" name="an_options[an_css_rules]" rows="6" style="font-family:courier;width:400px">' . $an_css_rules . '</textarea>' . "\n";		
 }
@@ -691,9 +688,9 @@ function an_request_text() {
  * Local Requests option
  */
 function an_local_requests_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
-	$an_local_requests = isset($options['an_local_requests']) ? $options['an_local_requests'] : '1';
+	$an_local_requests = isset($an_settings['an_local_requests']) ? $an_settings['an_local_requests'] : '1';
 	
 	echo '<select id="an_local_requests" name="an_options[an_local_requests]">' . "\n";		
 	$selected = ($an_local_requests == '1') ? ' selected="selected"' : '';
@@ -720,9 +717,9 @@ function an_items_text() {
  * Output items option
  */
 function an_items_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 
-	$an_items_code = isset($options['an_items_code']) ? $options['an_items_code'] : '';
+	$an_items_code = isset($an_settings['an_items_code']) ? $an_settings['an_items_code'] : '';
 	
 	echo '<textarea id="an_items_code_snippet" name="an_options[an_items_code]" rows="6" style="font-family:courier;width:400px">' . $an_items_code  . '</textarea>' . "\n";
 }
@@ -739,9 +736,9 @@ function an_profile_text() {
  * Output profile option
  */
 function an_profile_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
-	$an_profile_code = isset($options['an_profile_code']) ? $options['an_profile_code'] : '';	
+	$an_profile_code = isset($an_settings['an_profile_code']) ? $an_settings['an_profile_code'] : '';	
 	
 	echo '<textarea id="an_profile_code_snippet" name="an_options[an_profile_code]" rows="6" style="font-family:courier;width:400px">' . $an_profile_code . '</textarea>' . "\n";
 }
@@ -758,9 +755,9 @@ function an_feedback_text() {
  * Output feedback option
  */
 function an_feedback_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
-	$an_feedback_code = isset($options['an_feedback_code']) ? $options['an_feedback_code'] : '';		
+	$an_feedback_code = isset($an_settings['an_feedback_code']) ? $an_settings['an_feedback_code'] : '';		
 	
 	echo '<textarea id="an_feedback_code_snippet" name="an_options[an_feedback_code]" rows="6" style="font-family:courier;width:400px">' . $an_feedback_code . '</textarea>' . "\n";
 }

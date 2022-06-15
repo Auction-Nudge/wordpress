@@ -160,3 +160,14 @@ function an_get_post_meta($post_id) {
 	
 	return $post_meta;
 }
+
+function an_get_settings() {
+	$settings = get_option('an_options');
+	
+	//Not yet set
+	if(! is_array($settings)) {
+		$settings = [];
+	}
+	
+	return $settings;
+}

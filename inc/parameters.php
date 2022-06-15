@@ -13,24 +13,24 @@ function an_update_parameter_defaults() {
 	global $an_plugin_config;
 
 	//Get options
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
 	//If we have options
-	if($options !== false) {		
+	if($an_settings !== false) {		
 		//Check for default eBay Username
-		if(array_key_exists('an_ebay_user', $options) && ! empty($options['an_ebay_user'])) {
-			$an_plugin_config['item_parameters']['item_SellerID']['default'] = $options['an_ebay_user'];
-			$an_plugin_config['ad_parameters']['ad_SellerID']['default'] = $options['an_ebay_user'];
-			$an_plugin_config['profile_parameters']['profile_UserID']['default'] = $options['an_ebay_user'];
-			$an_plugin_config['feedback_parameters']['feedback_UserID']['default'] = $options['an_ebay_user'];
+		if(array_key_exists('an_ebay_user', $an_settings) && ! empty($an_settings['an_ebay_user'])) {
+			$an_plugin_config['item_parameters']['item_SellerID']['default'] = $an_settings['an_ebay_user'];
+			$an_plugin_config['ad_parameters']['ad_SellerID']['default'] = $an_settings['an_ebay_user'];
+			$an_plugin_config['profile_parameters']['profile_UserID']['default'] = $an_settings['an_ebay_user'];
+			$an_plugin_config['feedback_parameters']['feedback_UserID']['default'] = $an_settings['an_ebay_user'];
 		}	
 	
 		//Check for default eBay site
-		if(array_key_exists('an_ebay_site', $options) && ! empty($options['an_ebay_site'])) {
-			$an_plugin_config['item_parameters']['item_siteid']['default'] = $options['an_ebay_site'];
-			$an_plugin_config['ad_parameters']['ad_siteid']['default'] = $options['an_ebay_site'];
-			$an_plugin_config['profile_parameters']['profile_siteid']['default'] = $options['an_ebay_site'];
-			$an_plugin_config['feedback_parameters']['feedback_siteid']['default'] = $options['an_ebay_site'];
+		if(array_key_exists('an_ebay_site', $an_settings) && ! empty($an_settings['an_ebay_site'])) {
+			$an_plugin_config['item_parameters']['item_siteid']['default'] = $an_settings['an_ebay_site'];
+			$an_plugin_config['ad_parameters']['ad_siteid']['default'] = $an_settings['an_ebay_site'];
+			$an_plugin_config['profile_parameters']['profile_siteid']['default'] = $an_settings['an_ebay_site'];
+			$an_plugin_config['feedback_parameters']['feedback_siteid']['default'] = $an_settings['an_ebay_site'];
 		}		
 	}
 }
@@ -191,7 +191,7 @@ function an_update_widget_instance($tool_key, $instance_in) {
  */
 function an_request_parameters_defaults($tool_key) {
 	$parameters_defaults = array();	
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
 	//Config
 	
@@ -211,16 +211,16 @@ function an_request_parameters_defaults($tool_key) {
 		switch($param_name) {
 			case 'sellerid' :
 
-				if(array_key_exists('an_ebay_user', $options) && ! empty($options['an_ebay_user'])) {
-					$parameters_defaults['sellerid'] = $options['an_ebay_user'];
+				if(array_key_exists('an_ebay_user', $an_settings) && ! empty($an_settings['an_ebay_user'])) {
+					$parameters_defaults['sellerid'] = $an_settings['an_ebay_user'];
 				}
 
 				break;
 
 			case 'siteid' :
 
-				if(array_key_exists('an_ebay_site', $options) && ! empty($options['an_ebay_site'])) {
-					$parameters_defaults['siteid'] = $options['an_ebay_site'];
+				if(array_key_exists('an_ebay_site', $an_settings) && ! empty($an_settings['an_ebay_site'])) {
+					$parameters_defaults['siteid'] = $an_settings['an_ebay_site'];
 				}
 
 				break;				
