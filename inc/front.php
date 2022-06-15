@@ -52,6 +52,13 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 	wp_enqueue_script('an_check_js');
 	add_action('wp_footer', 'an_output_load_check');
 	
+	//Build unique hash for this request
+	$request_hash = substr(md5(json_encode($request_parameters)), 0, 9);
+	if($tool_key == 'item') {
+		//Add to URL
+		$request_parameters['target'] = $request_hash; 
+	}
+	
 	//Profile JS or iframe?
 	$profile_is_framed = array_key_exists('profile_theme', $request_parameters) && $request_parameters['profile_theme'] == 'overview';
 	
@@ -96,7 +103,7 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 			//JS
 			} else {
 				//Enqueue
-				wp_enqueue_script(md5($request_url), $request_url, array(), an_get_config('plugin_version'), true);
+				wp_enqueue_script($request_hash, $request_url, array(), an_get_config('plugin_version'), true);
 				
 				return '<div id="auction-nudge-profile">&nbsp;</div>';				
 			}
@@ -104,7 +111,7 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 			break;
 		case 'feedback' :
 				//Enqueue
-				wp_enqueue_script(md5($request_url), $request_url, array(), an_get_config('plugin_version'), true);
+				wp_enqueue_script($request_hash, $request_url, array(), an_get_config('plugin_version'), true);
 
 				return '<div id="auction-nudge-feedback">&nbsp;</div>';
 		
@@ -124,9 +131,9 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 		case 'item' :
 		default :
 			//Enqueue
-			wp_enqueue_script(md5($request_url), $request_url, array(), an_get_config('plugin_version'), true);
-		
-			return '<div id="auction-nudge-items">&nbsp;</div>';
+			wp_enqueue_script($request_hash, $request_url, array(), an_get_config('plugin_version'), true);
+			
+			return '<div id="auction-nudge-' . $request_hash . '">&nbsp;</div>';
 					
 			break;
 	}
