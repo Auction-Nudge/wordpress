@@ -59,13 +59,35 @@ function an_get_option($option_key) {
 /**
  * Ads...
  */
-function an_ads_disable() {
+function an_legacy_features() {
+	global $wpdb;
+		
 	$an_options = get_option('an_options');
 	
-	//No settings present, or not the one we are looking for
-	if(! is_array($an_options) || ! array_key_exists('an_ads_disable', $an_options)) {
-		global $wpdb;
+	//Not yet set
+	if(! is_array($an_options)) {
+		$an_options = [];
+	}
+	
+	//Meta disable
+	if(! array_key_exists('an_meta_disable', $an_options)) {
+		//Check post meta
+		$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "postmeta` WHERE `meta_key` REGEXP '^(item_|profile_|feedback|ad_)(.*)'", ARRAY_A);			
+
+		//If post meta
+		if(sizeof($results) > 0) {
+			//Don't disable
+			$an_options['an_meta_disable'] = false;				
+		} else {
+			//Disable
+			$an_options['an_meta_disable'] = true;								
+		}
 		
+		update_option('an_options', $an_options);
+	}
+
+	//ADs disable?
+	if(! array_key_exists('an_ads_disable', $an_options)) {
 		//Check post meta
 		$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "postmeta` WHERE `meta_key` LIKE '%ad_SellerID%'", ARRAY_A);			
 
@@ -92,7 +114,7 @@ function an_ads_disable() {
 		update_option('an_options', $an_options);
 	}
 }
-add_action('admin_init', 'an_ads_disable');
+add_action('admin_init', 'an_legacy_disable');
 
 /**
  * Username change
@@ -182,6 +204,11 @@ add_filter('plugin_action_links_auction-nudge/auctionnudge.php', 'an_add_action_
  * Create the custom fields box
  */
 function an_create_custom_fields_box() {
+	
+	if() {
+		return false;	
+	}
+
 	foreach(array('post', 'page') as $post_type) {
 		add_meta_box('an-custom-fields', an_get_config('plugin_name'), 'an_create_custom_field_form', $post_type, 'normal', 'high');
 	}
