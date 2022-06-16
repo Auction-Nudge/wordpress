@@ -209,13 +209,6 @@ jQuery(document).ready(function() {
 		
 		return false;
 	});
-	
-	jQuery('#an-theme-show').click(function() {
-		jQuery('#an-theme-options').show();
-		jQuery(this).parent('p').hide();
-		
-		return false;		
-	});
 
 	//Tooltips
 	jQuery('a.an-tooltip').hover(function(){

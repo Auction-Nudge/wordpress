@@ -464,8 +464,6 @@ add_action('admin_menu', 'an_admin_page');
 function an_options_page() {
 	echo '<div id="an-options-container">' . "\n";
 
-	echo '	<a class="button right" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-
 	echo '	<div id="an-about">' . "\n";	
 	echo '		<img width="60" height="60" alt="Joe\'s mug" src="http://www.josephhawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";		
 	echo '		<p><b>Hi, I\'m Joe and I created this plugin.</b></p>' . "\n";		
@@ -479,70 +477,61 @@ function an_options_page() {
 	echo '	</div>' . "\n";
 
 	echo '	<h1>' . an_get_config('plugin_name') . '</h1>' . "\n";
-	
-// 	echo '<p>To add Auction Nudge to your pages or posts, use the Auction Nudge box on the edit page. You can also add Auction Nudge to your theme as <a href="' . admin_url('widgets.php') . '">Widgets</a>. The Settings below can be used to specify some defaults and style rules, but are not required.</p>' . "\n";
-	
-// 	echo '<p>For more details on how to use the plugin, you can watch the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>.</p>' . "\n";
-	
+
 	//Tabs
 	$active_tab = (isset($_GET['tab'])) ? $_GET['tab'] : 'general';
 	an_admin_tabs($active_tab);
+
+ 	echo '	<div id="an-settings-tabs">' . "\n";
 	
-	//Open form
-	echo '	<form id="an-settings-tabs" action="' . admin_url('options.php') . '" method="post">' . "\n";
-	settings_fields('an_options');
+	//Form
+	if(in_array($active_tab, ['legacy', 'general'])) {
+		//Open form
+		echo '		<form action="' . admin_url('options.php') . '" method="post">' . "\n";
+		settings_fields('an_options');
 	
-	//Preserve value
-	$an_settings = an_get_settings();	
-	$an_ads_disable = ($an_settings['an_ads_disable']) ? 1 : 0;
-	echo '	<input type="hidden" id="an_ads_disable" name="an_options[an_ads_disable]" value="' . $an_ads_disable . '" />';
+		//Preserve value
+		$an_settings = an_get_settings();	
+		$an_ads_disable = ($an_settings['an_ads_disable']) ? 1 : 0;
+		echo '		<input type="hidden" id="an_ads_disable" name="an_options[an_ads_disable]" value="' . $an_ads_disable . '" />';
 
-	//Propagate username change?
-	if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
-		an_propagate_username_change($an_settings['an_ebay_user']);
-	}
+		//Propagate username change?
+		if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
+			an_propagate_username_change($an_settings['an_ebay_user']);
+		}
+
+		$style = ($active_tab != 'general') ? ' style="display:none"' : '';
+		echo '		<div id="an-settings-general"' . $style . '>' . "\n";
+		do_settings_sections('an_general');
+		echo '		</div>';
 
 
-	//Which group of options are we showing?
-	switch($active_tab) {
-		case 'shortcodes' :
-			//Help
-			
-			echo an_create_custom_field_form();
+		//Removed from UI, but kept for backwards compatibility
+		$style = ($active_tab != 'legacy') ? ' style="display:none"' : '';
+		echo '		<div id="an-settings-legacy"' . $style . '>' . "\n";
+		echo '			<p>[HTML ;)]</p>' . "\n";
+		echo '			<div style="display:none">' . "\n";
+		do_settings_sections('an_theme');
+		echo '			</div>' . "\n";
+		echo '		</div>' . "\n";
+
+		//Submit
+		echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
+	
+	
+		echo '	</form>' . "\n";	
+	//No Form
+	} else {
+		echo an_create_custom_field_form();
 
 // 			echo an_shortcode_parameters_help_table();
-			
-			break;
-		case 'legacy' :
-			echo '<div style="display:none">';
-			do_settings_sections('an_general');
-			echo '</div>';
-			echo '<p><strong>To add Auction Nudge to your pages / posts use the Auction Nudge box on the edit page. The options on this page allow you to specify code snippets from within your theme if you are modifying your theme\'s PHP scripts.</strong></p>' . "\n";
-			echo '<p>In <em>most</em> cases you will not need to use these options. If you are unsure how to use the plugin, I recommend checking out this quick <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>.</p>' . "\n";
-			echo '<p>To modify these options, click <a href="#" id="an-theme-show">here</a>.</p>' . "\n";
-			echo '<div id="an-theme-options" style="display:none">' . "\n";
-			do_settings_sections('an_theme');
-			echo '</div>' . "\n";
-
-			//Submit
-			echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
-			
-			break;			
-		case 'general' :
-		default :
-			do_settings_sections('an_general');
-			echo '<div style="display:none">';
-			do_settings_sections('an_theme');
-			echo '</div>';
-
-			//Submit
-			echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
-			
-			break;
+	
 	}
+
+
 	
-	echo '	</form>' . "\n";
-	
+
+ 	echo '	</div>' . "\n";
 	echo '</div>' . "\n";
 	echo '<div id="adblock-test" class="auction-nudge"></div>';
 }
@@ -694,7 +683,7 @@ function an_css_setting() {
 	
 	$an_css_rules = isset($an_settings['an_css_rules']) ? $an_settings['an_css_rules'] : '';
 	
-	echo '<textarea id="an_css_rules" name="an_options[an_css_rules]" rows="6" style="font-family:courier;width:400px">' . $an_css_rules . '</textarea>' . "\n";		
+	echo '<textarea id="an_css_rules" name="an_options[an_css_rules]">' . $an_css_rules . '</textarea>' . "\n";		
 }
 
 /**
@@ -728,58 +717,46 @@ function an_local_requests_setting() {
  */
 
 /**
- * Items text
+ * Items
  */
 function an_items_text() {
-	echo '<p>To begin <strong>you must obtain your code snippet from the Auction Nudge website</strong> <a target="_blank" href="https://www.auctionnudge.com/tools/your-ebay-items">here</a> (shown as "Copy the code snippet onto your site") and paste it into the box below.</p>' . "\n";
-	echo '<p>You can then call <code>&lt;?php an_items(); ?&gt;</code> from within your theme files to display Your eBay Listings where desired.</p>' . "\n";
+	echo '';
 }
 
-/**
- * Output items option
- */
 function an_items_setting() {
 	$an_settings = an_get_settings();
 
 	$an_items_code = isset($an_settings['an_items_code']) ? $an_settings['an_items_code'] : '';
 	
-	echo '<textarea id="an_items_code_snippet" name="an_options[an_items_code]" rows="6" style="font-family:courier;width:400px">' . $an_items_code  . '</textarea>' . "\n";
+	echo '<textarea name="an_options[an_items_code]">' . $an_items_code  . '</textarea>' . "\n";
 }
 
 /**
- * Profile text
+ * Profile
  */
 function an_profile_text() {
-	echo '<p>To begin <strong>you must obtain your code snippet from the Auction Nudge website</strong> <a target="_blank" href="https://www.auctionnudge.com/tools/your-ebay-profile">here</a> (shown as "Copy the code snippet onto your site") and paste it into the box below.</p>' . "\n";
-	echo '<p>You can then call <code>&lt;?php an_profile(); ?&gt;</code> from within your theme files to display Your eBay Profile where desired.</p>' . "\n";
+	echo '';
 }
 
-/**
- * Output profile option
- */
 function an_profile_setting() {
 	$an_settings = an_get_settings();
 	
 	$an_profile_code = isset($an_settings['an_profile_code']) ? $an_settings['an_profile_code'] : '';	
 	
-	echo '<textarea id="an_profile_code_snippet" name="an_options[an_profile_code]" rows="6" style="font-family:courier;width:400px">' . $an_profile_code . '</textarea>' . "\n";
+	echo '<textarea name="an_options[an_profile_code]">' . $an_profile_code . '</textarea>' . "\n";
 }
 
 /**
- * Feedback text
+ * Feedback
  */
 function an_feedback_text() {
-	echo '<p>To begin <strong>you must obtain your code snippet from the Auction Nudge website</strong> <a target="_blank" href="https://www.auctionnudge.com/tools/your-ebay-feedback">here</a> (shown as "Copy the code snippet onto your site") and paste it into the box below.</p>' . "\n";
-	echo '<p>You can then call <code>&lt;?php an_feedback(); ?&gt;</code> from within your theme files to display Your eBay Feedback where desired.</p>' . "\n";
+	echo '';
 }
 
-/**
- * Output feedback option
- */
 function an_feedback_setting() {
 	$an_settings = an_get_settings();
 	
 	$an_feedback_code = isset($an_settings['an_feedback_code']) ? $an_settings['an_feedback_code'] : '';		
 	
-	echo '<textarea id="an_feedback_code_snippet" name="an_options[an_feedback_code]" rows="6" style="font-family:courier;width:400px">' . $an_feedback_code . '</textarea>' . "\n";
+	echo '<textarea name="an_options[an_feedback_code]">' . $an_feedback_code . '</textarea>' . "\n";
 }
