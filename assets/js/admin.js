@@ -101,9 +101,92 @@ function an_alt_inputs() {
 	});
 }
 
+function an_create_tool_data(shortcode_data) {
+	var tool_data = {
+		'item': {},
+		'profile': {},
+		'feedback': {}
+	}
+	
+	for(data_key in shortcode_data) {
+		switch(0) {
+			case data_key.indexOf('item_') :
+				tool_data['item'][data_key.replace('item_', '')] = shortcode_data[data_key];
+
+				break;
+
+			case data_key.indexOf('profile_') :
+				tool_data['profile'][data_key.replace('profile_', '')] = shortcode_data[data_key];
+				
+				break;
+
+			case data_key.indexOf('feedback_') :
+				tool_data['feedback'][data_key.replace('feedback_', '')] = shortcode_data[data_key];
+				
+				break;
+
+		}
+	}
+	
+	return tool_data;
+}
+
+function an_build_shortcode(tool_key = 'item', tool_data = {}) {
+	tool_key = (tool_key == 'item') ? 'listings' : tool_key;
+	
+	var out = '[auction-nudge tool="' + tool_key + '"';
+	for(attr_key in tool_data) {
+		out += ' ' + attr_key.toLowerCase() + '="' + tool_data[attr_key] + '"';
+	}
+	out += ']';
+	
+	return out;
+}
+
+function setup_settings_ui() {
+	var container = jQuery('body.settings_page_an_options_page #an-settings-tabs #an-custom-field-container');
+	
+	if(container.length) {
+		var default_data = [];
+		var shortcode_data = [];
+		
+		//Get inputs
+		var inputs = jQuery('input,select,radio', container);
+		
+		//Each
+		inputs.each(function() {
+			var input = jQuery(this);
+
+			default_data[input.attr('name')] = input.data('default');
+			
+			//On change	
+			input.on('change', function() {
+				//Compare
+				if(input.val() !== default_data[input.attr('name')]) {
+					//Update
+					shortcode_data[input.attr('name')] = input.val();
+				}
+				
+				//Update shortcode
+				//var textarea = jQuery('.an-custom-field-help textarea', input.parents('.an-custom-field-tab'));
+				
+				var tool_data = an_create_tool_data(shortcode_data);
+				
+				for(tool_key in tool_data) {
+					var shortcode = an_build_shortcode(tool_key, tool_data[tool_key]);
+					jQuery('#an-shortcode-' + tool_key).html(shortcode);
+				}
+			});
+		});
+
+// 		console.log(default_data);
+	}
+}
+
 jQuery(document).ready(function() {
 	setup_parameter_groups();
 	setup_widget_theme_dropdown();
+	setup_settings_ui();
 	
 	var custom_field_parent = jQuery('#listings-tab');
 	an_show_theme_options(jQuery('#theme').val(), custom_field_parent);
@@ -159,7 +242,8 @@ jQuery(document).ready(function() {
 		})
 		.on('mouseleave', 'a.an-tooltip', function() {
 		  jQuery('#tooltip-active').remove();
-		});	
+		})
+	;	
 
 	//Adblock check
 	window.setTimeout(adblock_check, 500);	

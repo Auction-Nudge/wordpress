@@ -162,7 +162,14 @@ class Auction_Nudge_Widget_Feedback extends Auction_Nudge_Widget {
 
 function an_widgets_init() {
 	an_update_parameter_defaults();
-	
+
+	$an_settings = an_get_settings();
+
+	//Not if disabled
+	if(isset($an_settings['an_widget_disable']) && $an_settings['an_widget_disable']) {
+		return false;	
+	}
+		
 	register_widget('Auction_Nudge_Widget_Listings');
 	if(an_get_option('an_ads_disable') == false) {
 		register_widget('Auction_Nudge_Widget_Ads');	

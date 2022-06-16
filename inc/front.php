@@ -69,10 +69,10 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 	$request_string = an_request_parameters_to_request_string($request_parameters);
 	
 	//Get options
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
 	//Local requests
-	if(! array_key_exists('an_local_requests', $options) || $options['an_local_requests'] == '1') {
+	if(! array_key_exists('an_local_requests', $an_settings) || $an_settings['an_local_requests'] == '1') {
 		//We encode this, wp_enqueue_script encodes the others
 		if($tool_key == 'ad' || ($tool_key == 'profile' && $profile_is_framed)) {
 			$request_string = urlencode($request_string);
@@ -166,12 +166,12 @@ add_action('wp_head', 'an_output_load_check_js');
  * Load custom CSS
  */
 function an_load_css() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
 	//Only output if CSS rules set
-	if(isset($options['an_css_rules']) && strlen($options['an_css_rules'])) {
+	if(isset($an_settings['an_css_rules']) && strlen($an_settings['an_css_rules'])) {
 		echo '<style type="text/css">' . "\n";
-		echo $options['an_css_rules'] . "\n";
+		echo $an_settings['an_css_rules'] . "\n";
 		echo '</style>' . "\n";		
 	}
 }
@@ -218,19 +218,19 @@ add_action('template_redirect', 'an_trigger_check');
  * Replace markers
  */
 function an_the_content($content) {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
 	//Is this legacy feature in use?		
-	if(isset($options['an_items_code']) || isset($options['an_profile_code']) || isset($options['an_feedback_code'])) {
+	if(isset($an_settings['an_items_code']) || isset($an_settings['an_profile_code']) || isset($an_settings['an_feedback_code'])) {
 		$old = array(
 			'[an_items]',
 			'[an_profile]',
 			'[an_feedback]'
 		);
 		$new = array(
-			isset($options['an_items_code']) ? $options['an_items_code'] : '',
-			isset($options['an_profile_code']) ? $options['an_profile_code'] : '',
-			isset($options['an_feedback_code']) ? $options['an_feedback_code'] : ''
+			isset($an_settings['an_items_code']) ? $an_settings['an_items_code'] : '',
+			isset($an_settings['an_profile_code']) ? $an_settings['an_profile_code'] : '',
+			isset($an_settings['an_feedback_code']) ? $an_settings['an_feedback_code'] : ''
 		);	
 		
 		return str_replace($old, $new, $content);		

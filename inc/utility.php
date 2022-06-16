@@ -54,10 +54,14 @@ function an_username_encode($username) {
  */
 function an_create_input($field, $set_value) {
 	$out = '';
+
+	if(! array_key_exists('default', $field)) {
+		$field['default'] = null;
+	}
 	
 	switch($field['type']) {
 		case 'select' :
-			$out .= '		<select name="' . $field['name'] . '" id="' . $field['id'] . '">' . "\n";
+			$out .= '		<select data-default="' . $field['default'] . '" name="' . $field['name'] . '" id="' . $field['id'] . '">' . "\n";
 			foreach($field['options'] as $value => $description) {
 				//Always use strings
 				$value = (string)$value;
@@ -67,7 +71,7 @@ function an_create_input($field, $set_value) {
 				if($set_value === $value) {
 					$out .= ' selected="selected"';
 				//Do we have a default?
-				}	elseif($set_value === false && (array_key_exists('default', $field) && $field['default'] == $value)) {
+				}	elseif($set_value === false && $field['default'] === $value) {
 					$out .= ' selected="selected"';				
 				}		
 				$out .= '>' . $description . '</option>' . "\n";
@@ -84,7 +88,7 @@ function an_create_input($field, $set_value) {
 				$checked = true;								
 			}
 			$value = ($field['value']) ? $field['value'] : 'true';
-			$out .= '		<input type="checkbox" name="' . $field['name'] . '" value="' . $value . '" id="' . $field['id'] . '"';
+			$out .= '		<input data-default="' . $field['default'] . '" type="checkbox" name="' . $field['name'] . '" value="' . $value . '" id="' . $field['id'] . '"';
 			if($checked) {
 				$out .= ' checked="checked"';			
 			}
@@ -101,11 +105,11 @@ function an_create_input($field, $set_value) {
 				if($set_value === $value) {
 					$checked = true;
 				//Otherwise is this the default value?
-				} elseif($set_value === false && $value == $field['default']) {
+				} elseif($set_value === false && $value === $field['default']) {
 					$checked = true;
 				}
 				$out .= '<div class="radio">' . "\n";
-				$out .= '	<input type="radio" name="' . $field['name'] . '" value="' . $value . '"';
+				$out .= '	<input data-default="' . $field['default'] . '" type="radio" name="' . $field['name'] . '" value="' . $value . '"';
 				if($checked) {
 					$out .= ' checked="checked"';			
 				}				
@@ -116,15 +120,13 @@ function an_create_input($field, $set_value) {
 			break;						
 		case 'text' :
 		default :
-			$out .= '		<input type="text" name="' . $field['name'] . '" id="' . $field['id'] . '"';
+			$out .= '		<input data-default="' . $field['default'] . '" type="text" name="' . $field['name'] . '" id="' . $field['id'] . '"';
 			//Do we have a value for this post?
 			if($value = htmlspecialchars($set_value)) {
 				$out .= ' value="' . $value . '"';
-			//Do we have a default?
-			}	elseif(array_key_exists('default', $field)) {
-				$value = $field['default'];
-				
-				$out .= ' value="' . $value . '"';			
+			//Use default
+			}	else {
+				$out .= ' value="' . $field['default'] . '"';			
 			}
 			$out .= ' />' . "\n";
 			break;
@@ -159,4 +161,15 @@ function an_get_post_meta($post_id) {
 	}
 	
 	return $post_meta;
+}
+
+function an_get_settings() {
+	$settings = get_option('an_options');
+	
+	//Not yet set
+	if(! is_array($settings)) {
+		$settings = [];
+	}
+	
+	return $settings;
 }

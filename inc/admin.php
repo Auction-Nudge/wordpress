@@ -47,10 +47,10 @@ function an_options_validate($input) {
  * Get plugin options
  */
 function an_get_option($option_key) {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
-	if(is_array($options) && array_key_exists($option_key, $options)) {
-		return $options[$option_key];		
+	if(is_array($an_settings) && array_key_exists($option_key, $an_settings)) {
+		return $an_settings[$option_key];		
 	} else {
 		return false;		
 	}
@@ -59,40 +59,74 @@ function an_get_option($option_key) {
 /**
  * Ads...
  */
-function an_ads_disable() {
-	$an_options = get_option('an_options');
-	
-	//No settings present, or not the one we are looking for
-	if(! is_array($an_options) || ! array_key_exists('an_ads_disable', $an_options)) {
-		global $wpdb;
+function an_legacy_features() {
+	global $wpdb;
 		
+	$an_settings = an_get_settings();
+	
+	//Meta disable
+	if(! array_key_exists('an_meta_disable', $an_settings)) {
+		//Check post meta
+		$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "postmeta` WHERE `meta_key` REGEXP '^(item_|profile_|feedback|ad_)(.*)'", ARRAY_A);			
+
+		//If post meta
+		if(sizeof($results) > 0) {
+			//Don't disable
+			$an_settings['an_meta_disable'] = false;				
+		} else {
+			//Disable
+			$an_settings['an_meta_disable'] = true;								
+		}
+		
+		update_option('an_options', $an_settings);
+	}
+
+	//Widgets disable
+	if(! array_key_exists('an_widget_disable', $an_settings)) {
+		//Check post meta
+		$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "options` WHERE option_name LIKE 'widget_an_%_widget' AND option_value LIKE '%_siteid%'", ARRAY_A);
+
+		//If post meta
+		if(sizeof($results) > 0) {
+			//Don't disable
+			$an_settings['an_widget_disable'] = false;				
+		} else {
+			//Disable
+			$an_settings['an_widget_disable'] = true;								
+		}
+		
+		update_option('an_options', $an_settings);
+	}
+
+	//ADs disable?
+	if(! array_key_exists('an_ads_disable', $an_settings)) {
 		//Check post meta
 		$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "postmeta` WHERE `meta_key` LIKE '%ad_SellerID%'", ARRAY_A);			
 
 		//If post meta
 		if(sizeof($results) > 0) {
 			//Don't disable
-			$an_options['an_ads_disable'] = false;				
+			$an_settings['an_ads_disable'] = false;				
 		//If no page meta
 		} else {
-			//Then check for widget meta WITH DATA
-			$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "options` WHERE option_name LIKE 'widget_an_%_widget' AND option_value LIKE '%siteid%'", ARRAY_A);
+			//Then check for an Ad widget meta WITH DATA
+			$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "options` WHERE option_name LIKE 'widget_an_ads_widget' AND option_value LIKE '%ad_SellerID%'", ARRAY_A);
 			
 			//If widget meta		
 			if(sizeof($results) > 0) {
 				//Don't disable
-				$an_options['an_ads_disable'] = false;				
+				$an_settings['an_ads_disable'] = false;				
 			//No widget meta either
 			} else {
 				//Disable
-				$an_options['an_ads_disable'] = true;								
+				$an_settings['an_ads_disable'] = true;								
 			}
 		}
 		
-		update_option('an_options', $an_options);
+		update_option('an_options', $an_settings);
 	}
 }
-add_action('admin_init', 'an_ads_disable');
+add_action('admin_init', 'an_legacy_features');
 
 /**
  * Username change
@@ -182,6 +216,13 @@ add_filter('plugin_action_links_auction-nudge/auctionnudge.php', 'an_add_action_
  * Create the custom fields box
  */
 function an_create_custom_fields_box() {
+	$an_settings = an_get_settings();
+	
+	//Not if disabled
+	if(isset($an_settings['an_meta_disable']) && $an_settings['an_meta_disable']) {
+		return false;	
+	}
+
 	foreach(array('post', 'page') as $post_type) {
 		add_meta_box('an-custom-fields', an_get_config('plugin_name'), 'an_create_custom_field_form', $post_type, 'normal', 'high');
 	}
@@ -192,13 +233,15 @@ function an_create_custom_fields_box() {
  */
 function an_create_custom_field_form() {	
 	global $post;
+
+	$tools_meta = [];
 	
-	//Post type
-	$post_type_object = get_post_type_object(get_post_type($post));	
-	$post_type_name = (isset($post_type_object->labels->singular_name)) ? $post_type_object->labels->singular_name : 'Post';
-	
-	//Get post meta	
-	$post_meta = an_get_post_meta($post->ID);
+	//Do we have?
+	if(isset($post->ID)) {
+		//Get meta for tools
+		$tools_meta = an_get_post_meta($post->ID);
+	}
+
 	
 	$out = '<div id="an-custom-field-container">' . "\n";
 	
@@ -206,39 +249,30 @@ function an_create_custom_field_form() {
 	$out .= '<ul id="an-tab-links">' . "\n";
 	$out .= '	<li><a class="an-tab-link active" data-tab="listings-tab" href="#">Your eBay Listings</a></li>' . "\n";
 	//Show Ad tool?
-	if(an_get_option('an_ads_disable') == false) {
-		$out .= '	<li><a class="an-tab-link" data-tab="ads-tab" href="#">Your eBay Ads</a></li>' . "\n";
-	}
+// 		$out .= '	<li><a class="an-tab-link" data-tab="ads-tab" href="#">Your eBay Ads</a></li>' . "\n";
 	$out .= '	<li><a class="an-tab-link" data-tab="profile-tab" href="#">Your eBay Profile</a></li>' . "\n";
 	$out .= '	<li><a class="an-tab-link" data-tab="feedback-tab" href="#">Your eBay Feedback</a></li>' . "\n";	
 	$out .= '</ul>' . "\n";
 	
 	//Item tool
 	$out .= '<div id="listings-tab" class="an-custom-field-tab">' . "\n";			
-	
-	//Get stored post meta values
-	$tool_parameters = an_request_parameters_from_assoc_array('item', $post_meta, false);
-	$out .= an_create_tool_custom_fields('item', $tool_parameters);
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you would like the listings to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="listings"]</textarea></p><p><small><b>Note:</b> Only one set of eBay listings can be loaded per page.</small></p>' . "\n";
+	$out .= '		<textarea id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea>' . "\n";
 	$out .= '	</div>' . "\n";
 	
+	//Get stored post meta values
+	$tool_parameters = an_request_parameters_from_assoc_array('item', $tools_meta, false);
+	$out .= an_create_tool_custom_fields('item', $tool_parameters);
+
 	$out .= '</div>' . "\n";			
 
-	//Show Ad tool?
-	if(an_get_option('an_ads_disable') == false) {
-		//Ad tool
+	//Ad tool (hidden)
+	if(isset($post->ID) && an_get_option('an_ads_disable') == false) {
 		$out .= '<div id="ads-tab" class="an-custom-field-tab" style="display:none">' . "\n";			
-		$out .= '	<div class="an-custom-field-help">' . "\n";
-		$out .= '		<p><b>The Your eBay Ads tool is no longer recommended due to very poor conversion rates.</b> You should try the the <b>Your eBay Listings</b> tool instead. More information <a target="_blank" href="https://www.auctionnudge.com/changes#v3.8">here</a>.</p>' . "\n";
-		$out .= '		<p>Use these options to specify the type of ad to display within your page/post.</p><p>Add the following shortcode within your content editor to specify where the ad will appear:</p><p>[' . an_get_config('shortcode') . ' tool="ads"]</p><p><small><b>Note:</b> Only one type of eBay ad can be loaded within each content area.</small></p>' . "\n";
-		$out .= '	</div>' . "\n";
-		$out .= '	<h2>Your eBay Ads</h2>' . "\n";						
 
 		//Get stored post meta values
-		$tool_parameters = an_request_parameters_from_assoc_array('ad', $post_meta, false);
+		$tool_parameters = an_request_parameters_from_assoc_array('ad', $tools_meta, false);
 		$out .= an_create_tool_custom_fields('ad', $tool_parameters);
 
 		$out .= '</div>' . "\n";		
@@ -247,30 +281,26 @@ function an_create_custom_field_form() {
 	//Profile tool
 	$out .= '<div id="profile-tab" class="an-custom-field-tab" style="display:none">' . "\n";				
 
-	//Get stored post meta values
-	$tool_parameters = an_request_parameters_from_assoc_array('profile', $post_meta, false);
-	$out .= an_create_tool_custom_fields('profile', $tool_parameters);
-
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you would like the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="profile"]</textarea></p><p><small><b>Note:</b> Only one profile can be loaded per page.</small></p>' . "\n";
-
+	$out .= '		<textarea id="an-shortcode-profile">[' . an_get_config('shortcode') . ' tool="profile"]</textarea>' . "\n";
 	$out .= '	</div>' . "\n";
+
+	//Get stored post meta values
+	$tool_parameters = an_request_parameters_from_assoc_array('profile', $tools_meta, false);
+	$out .= an_create_tool_custom_fields('profile', $tool_parameters);
 
 	$out .= '</div>' . "\n";			
 
 	//Feedback tool
 	$out .= '<div id="feedback-tab" class="an-custom-field-tab" style="display:none">' . "\n";			
 
-	//Get stored post meta values
-	$tool_parameters = an_request_parameters_from_assoc_array('feedback', $post_meta, false);
-	$out .= an_create_tool_custom_fields('feedback', $tool_parameters);
-
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you would like the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea></p><p><small><b>Note:</b> Only one set of feedback can be loaded per page.</small></p>' . "\n";
-
+	$out .= '		<textarea id="an-shortcode-feedback">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea>' . "\n";
 	$out .= '	</div>' . "\n";
+
+	//Get stored post meta values
+	$tool_parameters = an_request_parameters_from_assoc_array('feedback', $tools_meta, false);
+	$out .= an_create_tool_custom_fields('feedback', $tool_parameters);
 
 	$out .= '</div>' . "\n";			
 						
@@ -450,31 +480,40 @@ function an_options_page() {
 
 	echo '	<h1>' . an_get_config('plugin_name') . '</h1>' . "\n";
 	
-	echo '<p>To add Auction Nudge to your pages or posts, use the Auction Nudge box on the edit page. You can also add Auction Nudge to your theme as <a href="' . admin_url('widgets.php') . '">Widgets</a>. The Settings below can be used to specify some defaults and style rules, but are not required.</p>' . "\n";
+// 	echo '<p>To add Auction Nudge to your pages or posts, use the Auction Nudge box on the edit page. You can also add Auction Nudge to your theme as <a href="' . admin_url('widgets.php') . '">Widgets</a>. The Settings below can be used to specify some defaults and style rules, but are not required.</p>' . "\n";
 	
-	echo '<p>For more details on how to use the plugin, you can watch the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>.</p>' . "\n";
+// 	echo '<p>For more details on how to use the plugin, you can watch the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>.</p>' . "\n";
 	
 	//Tabs
 	$active_tab = (isset($_GET['tab'])) ? $_GET['tab'] : 'general';
 	an_admin_tabs($active_tab);
 	
 	//Open form
-	echo '	<form action="' . admin_url('options.php') . '" method="post">' . "\n";
+	echo '	<form id="an-settings-tabs" action="' . admin_url('options.php') . '" method="post">' . "\n";
 	settings_fields('an_options');
 	
 	//Preserve value
-	$an_options = get_option('an_options');	
-	$an_ads_disable = ($an_options['an_ads_disable']) ? 1 : 0;
-	echo '<input type="hidden" id="an_ads_disable" name="an_options[an_ads_disable]" value="' . $an_ads_disable . '" />';
+	$an_settings = an_get_settings();	
+	$an_ads_disable = ($an_settings['an_ads_disable']) ? 1 : 0;
+	echo '	<input type="hidden" id="an_ads_disable" name="an_options[an_ads_disable]" value="' . $an_ads_disable . '" />';
 
 	//Propagate username change?
-	if(isset($an_options['an_username_propagate']) && $an_options['an_username_propagate'] == 'true') {
-		an_propagate_username_change($an_options['an_ebay_user']);
+	if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
+		an_propagate_username_change($an_settings['an_ebay_user']);
 	}
-	
+
+
 	//Which group of options are we showing?
 	switch($active_tab) {
-		case 'theme' :
+		case 'shortcodes' :
+			//Help
+			
+			echo an_create_custom_field_form();
+
+// 			echo an_shortcode_parameters_help_table();
+			
+			break;
+		case 'legacy' :
 			echo '<div style="display:none">';
 			do_settings_sections('an_general');
 			echo '</div>';
@@ -484,13 +523,15 @@ function an_options_page() {
 			echo '<div id="an-theme-options" style="display:none">' . "\n";
 			do_settings_sections('an_theme');
 			echo '</div>' . "\n";
-			break;
+			
+			break;			
 		case 'general' :
 		default :
 			do_settings_sections('an_general');
 			echo '<div style="display:none">';
 			do_settings_sections('an_theme');
 			echo '</div>';
+			
 			break;
 	}
 	
@@ -508,7 +549,8 @@ function an_options_page() {
 function an_admin_tabs($current = 'general') {
   $tabs = array(
   	'general' => 'General',
-  	'theme' => 'Within Your Theme'
+  	'shortcodes' => 'Shortcodes',
+  	'legacy' => 'Legacy'
   );
   $links = array();
   foreach($tabs as $slug => $name) {
@@ -577,11 +619,11 @@ function an_ebay_defaults_text() {
  * Output eBay ID option
  */
 function an_ebay_user_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
 	//Option set?
-	if(is_array($options) && array_key_exists('an_ebay_user', $options)) {
-		$ebay_user_setting = $options['an_ebay_user'];
+	if(is_array($an_settings) && array_key_exists('an_ebay_user', $an_settings)) {
+		$ebay_user_setting = $an_settings['an_ebay_user'];
 	} else {
 		$ebay_user_setting = '';
 	}
@@ -598,11 +640,11 @@ function an_ebay_user_setting() {
  * Output eBay site option
  */
 function an_ebay_site_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 
 	//Option set?
-	if(is_array($options) && array_key_exists('an_ebay_site', $options)) {
-		$ebay_site_setting = $options['an_ebay_site'];
+	if(is_array($an_settings) && array_key_exists('an_ebay_site', $an_settings)) {
+		$ebay_site_setting = $an_settings['an_ebay_site'];
 	} else {
 		$ebay_site_setting = '0';
 	}
@@ -644,9 +686,9 @@ function an_css_text() {
  * Output CSS option
  */
 function an_css_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
-	$an_css_rules = isset($options['an_css_rules']) ? $options['an_css_rules'] : '';
+	$an_css_rules = isset($an_settings['an_css_rules']) ? $an_settings['an_css_rules'] : '';
 	
 	echo '<textarea id="an_css_rules" name="an_options[an_css_rules]" rows="6" style="font-family:courier;width:400px">' . $an_css_rules . '</textarea>' . "\n";		
 }
@@ -664,9 +706,9 @@ function an_request_text() {
  * Local Requests option
  */
 function an_local_requests_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
-	$an_local_requests = isset($options['an_local_requests']) ? $options['an_local_requests'] : '1';
+	$an_local_requests = isset($an_settings['an_local_requests']) ? $an_settings['an_local_requests'] : '1';
 	
 	echo '<select id="an_local_requests" name="an_options[an_local_requests]">' . "\n";		
 	$selected = ($an_local_requests == '1') ? ' selected="selected"' : '';
@@ -693,9 +735,9 @@ function an_items_text() {
  * Output items option
  */
 function an_items_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 
-	$an_items_code = isset($options['an_items_code']) ? $options['an_items_code'] : '';
+	$an_items_code = isset($an_settings['an_items_code']) ? $an_settings['an_items_code'] : '';
 	
 	echo '<textarea id="an_items_code_snippet" name="an_options[an_items_code]" rows="6" style="font-family:courier;width:400px">' . $an_items_code  . '</textarea>' . "\n";
 }
@@ -712,9 +754,9 @@ function an_profile_text() {
  * Output profile option
  */
 function an_profile_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
-	$an_profile_code = isset($options['an_profile_code']) ? $options['an_profile_code'] : '';	
+	$an_profile_code = isset($an_settings['an_profile_code']) ? $an_settings['an_profile_code'] : '';	
 	
 	echo '<textarea id="an_profile_code_snippet" name="an_options[an_profile_code]" rows="6" style="font-family:courier;width:400px">' . $an_profile_code . '</textarea>' . "\n";
 }
@@ -731,9 +773,9 @@ function an_feedback_text() {
  * Output feedback option
  */
 function an_feedback_setting() {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
-	$an_feedback_code = isset($options['an_feedback_code']) ? $options['an_feedback_code'] : '';		
+	$an_feedback_code = isset($an_settings['an_feedback_code']) ? $an_settings['an_feedback_code'] : '';		
 	
 	echo '<textarea id="an_feedback_code_snippet" name="an_options[an_feedback_code]" rows="6" style="font-family:courier;width:400px">' . $an_feedback_code . '</textarea>' . "\n";
 }
