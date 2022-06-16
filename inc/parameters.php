@@ -246,3 +246,45 @@ function an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_par
 	
 	return $request_parameters;
 }
+function an_shortcode_parameters_help_table($tool_keys = [ 'item', 'profile', 'feedback' ]) {
+	$out = '<table>';
+	
+	$out .= '	<tr>
+		<th>Attribute</th>
+		<th>Options</th>
+		<th>Tip</th>
+		<th>Default</th>
+	</td>';
+	
+	foreach($tool_keys as $tool_key) {
+
+/*
+	//Does this tool have groups?
+	if($tool_has_groups = (an_get_config($tool_key . '_parameter_groups') !== false)) {
+		$parameter_groups = an_get_config($tool_key . '_parameter_groups');
+		$group = $parameter_groups[$field['group']];
+				
+		//Output group?
+		if($current_group != $group) {
+*/
+	
+		foreach(an_get_config($tool_key . '_parameters') as $param_key => $param_defition) {
+		
+			$options_out = '';
+			if(isset($param_defition['options']) && is_array($param_defition['options'])) {
+				$options_out = implode(',<br />', $param_defition['options']);
+			}
+		
+			$out .= '	<tr>
+				<th>' . strtolower(an_unprefix($param_key)) . '</th>
+				<td>' . $options_out  . '</td>
+				<td>' . $param_defition['tip'] . '</th>
+				<td>' . $param_defition['default']  . '</td>
+			</td>';
+		}
+	}
+
+	$out .= '</table>';
+	
+	return $out;
+}

@@ -473,6 +473,9 @@ add_action('admin_menu', 'an_admin_page');
  * Display the settings page
  */
 function an_options_page() {
+	//Help
+	echo an_shortcode_parameters_help_table();
+
 	echo '<div id="an-options-container">' . "\n";
 
 	echo '	<a class="button right" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
