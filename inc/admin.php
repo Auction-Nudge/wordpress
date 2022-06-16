@@ -523,6 +523,9 @@ function an_options_page() {
 			echo '<div id="an-theme-options" style="display:none">' . "\n";
 			do_settings_sections('an_theme');
 			echo '</div>' . "\n";
+
+			//Submit
+			echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
 			
 			break;			
 		case 'general' :
@@ -531,12 +534,13 @@ function an_options_page() {
 			echo '<div style="display:none">';
 			do_settings_sections('an_theme');
 			echo '</div>';
+
+			//Submit
+			echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
 			
 			break;
 	}
 	
-	//Submit
-	echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
 	echo '	</form>' . "\n";
 	
 	echo '</div>' . "\n";
