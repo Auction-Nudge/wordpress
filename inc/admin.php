@@ -233,13 +233,15 @@ function an_create_custom_fields_box() {
  */
 function an_create_custom_field_form() {	
 	global $post;
+
+	$tools_meta = [];
 	
-	//Post type
-	$post_type_object = get_post_type_object(get_post_type($post));	
-	$post_type_name = (isset($post_type_object->labels->singular_name)) ? $post_type_object->labels->singular_name : 'Post';
-	
-	//Get post meta	
-	$post_meta = an_get_post_meta($post->ID);
+	//Do we have?
+	if(isset($post->ID)) {
+		//Get meta for tools
+		$tools_meta = an_get_post_meta($post->ID);
+	}
+
 	
 	$out = '<div id="an-custom-field-container">' . "\n";
 	
@@ -258,12 +260,12 @@ function an_create_custom_field_form() {
 	$out .= '<div id="listings-tab" class="an-custom-field-tab">' . "\n";			
 	
 	//Get stored post meta values
-	$tool_parameters = an_request_parameters_from_assoc_array('item', $post_meta, false);
+	$tool_parameters = an_request_parameters_from_assoc_array('item', $tools_meta, false);
 	$out .= an_create_tool_custom_fields('item', $tool_parameters);
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
 	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you would like the listings to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="listings"]</textarea></p><p><small><b>Note:</b> Only one set of eBay listings can be loaded per page.</small></p>' . "\n";
+	$out .= '		<p>Add the following Shortcode to your site where you would like the listings to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="listings"]</textarea></p><p><small><b>Note:</b> Only one set of eBay listings can be loaded per page.</small></p>' . "\n";
 	$out .= '	</div>' . "\n";
 	
 	$out .= '</div>' . "\n";			
@@ -279,7 +281,7 @@ function an_create_custom_field_form() {
 		$out .= '	<h2>Your eBay Ads</h2>' . "\n";						
 
 		//Get stored post meta values
-		$tool_parameters = an_request_parameters_from_assoc_array('ad', $post_meta, false);
+		$tool_parameters = an_request_parameters_from_assoc_array('ad', $tools_meta, false);
 		$out .= an_create_tool_custom_fields('ad', $tool_parameters);
 
 		$out .= '</div>' . "\n";		
@@ -289,12 +291,12 @@ function an_create_custom_field_form() {
 	$out .= '<div id="profile-tab" class="an-custom-field-tab" style="display:none">' . "\n";				
 
 	//Get stored post meta values
-	$tool_parameters = an_request_parameters_from_assoc_array('profile', $post_meta, false);
+	$tool_parameters = an_request_parameters_from_assoc_array('profile', $tools_meta, false);
 	$out .= an_create_tool_custom_fields('profile', $tool_parameters);
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
 	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you would like the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="profile"]</textarea></p><p><small><b>Note:</b> Only one profile can be loaded per page.</small></p>' . "\n";
+	$out .= '		<p>Add the following Shortcode to your site where you would like the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="profile"]</textarea></p><p><small><b>Note:</b> Only one profile can be loaded per page.</small></p>' . "\n";
 
 	$out .= '	</div>' . "\n";
 
@@ -304,12 +306,12 @@ function an_create_custom_field_form() {
 	$out .= '<div id="feedback-tab" class="an-custom-field-tab" style="display:none">' . "\n";			
 
 	//Get stored post meta values
-	$tool_parameters = an_request_parameters_from_assoc_array('feedback', $post_meta, false);
+	$tool_parameters = an_request_parameters_from_assoc_array('feedback', $tools_meta, false);
 	$out .= an_create_tool_custom_fields('feedback', $tool_parameters);
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
 	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your ' . $post_type_name . ' where you would like the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea></p><p><small><b>Note:</b> Only one set of feedback can be loaded per page.</small></p>' . "\n";
+	$out .= '		<p>Add the following Shortcode to your site where you would like the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea></p><p><small><b>Note:</b> Only one set of feedback can be loaded per page.</small></p>' . "\n";
 
 	$out .= '	</div>' . "\n";
 
@@ -500,7 +502,7 @@ function an_options_page() {
 	an_admin_tabs($active_tab);
 	
 	//Open form
-	echo '	<form action="' . admin_url('options.php') . '" method="post">' . "\n";
+	echo '	<form id="an-settings-tabs" action="' . admin_url('options.php') . '" method="post">' . "\n";
 	settings_fields('an_options');
 	
 	//Preserve value
@@ -514,13 +516,14 @@ function an_options_page() {
 	}
 
 
-	echo '	<div id="an-settings-tabs">' . "\n";
-	
 	//Which group of options are we showing?
 	switch($active_tab) {
 		case 'shortcodes' :
 			//Help
-			echo an_shortcode_parameters_help_table();
+			
+			echo an_create_custom_field_form();
+
+// 			echo an_shortcode_parameters_help_table();
 			
 			break;
 		case 'legacy' :
@@ -544,8 +547,6 @@ function an_options_page() {
 			
 			break;
 	}
-
-	echo '	</div>' . "\n";
 	
 	//Submit
 	echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
