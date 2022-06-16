@@ -473,9 +473,6 @@ add_action('admin_menu', 'an_admin_page');
  * Display the settings page
  */
 function an_options_page() {
-	//Help
-	echo an_shortcode_parameters_help_table();
-
 	echo '<div id="an-options-container">' . "\n";
 
 	echo '	<a class="button right" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
@@ -509,16 +506,24 @@ function an_options_page() {
 	//Preserve value
 	$an_settings = an_get_settings();	
 	$an_ads_disable = ($an_settings['an_ads_disable']) ? 1 : 0;
-	echo '<input type="hidden" id="an_ads_disable" name="an_options[an_ads_disable]" value="' . $an_ads_disable . '" />';
+	echo '	<input type="hidden" id="an_ads_disable" name="an_options[an_ads_disable]" value="' . $an_ads_disable . '" />';
 
 	//Propagate username change?
 	if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
 		an_propagate_username_change($an_settings['an_ebay_user']);
 	}
+
+
+	echo '	<div id="an-settings-tabs">' . "\n";
 	
 	//Which group of options are we showing?
 	switch($active_tab) {
-		case 'theme' :
+		case 'shortcodes' :
+			//Help
+			echo an_shortcode_parameters_help_table();
+			
+			break;
+		case 'legacy' :
 			echo '<div style="display:none">';
 			do_settings_sections('an_general');
 			echo '</div>';
@@ -528,15 +533,19 @@ function an_options_page() {
 			echo '<div id="an-theme-options" style="display:none">' . "\n";
 			do_settings_sections('an_theme');
 			echo '</div>' . "\n";
-			break;
+			
+			break;			
 		case 'general' :
 		default :
 			do_settings_sections('an_general');
 			echo '<div style="display:none">';
 			do_settings_sections('an_theme');
 			echo '</div>';
+			
 			break;
 	}
+
+	echo '	</div>' . "\n";
 	
 	//Submit
 	echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
@@ -552,7 +561,8 @@ function an_options_page() {
 function an_admin_tabs($current = 'general') {
   $tabs = array(
   	'general' => 'General',
-  	'theme' => 'Within Your Theme'
+  	'shortcodes' => 'Shortcodes',
+  	'legacy' => 'Legacy'
   );
   $links = array();
   foreach($tabs as $slug => $name) {

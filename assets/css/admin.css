@@ -130,6 +130,9 @@ a.an-tooltip {
   padding-right: 200px;
   width: 600px;
 }
+#an-options-container #an-tab-container {
+  border: 1px solid red;
+}
 #an-options-container #an-about {
   position: absolute;
   top: 0;
