@@ -258,16 +258,16 @@ function an_create_custom_field_form() {
 	
 	//Item tool
 	$out .= '<div id="listings-tab" class="an-custom-field-tab">' . "\n";			
+
+	$out .= '	<div class="an-custom-field-help">' . "\n";
+	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
+	$out .= '		<p>Add the following Shortcode to your site where you would like the listings to appear:</p><p><textarea id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea></p><p><small><b>Note:</b> Only one set of eBay listings can be loaded per page.</small></p>' . "\n";
+	$out .= '	</div>' . "\n";
 	
 	//Get stored post meta values
 	$tool_parameters = an_request_parameters_from_assoc_array('item', $tools_meta, false);
 	$out .= an_create_tool_custom_fields('item', $tool_parameters);
 
-	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your site where you would like the listings to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="listings"]</textarea></p><p><small><b>Note:</b> Only one set of eBay listings can be loaded per page.</small></p>' . "\n";
-	$out .= '	</div>' . "\n";
-	
 	$out .= '</div>' . "\n";			
 
 	//Show Ad tool?
@@ -290,13 +290,13 @@ function an_create_custom_field_form() {
 	//Profile tool
 	$out .= '<div id="profile-tab" class="an-custom-field-tab" style="display:none">' . "\n";				
 
+	$out .= '	<div class="an-custom-field-help">' . "\n";
+	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
+	$out .= '		<p>Add the following Shortcode to your site where you would like the profile to appear:</p><p><textarea id="an-shortcode-profile">[' . an_get_config('shortcode') . ' tool="profile"]</textarea></p><p><small><b>Note:</b> Only one profile can be loaded per page.</small></p>' . "\n";
+
 	//Get stored post meta values
 	$tool_parameters = an_request_parameters_from_assoc_array('profile', $tools_meta, false);
 	$out .= an_create_tool_custom_fields('profile', $tool_parameters);
-
-	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your site where you would like the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="profile"]</textarea></p><p><small><b>Note:</b> Only one profile can be loaded per page.</small></p>' . "\n";
 
 	$out .= '	</div>' . "\n";
 
@@ -305,15 +305,15 @@ function an_create_custom_field_form() {
 	//Feedback tool
 	$out .= '<div id="feedback-tab" class="an-custom-field-tab" style="display:none">' . "\n";			
 
+	$out .= '	<div class="an-custom-field-help">' . "\n";
+	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
+	$out .= '		<p>Add the following Shortcode to your site where you would like the feedback to appear:</p><p><textarea id="an-shortcode-feedback">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea></p><p><small><b>Note:</b> Only one set of feedback can be loaded per page.</small></p>' . "\n";
+
+	$out .= '	</div>' . "\n";
+
 	//Get stored post meta values
 	$tool_parameters = an_request_parameters_from_assoc_array('feedback', $tools_meta, false);
 	$out .= an_create_tool_custom_fields('feedback', $tool_parameters);
-
-	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your site where you would like the profile to appear:</p><p><textarea rows="1">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea></p><p><small><b>Note:</b> Only one set of feedback can be loaded per page.</small></p>' . "\n";
-
-	$out .= '	</div>' . "\n";
 
 	$out .= '</div>' . "\n";			
 						
