@@ -23,8 +23,10 @@ a.an-tooltip {
 /* Meta Box */
 
 #an-custom-field-container {
-	max-width: 440px;
+// 	max-width: 440px;
 	min-height: 370px;
+	background: #fff;
+	padding: 15px;
 
 	/* Tool Tabs */
 
@@ -147,8 +149,23 @@ a.an-tooltip {
 	padding-right: 200px;
 	width: 600px;
 
-	#an-tab-container {
-		border: 1px solid red;
+	.nav-tab-wrapper {
+		position: relative;
+		border-bottom: none;
+		
+		.nav-tab-active {
+			position: relative;
+			bottom: -1px;
+			border-bottom: none;
+			background: #f7f7f7;			
+		}
+	}
+
+	#an-about,
+	#an-settings-tabs {
+		padding: 15px;
+		border: 1px solid #ccc;
+		background: #f7f7f7;
 	}
 
 	#an-about {
@@ -157,13 +174,11 @@ a.an-tooltip {
 		right: 0;
 		width: 150px;
 		height: 555px;
-		padding: 15px;
-		border: 1px solid #ccc;
-		background: #f7f7f7;
 
 		p {
 			margin-top: 0;
 		}
+		
 		img {
 			width: 60px;
 			height: 60px;
@@ -171,6 +186,7 @@ a.an-tooltip {
 			float: left;
 			border-radius: 50%;
 		}
+		
 		a.button {
 			margin-bottom: 5px;
 		}

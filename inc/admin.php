@@ -249,9 +249,7 @@ function an_create_custom_field_form() {
 	$out .= '<ul id="an-tab-links">' . "\n";
 	$out .= '	<li><a class="an-tab-link active" data-tab="listings-tab" href="#">Your eBay Listings</a></li>' . "\n";
 	//Show Ad tool?
-	if(an_get_option('an_ads_disable') == false) {
-		$out .= '	<li><a class="an-tab-link" data-tab="ads-tab" href="#">Your eBay Ads</a></li>' . "\n";
-	}
+// 		$out .= '	<li><a class="an-tab-link" data-tab="ads-tab" href="#">Your eBay Ads</a></li>' . "\n";
 	$out .= '	<li><a class="an-tab-link" data-tab="profile-tab" href="#">Your eBay Profile</a></li>' . "\n";
 	$out .= '	<li><a class="an-tab-link" data-tab="feedback-tab" href="#">Your eBay Feedback</a></li>' . "\n";	
 	$out .= '</ul>' . "\n";
@@ -260,8 +258,7 @@ function an_create_custom_field_form() {
 	$out .= '<div id="listings-tab" class="an-custom-field-tab">' . "\n";			
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your site where you would like the listings to appear:</p><p><textarea id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea></p><p><small><b>Note:</b> Only one set of eBay listings can be loaded per page.</small></p>' . "\n";
+	$out .= '		<textarea id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea>' . "\n";
 	$out .= '	</div>' . "\n";
 	
 	//Get stored post meta values
@@ -270,15 +267,9 @@ function an_create_custom_field_form() {
 
 	$out .= '</div>' . "\n";			
 
-	//Show Ad tool?
-	if(an_get_option('an_ads_disable') == false) {
-		//Ad tool
+	//Ad tool (hidden)
+	if(isset($post->ID) && an_get_option('an_ads_disable') == false) {
 		$out .= '<div id="ads-tab" class="an-custom-field-tab" style="display:none">' . "\n";			
-		$out .= '	<div class="an-custom-field-help">' . "\n";
-		$out .= '		<p><b>The Your eBay Ads tool is no longer recommended due to very poor conversion rates.</b> You should try the the <b>Your eBay Listings</b> tool instead. More information <a target="_blank" href="https://www.auctionnudge.com/changes#v3.8">here</a>.</p>' . "\n";
-		$out .= '		<p>Use these options to specify the type of ad to display within your page/post.</p><p>Add the following shortcode within your content editor to specify where the ad will appear:</p><p>[' . an_get_config('shortcode') . ' tool="ads"]</p><p><small><b>Note:</b> Only one type of eBay ad can be loaded within each content area.</small></p>' . "\n";
-		$out .= '	</div>' . "\n";
-		$out .= '	<h2>Your eBay Ads</h2>' . "\n";						
 
 		//Get stored post meta values
 		$tool_parameters = an_request_parameters_from_assoc_array('ad', $tools_meta, false);
@@ -291,14 +282,12 @@ function an_create_custom_field_form() {
 	$out .= '<div id="profile-tab" class="an-custom-field-tab" style="display:none">' . "\n";				
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your site where you would like the profile to appear:</p><p><textarea id="an-shortcode-profile">[' . an_get_config('shortcode') . ' tool="profile"]</textarea></p><p><small><b>Note:</b> Only one profile can be loaded per page.</small></p>' . "\n";
+	$out .= '		<textarea id="an-shortcode-profile">[' . an_get_config('shortcode') . ' tool="profile"]</textarea>' . "\n";
+	$out .= '	</div>' . "\n";
 
 	//Get stored post meta values
 	$tool_parameters = an_request_parameters_from_assoc_array('profile', $tools_meta, false);
 	$out .= an_create_tool_custom_fields('profile', $tool_parameters);
-
-	$out .= '	</div>' . "\n";
 
 	$out .= '</div>' . "\n";			
 
@@ -306,9 +295,7 @@ function an_create_custom_field_form() {
 	$out .= '<div id="feedback-tab" class="an-custom-field-tab" style="display:none">' . "\n";			
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a>' . "\n";
-	$out .= '		<p>Add the following Shortcode to your site where you would like the feedback to appear:</p><p><textarea id="an-shortcode-feedback">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea></p><p><small><b>Note:</b> Only one set of feedback can be loaded per page.</small></p>' . "\n";
-
+	$out .= '		<textarea id="an-shortcode-feedback">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea>' . "\n";
 	$out .= '	</div>' . "\n";
 
 	//Get stored post meta values
@@ -493,9 +480,9 @@ function an_options_page() {
 
 	echo '	<h1>' . an_get_config('plugin_name') . '</h1>' . "\n";
 	
-	echo '<p>To add Auction Nudge to your pages or posts, use the Auction Nudge box on the edit page. You can also add Auction Nudge to your theme as <a href="' . admin_url('widgets.php') . '">Widgets</a>. The Settings below can be used to specify some defaults and style rules, but are not required.</p>' . "\n";
+// 	echo '<p>To add Auction Nudge to your pages or posts, use the Auction Nudge box on the edit page. You can also add Auction Nudge to your theme as <a href="' . admin_url('widgets.php') . '">Widgets</a>. The Settings below can be used to specify some defaults and style rules, but are not required.</p>' . "\n";
 	
-	echo '<p>For more details on how to use the plugin, you can watch the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>.</p>' . "\n";
+// 	echo '<p>For more details on how to use the plugin, you can watch the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>.</p>' . "\n";
 	
 	//Tabs
 	$active_tab = (isset($_GET['tab'])) ? $_GET['tab'] : 'general';

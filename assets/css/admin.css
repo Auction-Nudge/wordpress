@@ -20,8 +20,9 @@ a.an-tooltip {
 }
 /* Meta Box */
 #an-custom-field-container {
-  max-width: 440px;
   min-height: 370px;
+  background: #fff;
+  padding: 15px;
   /* Tool Tabs */
   /* Help */
 }
@@ -130,8 +131,21 @@ a.an-tooltip {
   padding-right: 200px;
   width: 600px;
 }
-#an-options-container #an-tab-container {
-  border: 1px solid red;
+#an-options-container .nav-tab-wrapper {
+  position: relative;
+  border-bottom: none;
+}
+#an-options-container .nav-tab-wrapper .nav-tab-active {
+  position: relative;
+  bottom: -1px;
+  border-bottom: none;
+  background: #f7f7f7;
+}
+#an-options-container #an-about,
+#an-options-container #an-settings-tabs {
+  padding: 15px;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
 }
 #an-options-container #an-about {
   position: absolute;
@@ -139,9 +153,6 @@ a.an-tooltip {
   right: 0;
   width: 150px;
   height: 555px;
-  padding: 15px;
-  border: 1px solid #ccc;
-  background: #f7f7f7;
 }
 #an-options-container #an-about p {
   margin-top: 0;
