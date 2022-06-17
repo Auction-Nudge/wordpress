@@ -73,7 +73,6 @@ a.an-tooltip {
 }
 #an-custom-field-container fieldset.an-parameter-group,
 .an-widget-container fieldset.an-parameter-group {
-  width: 420px;
   margin: 10px 0 20px 0;
 }
 #an-custom-field-container fieldset.an-parameter-group legend,
