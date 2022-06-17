@@ -109,6 +109,11 @@ function an_create_tool_data(shortcode_data) {
 	}
 	
 	for(data_key in shortcode_data) {
+		//One-off
+		if(data_key == 'cats_output') {
+			data_key = 'item_' + data_key;
+		}
+	
 		switch(0) {
 			case data_key.indexOf('item_') :
 				tool_data['item'][data_key.replace('item_', '')] = shortcode_data[data_key];
