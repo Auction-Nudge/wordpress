@@ -490,11 +490,6 @@ function an_options_page() {
 		echo '		<form action="' . admin_url('options.php') . '" method="post">' . "\n";
 		settings_fields('an_options');
 	
-		//Preserve value
-		$an_settings = an_get_settings();	
-		$an_ads_disable = ($an_settings['an_ads_disable']) ? 1 : 0;
-		echo '		<input type="hidden" id="an_ads_disable" name="an_options[an_ads_disable]" value="' . $an_ads_disable . '" />';
-
 		//Propagate username change?
 		if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
 			an_propagate_username_change($an_settings['an_ebay_user']);
