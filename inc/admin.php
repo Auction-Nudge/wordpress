@@ -522,6 +522,10 @@ function an_options_page() {
 
 		echo '	</form>' . "\n";	
 // 			echo an_shortcode_parameters_help_table();
+
+		if(isset($_POST['item_siteid'])) {
+			echo an_build_snippet('item', $_POST);
+		}
 	
 	}
 
