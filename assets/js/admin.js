@@ -143,20 +143,23 @@ function an_build_shortcode(tool_key = 'item', tool_data = {}) {
 	return out;
 }
 
+function an_update_tool_snippets(tool_data = []) {
+	for(tool_key in tool_data) {
+		var shortcode = an_build_shortcode(tool_key, tool_data[tool_key]);
+		
+		jQuery('#an-shortcode-' + tool_key).html(shortcode);
+	}
+}
+
 function setup_settings_ui() {
 	var container = jQuery('body.settings_page_an_options_page #an-settings-tabs #an-custom-field-container');
 	
 	if(container.length) {
 		var default_data = [];
 		var shortcode_data = [];
-		
-		//Get inputs
-		var inputs = jQuery('input,select,radio', container);
-		
-		//Each
-		inputs.each(function() {
-			var input = jQuery(this);
+		var tool_data = {};
 
+		var an_update_shortcode = function(input) {
 			//Determine key
 			var data_key = input.attr('name');
 			if(data_key == 'cats_output' || data_key == 'search_box') {
@@ -165,44 +168,63 @@ function setup_settings_ui() {
 
 			default_data[data_key] = input.data('default').toString();
 
+			var input_value = input.val();
+			var input_type = input.prop('tagName').toUpperCase();
+	
+			//Booleans
+			if(input_type === 'INPUT' && input.attr('type') == 'radio') {
+				//Empty means '0'
+				if(input_value === '') {
+					input_value = '0';					
+				}
+			}
+			
+			//Compare
+			if(input_value != default_data[data_key]) {
+		// 	if(data_key == 'item_siteid') {
+		// 		console.log('default => ' + default_data[data_key]);
+		// 		console.log('input => ' + input_value);
+		// 	}
+	
+				//Update
+				shortcode_data[data_key] = input_value;
+			//Is default
+			} else {
+				//Remove
+				delete shortcode_data[data_key];				
+			}
+	
+			console.log(shortcode_data);
+	
+			//Update shortcode
+			//var textarea = jQuery('.an-custom-field-help textarea', input.parents('.an-custom-field-tab'));
+				
+			//Update snippet
+			tool_data = an_create_tool_data(shortcode_data);
+			an_update_tool_snippets(tool_data);		
+		};
+
+		//Get inputs
+		var inputs = jQuery('input,select,radio', container);
+
+		//Each
+		inputs.each(function() {
+			var input = jQuery(this);
+
 			//On change	
 			input.on('change', function() {
-				var new_value = input.val();
-				var input_type = input.prop('tagName').toUpperCase();
-				
-				//Booleans
-				if(input_type === 'INPUT' && input.attr('type') == 'radio') {
-					//Empty means '0'
-					if(new_value === '') {
-						new_value = '0';					
-					}
-				}
-						
-				//Compare
-				if(new_value != default_data[data_key]) {
-					console.log('Not default!');
-
-					//Update
-					shortcode_data[data_key] = new_value;
-				//Is default
-				} else {
-					//Remove
-					delete shortcode_data[data_key];				
-				}
-				
-				//Update shortcode
-				//var textarea = jQuery('.an-custom-field-help textarea', input.parents('.an-custom-field-tab'));
-				
-				var tool_data = an_create_tool_data(shortcode_data);
-				
-				for(tool_key in tool_data) {
-					var shortcode = an_build_shortcode(tool_key, tool_data[tool_key]);
-					jQuery('#an-shortcode-' + tool_key).html(shortcode);
-				}
+				an_update_shortcode(jQuery(this));
 			});
+			
+			//Initial
+			an_update_shortcode(input);
 		});
-
- 		console.log(default_data);
+		
+// 		setTimeout(function() {
+// 			inputs.each(function() {
+// 				jQuery(this).trigger('change');
+// 			});		
+// 		}, 500);
 	}
 }
 

@@ -231,17 +231,14 @@ function an_create_custom_fields_box() {
 /**
  * Create the custom field form
  */
-function an_create_custom_field_form() {	
+function an_create_custom_field_form($tools_meta = []) {	
 	global $post;
 
-	$tools_meta = [];
-	
 	//Do we have?
-	if(isset($post->ID)) {
+	if(! $tools_meta && isset($post->ID)) {
 		//Get meta for tools
 		$tools_meta = an_get_post_meta($post->ID);
 	}
-
 	
 	$out = '<div id="an-custom-field-container">' . "\n";
 	
@@ -484,7 +481,7 @@ function an_options_page() {
 
  	echo '	<div id="an-settings-tabs">' . "\n";
 	
-	//Form
+	//Settings
 	if(in_array($active_tab, ['legacy', 'general'])) {
 		//Open form
 		echo '		<form action="' . admin_url('options.php') . '" method="post">' . "\n";
@@ -513,12 +510,17 @@ function an_options_page() {
 		//Submit
 		echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
 	
-	
 		echo '	</form>' . "\n";	
-	//No Form
+	//Not Settings
 	} else {
-		echo an_create_custom_field_form();
+		echo '		<form action="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '" method="post">' . "\n";
+		
+		//Display form, propogated with any user submitted values
+		echo an_create_custom_field_form($_POST);
 
+		echo '		<input class="button button-primary" name="Preview" type="submit" value="Preview" />' . "\n";
+
+		echo '	</form>' . "\n";	
 // 			echo an_shortcode_parameters_help_table();
 	
 	}
