@@ -109,10 +109,10 @@ function an_create_tool_data(shortcode_data) {
 	}
 	
 	for(data_key in shortcode_data) {
-		//One-off
-		if(data_key == 'cats_output') {
-			data_key = 'item_' + data_key;
-		}
+		//These are not prefixed properly
+// 		if(data_key == 'cats_output' || data_key == 'search_box') {
+// 			data_key = 'item_' + data_key;
+// 		}
 	
 		switch(0) {
 			case data_key.indexOf('item_') :
@@ -162,14 +162,31 @@ function setup_settings_ui() {
 		inputs.each(function() {
 			var input = jQuery(this);
 
-			default_data[input.attr('name')] = input.data('default');
-			
+			default_data[input.attr('name')] = input.data('default').toString();
+
 			//On change	
 			input.on('change', function() {
+				var new_value = input.val();
+				var input_type = input.prop('tagName').toUpperCase();
+				
+				//Booleans
+				if(input_type === 'INPUT' && input.attr('type') == 'radio') {
+					//Empty means '0'
+					if(new_value === '') {
+						new_value = '0';					
+					}
+				}
+						
 				//Compare
-				if(input.val() !== default_data[input.attr('name')]) {
+				if(new_value != default_data[input.attr('name')]) {
+					console.log('Not default!');
+
 					//Update
-					shortcode_data[input.attr('name')] = input.val();
+					shortcode_data[input.attr('name')] = new_value;
+				//Is default
+				} else {
+					//Remove
+					delete shortcode_data[input.attr('name')];				
 				}
 				
 				//Update shortcode
@@ -184,7 +201,7 @@ function setup_settings_ui() {
 			});
 		});
 
-// 		console.log(default_data);
+ 		console.log(default_data);
 	}
 }
 
