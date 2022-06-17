@@ -235,7 +235,7 @@ function an_create_custom_field_form($tools_meta = []) {
 	global $post;
 
 	//Do we have?
-	if(! $tools_meta && isset($post->ID)) {
+	if(isset($post->ID)) {
 		//Get meta for tools
 		$tools_meta = an_get_post_meta($post->ID);
 	}

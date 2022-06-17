@@ -60,6 +60,7 @@ function an_create_input($field, $set_value) {
 	}
 	
 	switch($field['type']) {
+		case 'radio' :
 		case 'select' :
 			$out .= '		<select data-default="' . $field['default'] . '" name="' . $field['name'] . '" id="' . $field['id'] . '">' . "\n";
 			foreach($field['options'] as $value => $description) {
@@ -77,47 +78,9 @@ function an_create_input($field, $set_value) {
 				$out .= '>' . $description . '</option>' . "\n";
 			}
 			$out .= '		</select>' . "\n";
-			break;
-		case 'checkbox' :
-			//Value submitted?
-			$checked = false;
 
-			if($set_value && ($set_value == 'true' || $set_value == $field['value'])) {
-				$checked = true;
-			} elseif($field['default'] == 'true') {
-				$checked = true;								
-			}
-			$value = ($field['value']) ? $field['value'] : 'true';
-			$out .= '		<input data-default="' . $field['default'] . '" type="checkbox" name="' . $field['name'] . '" value="' . $value . '" id="' . $field['id'] . '"';
-			if($checked) {
-				$out .= ' checked="checked"';			
-			}
-			$out .= ' />' . "\n";			
 			break;
-		case 'radio' :
-			foreach($field['options'] as $value => $description) {
-				$checked = false;
 
-				//Always use strings
-				$value = (string)$value;
-				
-				//If we have a stored value
-				if($set_value === $value) {
-					$checked = true;
-				//Otherwise is this the default value?
-				} elseif($set_value === false && $value === $field['default']) {
-					$checked = true;
-				}
-				$out .= '<div class="radio">' . "\n";
-				$out .= '	<input data-default="' . $field['default'] . '" type="radio" name="' . $field['name'] . '" value="' . $value . '"';
-				if($checked) {
-					$out .= ' checked="checked"';			
-				}				
-				$out .= ' />' . "\n";						
-				$out .= $description . '<br />' . "\n";						
-				$out .= '</div>' . "\n";
-			}
-			break;						
 		case 'text' :
 		default :
 			$out .= '		<input data-default="' . $field['default'] . '" type="text" name="' . $field['name'] . '" id="' . $field['id'] . '"';
@@ -129,6 +92,7 @@ function an_create_input($field, $set_value) {
 				$out .= ' value="' . $field['default'] . '"';			
 			}
 			$out .= ' />' . "\n";
+
 			break;
 	}	
 	
