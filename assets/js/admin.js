@@ -109,11 +109,6 @@ function an_create_tool_data(shortcode_data) {
 	}
 	
 	for(data_key in shortcode_data) {
-		//These are not prefixed properly
-// 		if(data_key == 'cats_output' || data_key == 'search_box') {
-// 			data_key = 'item_' + data_key;
-// 		}
-	
 		switch(0) {
 			case data_key.indexOf('item_') :
 				tool_data['item'][data_key.replace('item_', '')] = shortcode_data[data_key];
@@ -162,7 +157,13 @@ function setup_settings_ui() {
 		inputs.each(function() {
 			var input = jQuery(this);
 
-			default_data[input.attr('name')] = input.data('default').toString();
+			//Determine key
+			var data_key = input.attr('name');
+			if(data_key == 'cats_output' || data_key == 'search_box') {
+				data_key = 'item_' + data_key;
+			}
+
+			default_data[data_key] = input.data('default').toString();
 
 			//On change	
 			input.on('change', function() {
@@ -178,15 +179,15 @@ function setup_settings_ui() {
 				}
 						
 				//Compare
-				if(new_value != default_data[input.attr('name')]) {
+				if(new_value != default_data[data_key]) {
 					console.log('Not default!');
 
 					//Update
-					shortcode_data[input.attr('name')] = new_value;
+					shortcode_data[data_key] = new_value;
 				//Is default
 				} else {
 					//Remove
-					delete shortcode_data[input.attr('name')];				
+					delete shortcode_data[data_key];				
 				}
 				
 				//Update shortcode
