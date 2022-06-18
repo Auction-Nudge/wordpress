@@ -59,7 +59,7 @@ a.an-tooltip {
   margin: 0 0 12px 0;
 }
 #an-custom-field-container .an-custom-field-help textarea {
-  width: 300px;
+  width: 100%;
 }
 #an-custom-field-container .an-custom-field-help a.button {
   float: right;
@@ -138,13 +138,15 @@ a.an-tooltip {
   position: relative;
   bottom: -1px;
   border-bottom: none;
-  background: #f7f7f7;
+  background: #fff;
 }
 #an-options-container #an-about,
 #an-options-container #an-settings-tabs {
   padding: 15px;
   border: 1px solid #ccc;
-  background: #f7f7f7;
+}
+#an-options-container #an-settings-tabs {
+  background: #fff;
 }
 #an-options-container #an-about {
   position: absolute;
@@ -152,6 +154,7 @@ a.an-tooltip {
   right: 0;
   width: 150px;
   height: 555px;
+  background: #f7f7f7;
 }
 #an-options-container #an-about p {
   margin-top: 0;

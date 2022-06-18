@@ -159,7 +159,7 @@ function an_shortcode_input_value(data_key, input) {
 }
 
 function an_setup_settings_ui() {
-	var container = jQuery('body.settings_page_an_options_page #an-settings-tabs #an-custom-field-container');
+	var container = jQuery('body.settings_page_an_options_page #an-custom-field-container');
 	
 	if(container.length) {
 		var default_data = [];
@@ -196,7 +196,7 @@ function an_setup_settings_ui() {
 		};
 
 		//Get inputs
-		var inputs = jQuery('input,select', container);
+		var inputs = jQuery('.controls input, .controls select', container);
 
 		//Each
 		inputs.each(function() {
@@ -233,13 +233,10 @@ jQuery(document).ready(function() {
 		an_show_theme_options(jQuery(this).val(), custom_field_parent);
 	});	
 		
-	jQuery('ul#an-tab-links li a').on('click', function(e) {
+	jQuery('select#an-tab-links').on('change', function(e) {
 		e.preventDefault();
 
-		jQuery('ul#an-tab-links li a').removeClass('active');
-		jQuery(this).addClass('active');
-		
-		var tab_show = jQuery(this).data('tab');
+		var tab_show = jQuery('option:selected', this).data('tab');
 		
 		//Hide all
 		jQuery('.an-custom-field-tab').hide();		

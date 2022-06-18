@@ -243,19 +243,17 @@ function an_create_custom_field_form($tools_meta = []) {
 	$out = '<div id="an-custom-field-container">' . "\n";
 	
 	//Tabs
-	$out .= '<ul id="an-tab-links">' . "\n";
-	$out .= '	<li><a class="an-tab-link active" data-tab="listings-tab" href="#">Your eBay Listings</a></li>' . "\n";
-	//Show Ad tool?
-// 		$out .= '	<li><a class="an-tab-link" data-tab="ads-tab" href="#">Your eBay Ads</a></li>' . "\n";
-	$out .= '	<li><a class="an-tab-link" data-tab="profile-tab" href="#">Your eBay Profile</a></li>' . "\n";
-	$out .= '	<li><a class="an-tab-link" data-tab="feedback-tab" href="#">Your eBay Feedback</a></li>' . "\n";	
-	$out .= '</ul>' . "\n";
+	$out .= '<select id="an-tab-links">' . "\n";
+	$out .= '	<option class="an-tab-link active" data-tab="listings-tab">Your eBay Listings</option>' . "\n";
+	$out .= '	<option class="an-tab-link" data-tab="profile-tab">Your eBay Profile</option>' . "\n";
+	$out .= '	<option class="an-tab-link" data-tab="feedback-tab">Your eBay Feedback</option>' . "\n";	
+	$out .= '</select>' . "\n";
 	
 	//Item tool
 	$out .= '<div id="listings-tab" class="an-custom-field-tab">' . "\n";			
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<textarea id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea>' . "\n";
+	$out .= '		<textarea readonly="readonly" id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea>' . "\n";
 	$out .= '	</div>' . "\n";
 	
 	//Get stored post meta values
@@ -279,7 +277,7 @@ function an_create_custom_field_form($tools_meta = []) {
 	$out .= '<div id="profile-tab" class="an-custom-field-tab" style="display:none">' . "\n";				
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<textarea id="an-shortcode-profile">[' . an_get_config('shortcode') . ' tool="profile"]</textarea>' . "\n";
+	$out .= '		<textarea readonly="readonly" id="an-shortcode-profile">[' . an_get_config('shortcode') . ' tool="profile"]</textarea>' . "\n";
 	$out .= '	</div>' . "\n";
 
 	//Get stored post meta values
@@ -292,7 +290,7 @@ function an_create_custom_field_form($tools_meta = []) {
 	$out .= '<div id="feedback-tab" class="an-custom-field-tab" style="display:none">' . "\n";			
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<textarea id="an-shortcode-feedback">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea>' . "\n";
+	$out .= '		<textarea readonly="readonly" id="an-shortcode-feedback">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea>' . "\n";
 	$out .= '	</div>' . "\n";
 
 	//Get stored post meta values
@@ -531,8 +529,8 @@ function an_options_page() {
  */
 function an_admin_tabs($current = 'general') {
   $tabs = array(
-  	'general' => 'General',
   	'shortcodes' => 'Shortcodes',
+  	'general' => 'Options',
   	'legacy' => 'Legacy'
   );
   $links = array();
