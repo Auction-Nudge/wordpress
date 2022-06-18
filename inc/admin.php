@@ -231,34 +231,29 @@ function an_create_custom_fields_box() {
 /**
  * Create the custom field form
  */
-function an_create_custom_field_form() {	
+function an_create_custom_field_form($tools_meta = []) {	
 	global $post;
 
-	$tools_meta = [];
-	
 	//Do we have?
 	if(isset($post->ID)) {
 		//Get meta for tools
 		$tools_meta = an_get_post_meta($post->ID);
 	}
-
 	
 	$out = '<div id="an-custom-field-container">' . "\n";
 	
 	//Tabs
-	$out .= '<ul id="an-tab-links">' . "\n";
-	$out .= '	<li><a class="an-tab-link active" data-tab="listings-tab" href="#">Your eBay Listings</a></li>' . "\n";
-	//Show Ad tool?
-// 		$out .= '	<li><a class="an-tab-link" data-tab="ads-tab" href="#">Your eBay Ads</a></li>' . "\n";
-	$out .= '	<li><a class="an-tab-link" data-tab="profile-tab" href="#">Your eBay Profile</a></li>' . "\n";
-	$out .= '	<li><a class="an-tab-link" data-tab="feedback-tab" href="#">Your eBay Feedback</a></li>' . "\n";	
-	$out .= '</ul>' . "\n";
+	$out .= '<select id="an-tab-links">' . "\n";
+	$out .= '	<option class="an-tab-link active" data-tab="listings-tab">Your eBay Listings</option>' . "\n";
+	$out .= '	<option class="an-tab-link" data-tab="profile-tab">Your eBay Profile</option>' . "\n";
+	$out .= '	<option class="an-tab-link" data-tab="feedback-tab">Your eBay Feedback</option>' . "\n";	
+	$out .= '</select>' . "\n";
 	
 	//Item tool
 	$out .= '<div id="listings-tab" class="an-custom-field-tab">' . "\n";			
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<textarea id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea>' . "\n";
+	$out .= '		<textarea readonly="readonly" id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea>' . "\n";
 	$out .= '	</div>' . "\n";
 	
 	//Get stored post meta values
@@ -282,7 +277,7 @@ function an_create_custom_field_form() {
 	$out .= '<div id="profile-tab" class="an-custom-field-tab" style="display:none">' . "\n";				
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<textarea id="an-shortcode-profile">[' . an_get_config('shortcode') . ' tool="profile"]</textarea>' . "\n";
+	$out .= '		<textarea readonly="readonly" id="an-shortcode-profile">[' . an_get_config('shortcode') . ' tool="profile"]</textarea>' . "\n";
 	$out .= '	</div>' . "\n";
 
 	//Get stored post meta values
@@ -295,7 +290,7 @@ function an_create_custom_field_form() {
 	$out .= '<div id="feedback-tab" class="an-custom-field-tab" style="display:none">' . "\n";			
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<textarea id="an-shortcode-feedback">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea>' . "\n";
+	$out .= '		<textarea readonly="readonly" id="an-shortcode-feedback">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea>' . "\n";
 	$out .= '	</div>' . "\n";
 
 	//Get stored post meta values
@@ -357,19 +352,8 @@ function an_create_tool_custom_fields($tool_key, $tool_params, $field_name_forma
 		//Update field names
 		$field['name'] = sprintf($field_name_format, $field['name']);
 		
-		//Defaults...
-
 		//Do we have a default?
-		if(array_key_exists('default', $field)) {
-			//Do we need to maintain old defaults?
-			//This is used when a parameter is added/updated and the default is changed,
-			//but we don't want to force existing users to use it
-			//...
-			//If tool has existing data and there is an old default value
-			if((sizeof($tool_params) && array_key_exists($tool_key . '_siteid', $tool_params)) && array_key_exists('default_old', $field)) {
-				//Set the old default
-				$field['default'] = $field['default_old'];
-			}			
+		if(array_key_exists('default', $field)) {	
 		//No default
 		} else {
 			$field['default'] = false;		
@@ -484,17 +468,12 @@ function an_options_page() {
 
  	echo '	<div id="an-settings-tabs">' . "\n";
 	
-	//Form
+	//Settings
 	if(in_array($active_tab, ['legacy', 'general'])) {
 		//Open form
 		echo '		<form action="' . admin_url('options.php') . '" method="post">' . "\n";
 		settings_fields('an_options');
 	
-		//Preserve value
-		$an_settings = an_get_settings();	
-		$an_ads_disable = ($an_settings['an_ads_disable']) ? 1 : 0;
-		echo '		<input type="hidden" id="an_ads_disable" name="an_options[an_ads_disable]" value="' . $an_ads_disable . '" />';
-
 		//Propagate username change?
 		if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
 			an_propagate_username_change($an_settings['an_ebay_user']);
@@ -518,13 +497,22 @@ function an_options_page() {
 		//Submit
 		echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
 	
-	
 		echo '	</form>' . "\n";	
-	//No Form
+	//Not Settings
 	} else {
-		echo an_create_custom_field_form();
+		echo '		<form action="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '" method="post">' . "\n";
+		
+		//Display form, propogated with any user submitted values
+		echo an_create_custom_field_form($_POST);
 
+		echo '		<input class="button button-primary" name="Preview" type="submit" value="Preview" />' . "\n";
+
+		echo '	</form>' . "\n";	
 // 			echo an_shortcode_parameters_help_table();
+
+		if(isset($_POST['item_siteid'])) {
+			echo an_build_snippet('item', $_POST);
+		}
 	
 	}
 
@@ -541,8 +529,8 @@ function an_options_page() {
  */
 function an_admin_tabs($current = 'general') {
   $tabs = array(
-  	'general' => 'General',
   	'shortcodes' => 'Shortcodes',
+  	'general' => 'Options',
   	'legacy' => 'Legacy'
   );
   $links = array();

@@ -39,6 +39,10 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name){
 	$request_parameters = shortcode_atts($request_parameters, $shortcode_attrs);
 
 	//Get snippet
+	if($tool_key == 'item' && sizeof($shortcode_attrs)) {
+		$request_parameters['target'] = substr(md5(json_encode($shortcode_attrs)), 0, 9);
+	}
+	
 	$out = an_build_snippet($tool_key, $request_parameters);
 	
 	return $out;
@@ -54,10 +58,6 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 	
 	//Build unique hash for this request
 	$request_hash = substr(md5(json_encode($request_parameters)), 0, 9);
-	if($tool_key == 'item') {
-		//Add to URL
-		$request_parameters['target'] = $request_hash; 
-	}
 	
 	//Profile JS or iframe?
 	$profile_is_framed = array_key_exists('profile_theme', $request_parameters) && $request_parameters['profile_theme'] == 'overview';
@@ -133,8 +133,12 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 			//Enqueue
 			wp_enqueue_script($request_hash, $request_url, array(), an_get_config('plugin_version'), true);
 			
-			return '<div id="auction-nudge-' . $request_hash . '">&nbsp;</div>';
-					
+			if(isset($request_parameters['target']) && is_string($request_parameters['target'])) {
+				return '<div id="auction-nudge-' . $request_parameters['target'] . '">&nbsp;</div>';
+			} else {
+				return '<div id="auction-nudge-items">&nbsp;</div>';			
+			}
+							
 			break;
 	}
 }

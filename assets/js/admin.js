@@ -143,20 +143,30 @@ function an_build_shortcode(tool_key = 'item', tool_data = {}) {
 	return out;
 }
 
-function setup_settings_ui() {
-	var container = jQuery('body.settings_page_an_options_page #an-settings-tabs #an-custom-field-container');
+function an_update_tool_snippets(tool_data = []) {
+	for(tool_key in tool_data) {
+		var shortcode = an_build_shortcode(tool_key, tool_data[tool_key]);
+		
+		jQuery('#an-shortcode-' + tool_key).html(shortcode);
+	}
+}
+
+function an_shortcode_input_value(data_key, input) {
+	var value = input.val();
+	var input_type = input.prop('tagName').toUpperCase();
+	
+	return value;
+}
+
+function an_setup_settings_ui() {
+	var container = jQuery('body.settings_page_an_options_page #an-custom-field-container');
 	
 	if(container.length) {
 		var default_data = [];
 		var shortcode_data = [];
-		
-		//Get inputs
-		var inputs = jQuery('input,select,radio', container);
-		
-		//Each
-		inputs.each(function() {
-			var input = jQuery(this);
+		var tool_data = {};
 
+		var update_shortcode = function(input) {
 			//Determine key
 			var data_key = input.attr('name');
 			if(data_key == 'cats_output' || data_key == 'search_box') {
@@ -165,51 +175,57 @@ function setup_settings_ui() {
 
 			default_data[data_key] = input.data('default').toString();
 
+			var input_value = an_shortcode_input_value(data_key, input);
+
+			//Compare
+			if(input_value != default_data[data_key]) {
+				//Update
+				shortcode_data[data_key] = input_value;
+			//Is default
+			} else {
+				//Remove
+				delete shortcode_data[data_key];				
+			}
+	
+			//Update shortcode
+			//var textarea = jQuery('.an-custom-field-help textarea', input.parents('.an-custom-field-tab'));
+				
+			//Update snippet
+			tool_data = an_create_tool_data(shortcode_data);
+			an_update_tool_snippets(tool_data);		
+		};
+
+		//Get inputs
+		var inputs = jQuery('.controls input, .controls select', container);
+
+		//Each
+		inputs.each(function() {
+			var input = jQuery(this);
+
+// 			console.log(input.attr('name') + ' input => ' + input.val());
+
+
 			//On change	
 			input.on('change', function() {
-				var new_value = input.val();
-				var input_type = input.prop('tagName').toUpperCase();
-				
-				//Booleans
-				if(input_type === 'INPUT' && input.attr('type') == 'radio') {
-					//Empty means '0'
-					if(new_value === '') {
-						new_value = '0';					
-					}
-				}
-						
-				//Compare
-				if(new_value != default_data[data_key]) {
-					console.log('Not default!');
-
-					//Update
-					shortcode_data[data_key] = new_value;
-				//Is default
-				} else {
-					//Remove
-					delete shortcode_data[data_key];				
-				}
-				
-				//Update shortcode
-				//var textarea = jQuery('.an-custom-field-help textarea', input.parents('.an-custom-field-tab'));
-				
-				var tool_data = an_create_tool_data(shortcode_data);
-				
-				for(tool_key in tool_data) {
-					var shortcode = an_build_shortcode(tool_key, tool_data[tool_key]);
-					jQuery('#an-shortcode-' + tool_key).html(shortcode);
-				}
+				update_shortcode(jQuery(this));
 			});
+			
+			//Initial
+			update_shortcode(input);
 		});
-
- 		console.log(default_data);
+		
+// 		setTimeout(function() {
+// 			inputs.each(function() {
+// 				jQuery(this).trigger('change');
+// 			});		
+// 		}, 500);
 	}
 }
 
 jQuery(document).ready(function() {
 	setup_parameter_groups();
 	setup_widget_theme_dropdown();
-	setup_settings_ui();
+	an_setup_settings_ui();
 	
 	var custom_field_parent = jQuery('#listings-tab');
 	an_show_theme_options(jQuery('#theme').val(), custom_field_parent);
@@ -217,13 +233,10 @@ jQuery(document).ready(function() {
 		an_show_theme_options(jQuery(this).val(), custom_field_parent);
 	});	
 		
-	jQuery('ul#an-tab-links li a').on('click', function(e) {
+	jQuery('select#an-tab-links').on('change', function(e) {
 		e.preventDefault();
 
-		jQuery('ul#an-tab-links li a').removeClass('active');
-		jQuery(this).addClass('active');
-		
-		var tab_show = jQuery(this).data('tab');
+		var tab_show = jQuery('option:selected', this).data('tab');
 		
 		//Hide all
 		jQuery('.an-custom-field-tab').hide();		
