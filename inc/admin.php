@@ -354,19 +354,8 @@ function an_create_tool_custom_fields($tool_key, $tool_params, $field_name_forma
 		//Update field names
 		$field['name'] = sprintf($field_name_format, $field['name']);
 		
-		//Defaults...
-
 		//Do we have a default?
-		if(array_key_exists('default', $field)) {
-			//Do we need to maintain old defaults?
-			//This is used when a parameter is added/updated and the default is changed,
-			//but we don't want to force existing users to use it
-			//...
-			//If tool has existing data and there is an old default value
-			if((sizeof($tool_params) && array_key_exists($tool_key . '_siteid', $tool_params)) && array_key_exists('default_old', $field)) {
-				//Set the old default
-				$field['default'] = $field['default_old'];
-			}			
+		if(array_key_exists('default', $field)) {	
 		//No default
 		} else {
 			$field['default'] = false;		

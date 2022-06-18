@@ -68,14 +68,6 @@ function an_request_parameters_from_assoc_array($tool_key, $assoc_array, $do_out
 				
 			//Set it
 			$request_parameters[$param_name] = $param_value;									
-		//Is there a non-blank old default value for this parameter?
-		//This is used when a new option is added for a parameter and has a different default
-		//than the old value and ensures the new default isn't forced
-		//...
-		//If tool has data and there is an old default
-		} elseif((sizeof($assoc_array) && array_key_exists($tool_key . '_siteid', $assoc_array)) && array_key_exists('default_old', $param_defition) && $param_defition['default_old'] != '') {
-			//Use old default
-			$request_parameters[$param_name] = $param_defition['default_old'];					
 		}
 	}	
 
