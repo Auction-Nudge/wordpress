@@ -503,15 +503,16 @@ function an_options_page() {
 		echo '		<form action="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '" method="post">' . "\n";
 		
 		//Display form, propogated with any user submitted values
-		echo an_create_custom_field_form($_POST);
+		$request_params = an_request_parameters_from_assoc_array('item', $_POST);
+		echo an_create_custom_field_form($request_params);
 
 		echo '		<input class="button button-primary" name="Preview" type="submit" value="Preview" />' . "\n";
 
 		echo '	</form>' . "\n";	
 // 			echo an_shortcode_parameters_help_table();
 
-		if(isset($_POST['item_siteid'])) {
-			echo an_build_snippet('item', $_POST);
+		if(isset($request_params['item_siteid'])) {
+			echo an_build_snippet('item', $request_params);
 		}
 	
 	}
