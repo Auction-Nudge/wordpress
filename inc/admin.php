@@ -541,7 +541,7 @@ function an_options_page() {
 		if(sizeof($request_params)) {
 			echo '		<div id="an-shortcode-preview" class="an-tab-right">' . "\n";
 
-			echo '			<div id="an-shortcode-' . $tool_key . '">' . "\n";
+			echo '			<div class="an-shortcode-container" id="an-shortcode-' . $tool_key . '">' . "\n";
 			echo an_build_shortcode($tool_key, $request_params);
 			echo '			</div>' . "\n";
 			
