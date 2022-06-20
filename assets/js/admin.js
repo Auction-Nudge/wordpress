@@ -132,6 +132,7 @@ function an_create_tool_data(shortcode_data) {
 }
 
 function an_build_shortcode(tool_key = 'item', tool_data = {}) {
+	//Legacy
 	tool_key = (tool_key == 'item') ? 'listings' : tool_key;
 	
 	var out = '[auction-nudge tool="' + tool_key + '"';

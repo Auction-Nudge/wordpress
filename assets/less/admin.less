@@ -5,7 +5,6 @@ a.an-tooltip {
 	padding: 0 5px;
 	text-decoration: none;
 	cursor: help;
-	background: #F9F9F9;
 	color: #444;
 	border: 1px solid #DDDDDD;
 	border-radius: 50%;
@@ -61,9 +60,9 @@ a.an-tooltip {
 	
 	.an-custom-field-help {
 		margin: 20px 0 0 0;
-		padding: 10px;
-		border: 1px solid #DDDDDD;
-		background: #F9F9F9;
+// 		padding: 10px;
+// 		border: 1px solid #DDDDDD;
+// 		background: #F9F9F9;
 		 p {
 			margin: 0 0 12px 0;
 		}
@@ -161,21 +160,26 @@ a.an-tooltip {
 		}
 	}
 
-	#an-about,
-	#an-settings-tabs {
-		padding: 15px 0;
-		border: 1px solid #ccc;
-	}
-	
 	#an-settings-tabs {
 		background: #fff;
+		border: 1px solid #ccc;
+
+		.an-tab-left {
+			width: 31%;
+			float: left;	
+			padding: 1%;								
+		}		
+		.an-tab-right {
+			width: 65%;
+			float: left;
+			padding: 1%;	
+			background: #f7f7f7;				
+		}
+
+		//Shortcode Form
 		form#an-shortcode-form {
-			max-width: 27%;
-			float: left;		
 			#an-custom-field-container {
-				padding: 15px;
-				padding-right: 25px;
-				border-right: 1px solid #ccc;			
+				background: transparent;
 				.control-group {
 					width: unset;
 					.control-label {
@@ -188,40 +192,28 @@ a.an-tooltip {
 				margin-left: 15px;
 			}
 		}
-
-		#an-shortcode-preview {
-			float: left;
-			width: 69%;
-			padding-left: 2%;
-			padding-right: 2%;
+		
+		//Plugin about
+		#an-about {
+			min-height: 555px;
+			p {
+				margin-top: 0;
+			}
+		
+			img {
+				width: 60px;
+				height: 60px;
+				margin-right: 7px;
+				float: left;
+				border-radius: 50%;
+			}
+		
+			a.button {
+				margin-bottom: 5px;
+			}
 		}		
 	}
 
-	#an-about {
-		position: absolute;
-		top: 0;
-		right: 0;
-		width: 150px;
-		height: 555px;
-		background: #f7f7f7;
-
-		p {
-			margin-top: 0;
-		}
-		
-		img {
-			width: 60px;
-			height: 60px;
-			margin-right: 7px;
-			float: left;
-			border-radius: 50%;
-		}
-		
-		a.button {
-			margin-bottom: 5px;
-		}
-	}
-	
 	th[scope="row"] {
 		width: 170px;
 	}

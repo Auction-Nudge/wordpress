@@ -38,9 +38,18 @@ function an_update_parameter_defaults() {
 /**
  * Build request parameters array from post meta
  */
-function an_request_parameters_from_assoc_array($tool_key, $assoc_array, $do_output_processing = true, $is_prefixed = true) {
+function an_request_parameters_from_assoc_array($tool_key, $assoc_array, $do_output_processing = true, $is_prefixed = true, $extra_allow = []) {
 	$request_parameters = array();	
-	
+
+	//Allow some extra parameters
+	if(is_array($extra_allow)) {
+		foreach($extra_allow as $allow_key) {
+			if(array_key_exists($allow_key, $assoc_array)) {
+				$request_parameters[$allow_key] = $assoc_array[$allow_key];
+			}		
+		}
+	}
+
 	//Iterate over each parameter for the tool
 	foreach(an_get_config($tool_key . '_parameters') as $param_defition) {
 		//Param name (is the name prefixed?)

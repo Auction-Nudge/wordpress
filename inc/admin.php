@@ -229,13 +229,13 @@ function an_create_custom_fields_box() {
 }
 
 function an_create_custom_field_callback($tools_meta) {
-	echo an_create_custom_field_form($tools_meta);
+	echo an_create_custom_field_form($tools_meta, 'item', true);	//Show Help
 }
 
 /**
  * Create the custom field form
  */
-function an_create_custom_field_form($tools_meta = [], $inital_tool = 'item') {	
+function an_create_custom_field_form($tools_meta = [], $inital_tool = 'item', $show_shortcode = false) {	
 	global $post;
 
 	//Do we have?
@@ -246,7 +246,7 @@ function an_create_custom_field_form($tools_meta = [], $inital_tool = 'item') {
 	
 	$out = '<div id="an-custom-field-container">' . "\n";
 	
-	//Tabs
+	// == Tabs ==
 	$out .= '<select name="tool_key" id="an-tab-links">' . "\n";
 	
 	$selected = ($inital_tool == 'item') ? ' selected="selected"' : '';
@@ -259,21 +259,24 @@ function an_create_custom_field_form($tools_meta = [], $inital_tool = 'item') {
 	$out .= '	<option' . $selected . ' value="feedback" class="an-tab-link" data-tab="feedback-tab">Your eBay Feedback</option>' . "\n";	
 	$out .= '</select>' . "\n";
 	
-	//Item tool
+	// == Item tool ==
+
 	$style = ($inital_tool == 'item') ? '' : ' style="display:none"';
 	$out .= '<div' . $style . ' id="listings-tab" class="an-custom-field-tab">' . "\n";			
-
-	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<textarea readonly="readonly" id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea>' . "\n";
-	$out .= '	</div>' . "\n";
 	
 	//Get stored post meta values
 	$tool_parameters = an_request_parameters_from_assoc_array('item', $tools_meta, false);
 	$out .= an_create_tool_custom_fields('item', $tool_parameters);
 
+	//Output Shortcode
+	if($show_shortcode) {
+		$out .= an_build_shortcode('item');
+	}
+
 	$out .= '</div>' . "\n";			
 
-	//Ad tool (hidden)
+	// == Ad tool (Legacy) ==
+
 	if(isset($post->ID) && an_get_option('an_ads_disable') == false) {
 		$out .= '<div id="ads-tab" class="an-custom-field-tab" style="display:none">' . "\n";			
 
@@ -284,31 +287,35 @@ function an_create_custom_field_form($tools_meta = [], $inital_tool = 'item') {
 		$out .= '</div>' . "\n";		
 	}
 			
-	//Profile tool
+	// == Profile tool ==
+
 	$style = ($inital_tool == 'profile') ? '' : ' style="display:none"';
 	$out .= '<div' . $style . ' id="profile-tab" class="an-custom-field-tab">' . "\n";				
-
-	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<textarea readonly="readonly" id="an-shortcode-profile">[' . an_get_config('shortcode') . ' tool="profile"]</textarea>' . "\n";
-	$out .= '	</div>' . "\n";
 
 	//Get stored post meta values
 	$tool_parameters = an_request_parameters_from_assoc_array('profile', $tools_meta, false);
 	$out .= an_create_tool_custom_fields('profile', $tool_parameters);
 
+	//Output Shortcode
+	if($show_shortcode) {
+		$out .= an_build_shortcode('profile');
+	}
+
 	$out .= '</div>' . "\n";			
 
-	//Feedback tool
+	// == Feedback tool ==
+	
 	$style = ($inital_tool == 'feedback') ? '' : ' style="display:none"';
 	$out .= '<div' . $style . ' id="feedback-tab" class="an-custom-field-tab">' . "\n";			
-
-	$out .= '	<div class="an-custom-field-help">' . "\n";
-	$out .= '		<textarea readonly="readonly" id="an-shortcode-feedback">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea>' . "\n";
-	$out .= '	</div>' . "\n";
 
 	//Get stored post meta values
 	$tool_parameters = an_request_parameters_from_assoc_array('feedback', $tools_meta, false);
 	$out .= an_create_tool_custom_fields('feedback', $tool_parameters);
+
+	//Output Shortcode
+	if($show_shortcode) {
+		$out .= an_build_shortcode('feedback');
+	}
 
 	$out .= '</div>' . "\n";			
 						
@@ -461,18 +468,6 @@ add_action('admin_menu', 'an_admin_page');
 function an_options_page() {
 	echo '<div id="an-options-container">' . "\n";
 
-// 	echo '	<div id="an-about">' . "\n";	
-// 	echo '		<img width="60" height="60" alt="Joe\'s mug" src="http://www.josephhawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";		
-// 	echo '		<p><b>Hi, I\'m Joe and I created this plugin.</b></p>' . "\n";		
-// 	echo '		<p>I highly recommend watching the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a> on how to use the plugin.</p>' . "\n";	
-// 	echo '		<p>Most common issues are solved by reading the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Help</a> section. Bugs and errors can be reported <a target="_blank" href="https://www.auctionnudge.com/issues">here</a>. Please do this before leaving a poor review.</p>' . "\n";	
-// 	echo '		<p>If you like the plugin, please show your appreciation by <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">leaving a rating</a>. It really does help.</p>' . "\n";		
-// 	echo '		<p><b>Thanks!</b></p>' . "\n";		
-// 	echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>' . "\n";
-// 	echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Plugin Help</a>' . "\n";
-// 	echo '		<a class="button button-primary" target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">Rate the plugin <span class="dashicons dashicons-smiley" style="font-size:20px;padding-top:1px"></span></a>' . "\n";
-// 	echo '	</div>' . "\n";
-
 	echo '	<h1>' . an_get_config('plugin_name') . '</h1>' . "\n";
 
 	//Tabs
@@ -484,7 +479,7 @@ function an_options_page() {
 	//Settings
 	if(in_array($active_tab, ['legacy', 'general'])) {
 		//Open form
-		echo '		<form action="' . admin_url('options.php') . '" method="post">' . "\n";
+		echo '		<form class="an-tab-left" action="' . admin_url('options.php') . '" method="post">' . "\n";
 		settings_fields('an_options');
 	
 		//Propagate username change?
@@ -509,14 +504,26 @@ function an_options_page() {
 
 		//Submit
 		echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
-	
 		echo '	</form>' . "\n";	
+
+		echo '	<div class="an-tab-right" id="an-about">' . "\n";	
+		echo '		<img width="60" height="60" alt="Joe\'s mug" src="http://www.josephhawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";		
+		echo '		<p><b>Hi, I\'m Joe and I created this plugin.</b></p>' . "\n";		
+		echo '		<p>I highly recommend watching the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a> on how to use the plugin.</p>' . "\n";	
+		echo '		<p>Most common issues are solved by reading the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Help</a> section. Bugs and errors can be reported <a target="_blank" href="https://www.auctionnudge.com/issues">here</a>. Please do this before leaving a poor review.</p>' . "\n";	
+		echo '		<p>If you like the plugin, please show your appreciation by <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">leaving a rating</a>. It really does help.</p>' . "\n";		
+		echo '		<p><b>Thanks!</b></p>' . "\n";		
+		echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>' . "\n";
+		echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Plugin Help</a>' . "\n";
+		echo '		<a class="button button-primary" target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">Rate the plugin <span class="dashicons dashicons-smiley" style="font-size:20px;padding-top:1px"></span></a>' . "\n";
+		echo '	</div>' . "\n";
+
 	//Not Settings
 	} else {
 		$tab_url = 'options-general.php?page=an_options_page&tab=shortcodes';
 
 		//Start Preview Form
-		echo '		<form id="an-shortcode-form" action="' . admin_url($tab_url) . '" method="post">' . "\n";
+		echo '		<form id="an-shortcode-form" class="an-tab-left" action="' . admin_url($tab_url) . '" method="post">' . "\n";
 		
 		//Get tool key
 		$tool_key = (isset($_POST['tool_key'])) ? $_POST['tool_key'] : 'item';
@@ -526,17 +533,17 @@ function an_options_page() {
 		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
 
 		echo '	</form>' . "\n";	
-	}
 
-	//Parse for Preview request
-	$request_params = an_request_parameters_from_assoc_array($tool_key, $_POST);
-	if(sizeof($request_params)) {
-		echo '		<div id="an-shortcode-preview">' . "\n";
+		//Parse for Preview request
+		$request_params = an_request_parameters_from_assoc_array($tool_key, $_POST);
+		if(sizeof($request_params)) {
+			echo '		<div id="an-shortcode-preview" class="an-tab-right">' . "\n";
 
-		//Preview
-		echo an_build_snippet($tool_key, $request_params);
+			//Preview
+			echo an_build_snippet($tool_key, $request_params);
 
-		echo '		</div>' . "\n";
+			echo '		</div>' . "\n";
+		}
 	}
 
 	echo '		<div class="clear"></div>' . "\n";
