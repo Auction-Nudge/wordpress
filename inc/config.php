@@ -11,6 +11,7 @@ $an_plugin_config = array(
 	'plugin_version' => '6.2.3',
 	'custom_field_prefix' => 'an',
 	'shortcode' => 'auction-nudge',
+	'tool_keys' => ['item', 'ad', 'profile', 'feedback'],
 	'username_bad' => array('.', "\$", '!', '*'),
 	'username_good' => array('__dot__', '__dollar__', '__bang__', '__star__'),					
 	//Requests
@@ -135,7 +136,6 @@ $an_plugin_config = array(
 				'' => 'None'
 			),
 			'default' => 'dropdown',
-			'default_old' => '',
 			'group' => 'display',
 			'title' => 'Category List'
 		),
@@ -158,7 +158,6 @@ $an_plugin_config = array(
 			'group' => 'display',
 			'title' => 'Show Multiple Pages?',
 			'default' => 'init',
-			'default_old' => '',			
 			'options' => array(
 				'init' => 'Yes',
 				'' => 'No'
@@ -173,7 +172,6 @@ $an_plugin_config = array(
 			'group' => 'display',
 			'title' => 'Show Search Box?',
 			'default' => '1',
-			'default_old' => '0',			
 			'options' => array(
 				'1' => 'Yes',
 				'0' => 'No'
@@ -268,7 +266,6 @@ $an_plugin_config = array(
 			'group' => 'display',
 			'title' => 'Image Size',
 			'default' => '120',
-			'default_old' => '',
 			'input_processing' => array(
 				'preg_replace("/[^0-9]/", "", $param_value);'
 			)			
@@ -603,7 +600,6 @@ $an_plugin_config = array(
 				'table' => 'Basic table'
 			),
 			'default' => 'profile_table',
-			'default_old' => 'table',
 			'title' => 'Theme'
 		),		
 		'feedback_lang' => array(
