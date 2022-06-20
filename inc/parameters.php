@@ -38,9 +38,18 @@ function an_update_parameter_defaults() {
 /**
  * Build request parameters array from post meta
  */
-function an_request_parameters_from_assoc_array($tool_key, $assoc_array, $do_output_processing = true, $is_prefixed = true) {
+function an_request_parameters_from_assoc_array($tool_key, $assoc_array, $do_output_processing = true, $is_prefixed = true, $extra_allow = []) {
 	$request_parameters = array();	
-	
+
+	//Allow some extra parameters
+	if(is_array($extra_allow)) {
+		foreach($extra_allow as $allow_key) {
+			if(array_key_exists($allow_key, $assoc_array)) {
+				$request_parameters[$allow_key] = $assoc_array[$allow_key];
+			}		
+		}
+	}
+
 	//Iterate over each parameter for the tool
 	foreach(an_get_config($tool_key . '_parameters') as $param_defition) {
 		//Param name (is the name prefixed?)
@@ -181,7 +190,7 @@ function an_update_widget_instance($tool_key, $instance_in) {
  *
  *
  */
-function an_request_parameters_defaults($tool_key) {
+function an_request_parameters_defaults($tool_key, $process_output = false) {
 	$parameters_defaults = array();	
 	$an_settings = an_get_settings();
 	
@@ -196,9 +205,20 @@ function an_request_parameters_defaults($tool_key) {
 //  		$param_name = strtolower($param_name);
 		
 		//Is there a default?
-		$param_default = (isset($param_defition['default'])) ? $param_defition['default'] : '';
-
-		$parameters_defaults[$param_name] = $param_default;
+		$param_value = '';
+		
+		if(isset($param_defition['default'])) {
+			$param_value = $param_defition['default'];
+			
+			//Process output?	
+			if($process_output && isset($param_defition['output_processing']) && is_array($param_defition['output_processing'])) {
+				foreach($param_defition['output_processing'] as $process) {
+					eval("\$param_value = $process;");						
+				}		
+			}
+					
+			$parameters_defaults[$param_name] = $param_value;
+		}
 		
 		switch($param_name) {
 			case 'sellerid' :

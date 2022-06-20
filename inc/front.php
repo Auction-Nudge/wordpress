@@ -34,15 +34,14 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name){
 	$meta_parameters = an_request_parameters_from_assoc_array($tool_key, $meta_parameters);
 	$request_parameters = shortcode_atts($request_parameters, $meta_parameters);
 
-	// 3 - Shortcode attribtues
+	// 3 - Shortcode attribtues (Item tool only)
 	$shortcode_attrs = an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_attrs);
-	$request_parameters = shortcode_atts($request_parameters, $shortcode_attrs);
-
-	//Get snippet
 	if($tool_key == 'item' && sizeof($shortcode_attrs)) {
-		$request_parameters['target'] = substr(md5(json_encode($shortcode_attrs)), 0, 9);
+		$request_parameters['item_target'] = substr(md5(json_encode($shortcode_attrs)), 0, 9);
+
+		$request_parameters = shortcode_atts($request_parameters, $shortcode_attrs);
 	}
-	
+
 	$out = an_build_snippet($tool_key, $request_parameters);
 	
 	return $out;
@@ -85,7 +84,7 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 		$request_config = an_get_config($tool_key . '_request');
 		
 		//Process request parameters
-		$request_parameters = an_request_parameters_from_assoc_array($tool_key, $request_parameters, true, true);
+		$request_parameters = an_request_parameters_from_assoc_array($tool_key, $request_parameters, true, true, ['item_target']);
 
 		//Modify request config
 		$request_config = an_modify_request_config($request_config, $tool_key, $request_parameters);
@@ -133,8 +132,8 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 			//Enqueue
 			wp_enqueue_script($request_hash, $request_url, array(), an_get_config('plugin_version'), true);
 			
-			if(isset($request_parameters['target']) && is_string($request_parameters['target'])) {
-				return '<div id="auction-nudge-' . $request_parameters['target'] . '">&nbsp;</div>';
+			if(isset($request_parameters['item_target']) && is_string($request_parameters['item_target'])) {
+				return '<div id="auction-nudge-' . $request_parameters['item_target'] . '">&nbsp;</div>';
 			} else {
 				return '<div id="auction-nudge-items">&nbsp;</div>';			
 			}
