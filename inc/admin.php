@@ -605,6 +605,8 @@ function an_admin_tabs($current = 'general') {
 function an_admin_settings(){
 	//Permissions
 	if(current_user_can('manage_options')) {
+		$an_settings = an_get_settings();
+
 		register_setting('an_options', 'an_options', 'an_options_validate');
 
 		//General...
@@ -620,22 +622,31 @@ function an_admin_settings(){
 
 		
 		//Legacy...
+		//Only display each if value exists
 
-		//CSS
-		add_settings_section('an_css', 'Your CSS Rules', 'an_css_text', 'an_legacy');
-		add_settings_field('an_css_rules', 'Insert CSS Rules', 'an_css_setting', 'an_legacy', 'an_css');		
-
+		//CSS - only if it exists
+		if(isset($an_settings['an_css_rules']) && ! empty($an_settings['an_css_rules'])) {
+			add_settings_section('an_css', 'Your CSS Rules', 'an_css_text', 'an_legacy');
+			add_settings_field('an_css_rules', 'Insert CSS Rules', 'an_css_setting', 'an_legacy', 'an_css');		
+		}
+		
 		//Items
-		add_settings_section('an_items', 'Your eBay Listings', 'an_items_text', 'an_theme');
-		add_settings_field('an_items_code_snippet', 'Insert code snippet', 'an_items_setting', 'an_theme', 'an_items');
+		if(isset($an_settings['an_items_code']) && ! empty($an_settings['an_items_code'])) {
+			add_settings_section('an_items', 'Your eBay Listings', 'an_items_text', 'an_legacy');
+			add_settings_field('an_items_code_snippet', 'Insert code snippet', 'an_items_setting', 'an_legacy', 'an_items');
+		}
 
 		//Profile
-		add_settings_section('an_profile', 'Your eBay Profile', 'an_profile_text', 'an_theme');
-		add_settings_field('an_profile_code_snippet', 'Insert code snippet', 'an_profile_setting', 'an_theme', 'an_profile');
+		if(isset($an_settings['an_profile_code']) && ! empty($an_settings['an_profile_code'])) {
+			add_settings_section('an_profile', 'Your eBay Profile', 'an_profile_text', 'an_legacy');
+			add_settings_field('an_profile_code_snippet', 'Insert code snippet', 'an_profile_setting', 'an_legacy', 'an_profile');
+		}
 
 		//Feedback
-		add_settings_section('an_feedback', 'Your eBay Feedback', 'an_feedback_text', 'an_theme');
-		add_settings_field('an_feedback_code_snippet', 'Insert code snippet', 'an_feedback_setting', 'an_theme', 'an_feedback');
+		if(isset($an_settings['an_feedback_code']) && ! empty($an_settings['an_feedback_code'])) {
+			add_settings_section('an_feedback', 'Your eBay Feedback', 'an_feedback_text', 'an_legacy');
+			add_settings_field('an_feedback_code_snippet', 'Insert code snippet', 'an_feedback_setting', 'an_legacy', 'an_feedback');
+		}
 	}
 }
 add_action('admin_init', 'an_admin_settings');
