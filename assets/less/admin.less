@@ -68,6 +68,7 @@ a.an-tooltip {
 			margin: 0 0 12px 0;
 		}
 		textarea {
+			font-size: 10px;
 			width: 100%;
 		}
 		a.button {
@@ -146,8 +147,8 @@ a.an-tooltip {
 
 #an-options-container {
 	position: relative;
-	padding-right: 200px;
-	width: 600px;
+ 	margin-right: 20px;
+// 	width: 100%;
 
 	.nav-tab-wrapper {
 		position: relative;
@@ -162,12 +163,38 @@ a.an-tooltip {
 
 	#an-about,
 	#an-settings-tabs {
-		padding: 15px;
+		padding: 15px 0;
 		border: 1px solid #ccc;
 	}
 	
 	#an-settings-tabs {
 		background: #fff;
+		form#an-shortcode-form {
+			max-width: 27%;
+			float: left;		
+			#an-custom-field-container {
+				padding: 15px;
+				padding-right: 25px;
+				border-right: 1px solid #ccc;			
+				.control-group {
+					width: unset;
+					.control-label {
+						float: none;
+					}
+				}
+			}
+			
+			input[type="submit"] {
+				margin-left: 15px;
+			}
+		}
+
+		#an-shortcode-preview {
+			float: left;
+			width: 69%;
+			padding-left: 2%;
+			padding-right: 2%;
+		}		
 	}
 
 	#an-about {

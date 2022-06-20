@@ -461,17 +461,17 @@ add_action('admin_menu', 'an_admin_page');
 function an_options_page() {
 	echo '<div id="an-options-container">' . "\n";
 
-	echo '	<div id="an-about">' . "\n";	
-	echo '		<img width="60" height="60" alt="Joe\'s mug" src="http://www.josephhawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";		
-	echo '		<p><b>Hi, I\'m Joe and I created this plugin.</b></p>' . "\n";		
-	echo '		<p>I highly recommend watching the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a> on how to use the plugin.</p>' . "\n";	
-	echo '		<p>Most common issues are solved by reading the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Help</a> section. Bugs and errors can be reported <a target="_blank" href="https://www.auctionnudge.com/issues">here</a>. Please do this before leaving a poor review.</p>' . "\n";	
-	echo '		<p>If you like the plugin, please show your appreciation by <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">leaving a rating</a>. It really does help.</p>' . "\n";		
-	echo '		<p><b>Thanks!</b></p>' . "\n";		
-	echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>' . "\n";
-	echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Plugin Help</a>' . "\n";
-	echo '		<a class="button button-primary" target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">Rate the plugin <span class="dashicons dashicons-smiley" style="font-size:20px;padding-top:1px"></span></a>' . "\n";
-	echo '	</div>' . "\n";
+// 	echo '	<div id="an-about">' . "\n";	
+// 	echo '		<img width="60" height="60" alt="Joe\'s mug" src="http://www.josephhawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";		
+// 	echo '		<p><b>Hi, I\'m Joe and I created this plugin.</b></p>' . "\n";		
+// 	echo '		<p>I highly recommend watching the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a> on how to use the plugin.</p>' . "\n";	
+// 	echo '		<p>Most common issues are solved by reading the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Help</a> section. Bugs and errors can be reported <a target="_blank" href="https://www.auctionnudge.com/issues">here</a>. Please do this before leaving a poor review.</p>' . "\n";	
+// 	echo '		<p>If you like the plugin, please show your appreciation by <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">leaving a rating</a>. It really does help.</p>' . "\n";		
+// 	echo '		<p><b>Thanks!</b></p>' . "\n";		
+// 	echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>' . "\n";
+// 	echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Plugin Help</a>' . "\n";
+// 	echo '		<a class="button button-primary" target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">Rate the plugin <span class="dashicons dashicons-smiley" style="font-size:20px;padding-top:1px"></span></a>' . "\n";
+// 	echo '	</div>' . "\n";
 
 	echo '	<h1>' . an_get_config('plugin_name') . '</h1>' . "\n";
 
@@ -516,30 +516,34 @@ function an_options_page() {
 		$tab_url = 'options-general.php?page=an_options_page&tab=shortcodes';
 
 		//Start Preview Form
-		echo '		<form action="' . admin_url($tab_url) . '" method="post">' . "\n";
+		echo '		<form id="an-shortcode-form" action="' . admin_url($tab_url) . '" method="post">' . "\n";
 		
 		//Get tool key
 		$tool_key = (isset($_POST['tool_key'])) ? $_POST['tool_key'] : 'item';
 
 		//Display form, propogated with any user submitted values
 		echo an_create_custom_field_form($_POST, $tool_key);
+		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
 
-		//Parse for Preview request
-		$request_params = an_request_parameters_from_assoc_array($tool_key, $_POST);
-		if(sizeof($request_params)) {
-			//Preview
-			echo an_build_snippet($tool_key, $request_params);
-		}
+		echo '	</form>' . "\n";	
 	}
 
-	echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
+	//Parse for Preview request
+	$request_params = an_request_parameters_from_assoc_array($tool_key, $_POST);
+	if(sizeof($request_params)) {
+		echo '		<div id="an-shortcode-preview">' . "\n";
 
-	echo '	</form>' . "\n";	
+		//Preview
+		echo an_build_snippet($tool_key, $request_params);
 
-// 			echo an_shortcode_parameters_help_table();
+		echo '		</div>' . "\n";
+	}
+
+	echo '		<div class="clear"></div>' . "\n";
 
  	echo '	</div>' . "\n";
 	echo '</div>' . "\n";
+
 	echo '<div id="adblock-test" class="auction-nudge"></div>';
 }
 

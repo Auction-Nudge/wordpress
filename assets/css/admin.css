@@ -59,6 +59,7 @@ a.an-tooltip {
   margin: 0 0 12px 0;
 }
 #an-custom-field-container .an-custom-field-help textarea {
+  font-size: 10px;
   width: 100%;
 }
 #an-custom-field-container .an-custom-field-help a.button {
@@ -127,8 +128,7 @@ a.an-tooltip {
 /* Settings Page */
 #an-options-container {
   position: relative;
-  padding-right: 200px;
-  width: 600px;
+  margin-right: 20px;
 }
 #an-options-container .nav-tab-wrapper {
   position: relative;
@@ -142,11 +142,35 @@ a.an-tooltip {
 }
 #an-options-container #an-about,
 #an-options-container #an-settings-tabs {
-  padding: 15px;
+  padding: 15px 0;
   border: 1px solid #ccc;
 }
 #an-options-container #an-settings-tabs {
   background: #fff;
+}
+#an-options-container #an-settings-tabs form#an-shortcode-form {
+  max-width: 27%;
+  float: left;
+}
+#an-options-container #an-settings-tabs form#an-shortcode-form #an-custom-field-container {
+  padding: 15px;
+  padding-right: 25px;
+  border-right: 1px solid #ccc;
+}
+#an-options-container #an-settings-tabs form#an-shortcode-form #an-custom-field-container .control-group {
+  width: unset;
+}
+#an-options-container #an-settings-tabs form#an-shortcode-form #an-custom-field-container .control-group .control-label {
+  float: none;
+}
+#an-options-container #an-settings-tabs form#an-shortcode-form input[type="submit"] {
+  margin-left: 15px;
+}
+#an-options-container #an-settings-tabs #an-shortcode-preview {
+  float: left;
+  width: 69%;
+  padding-left: 2%;
+  padding-right: 2%;
 }
 #an-options-container #an-about {
   position: absolute;
