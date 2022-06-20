@@ -23,7 +23,7 @@ a.an-tooltip {
 
 #an-custom-field-container {
 // 	max-width: 440px;
-	min-height: 370px;
+// 	min-height: 370px;
 	background: #fff;
 	padding: 15px;
 
@@ -157,6 +157,9 @@ a.an-tooltip {
 			bottom: -1px;
 			border-bottom: none;
 			background: #fff;
+			&.nav-tab-shortcodes {
+				background: #f7f7f7;							
+			}
 		}
 	}
 
@@ -165,21 +168,32 @@ a.an-tooltip {
 		border: 1px solid #ccc;
 
 		.an-tab-left {
-			width: 31%;
+			width: 65%;
 			float: left;	
 			padding: 1%;								
 		}		
 		.an-tab-right {
-			width: 65%;
+			width: 31%;
 			float: left;
 			padding: 1%;	
 			background: #f7f7f7;				
 		}
 
+		//Shortcode Preview
+		#an-shortcode-preview {
+			width: 65%;
+			background: #fff;							
+		}
+		
 		//Shortcode Form
 		form#an-shortcode-form {
+			width: 31%;
+			background: #f7f7f7;							
 			#an-custom-field-container {
 				background: transparent;
+				legend {
+					background: #fff;
+				}
 				.control-group {
 					width: unset;
 					.control-label {

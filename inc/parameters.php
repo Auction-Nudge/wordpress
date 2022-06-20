@@ -190,7 +190,7 @@ function an_update_widget_instance($tool_key, $instance_in) {
  *
  *
  */
-function an_request_parameters_defaults($tool_key) {
+function an_request_parameters_defaults($tool_key, $process_output = false) {
 	$parameters_defaults = array();	
 	$an_settings = an_get_settings();
 	
@@ -205,9 +205,20 @@ function an_request_parameters_defaults($tool_key) {
 //  		$param_name = strtolower($param_name);
 		
 		//Is there a default?
-		$param_default = (isset($param_defition['default'])) ? $param_defition['default'] : '';
-
-		$parameters_defaults[$param_name] = $param_default;
+		$param_value = '';
+		
+		if(isset($param_defition['default'])) {
+			$param_value = $param_defition['default'];
+			
+			//Process output?	
+			if($process_output && isset($param_defition['output_processing']) && is_array($param_defition['output_processing'])) {
+				foreach($param_defition['output_processing'] as $process) {
+					eval("\$param_value = $process;");						
+				}		
+			}
+					
+			$parameters_defaults[$param_name] = $param_value;
+		}
 		
 		switch($param_name) {
 			case 'sellerid' :

@@ -466,6 +466,8 @@ add_action('admin_menu', 'an_admin_page');
  * Display the settings page
  */
 function an_options_page() {
+	$an_settings = an_get_settings();
+
 	echo '<div id="an-options-container">' . "\n";
 
 	echo '	<h1>' . an_get_config('plugin_name') . '</h1>' . "\n";
@@ -534,15 +536,27 @@ function an_options_page() {
 
 		echo '	</form>' . "\n";	
 
-		//Parse for Preview request
+		//Preview submitted?
 		$request_params = an_request_parameters_from_assoc_array($tool_key, $_POST);
 		if(sizeof($request_params)) {
 			echo '		<div id="an-shortcode-preview" class="an-tab-right">' . "\n";
 
-			//Preview
+			echo '			<div id="an-shortcode-' . $tool_key . '">' . "\n";
+			echo an_build_shortcode($tool_key, $request_params);
+			echo '			</div>' . "\n";
+			
 			echo an_build_snippet($tool_key, $request_params);
 
 			echo '		</div>' . "\n";
+
+		//Can we do the default preview?
+		} elseif(isset($an_settings['an_ebay_user']) && ! empty($an_settings['an_ebay_user'])) {
+
+			echo an_build_shortcode($tool_key);
+
+			echo an_build_snippet($tool_key, an_request_parameters_defaults($tool_key, true));
+		} else {
+			echo '[Welcome!]';
 		}
 	}
 
@@ -566,7 +580,7 @@ function an_admin_tabs($current = 'general') {
   $links = array();
   foreach($tabs as $slug => $name) {
 		if($slug == $current) {
-			$links[] = '<a class="nav-tab nav-tab-active" href="?page=an_options_page&tab=' . $slug . '">' . $name . '</a>';
+			$links[] = '<a class="nav-tab nav-tab-active nav-tab-' . $slug . '" href="?page=an_options_page&tab=' . $slug . '">' . $name . '</a>';
 		} else {
 			$links[] = '<a class="nav-tab" href="?page=an_options_page&tab=' . $slug . '">' . $name . '</a>';
 		}

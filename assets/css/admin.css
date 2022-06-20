@@ -19,7 +19,6 @@ a.an-tooltip {
 }
 /* Meta Box */
 #an-custom-field-container {
-  min-height: 370px;
   background: #fff;
   padding: 15px;
   /* Tool Tabs */
@@ -136,23 +135,37 @@ a.an-tooltip {
   border-bottom: none;
   background: #fff;
 }
+#an-options-container .nav-tab-wrapper .nav-tab-active.nav-tab-shortcodes {
+  background: #f7f7f7;
+}
 #an-options-container #an-settings-tabs {
   background: #fff;
   border: 1px solid #ccc;
 }
 #an-options-container #an-settings-tabs .an-tab-left {
-  width: 31%;
+  width: 65%;
   float: left;
   padding: 1%;
 }
 #an-options-container #an-settings-tabs .an-tab-right {
-  width: 65%;
+  width: 31%;
   float: left;
   padding: 1%;
   background: #f7f7f7;
 }
+#an-options-container #an-settings-tabs #an-shortcode-preview {
+  width: 65%;
+  background: #fff;
+}
+#an-options-container #an-settings-tabs form#an-shortcode-form {
+  width: 31%;
+  background: #f7f7f7;
+}
 #an-options-container #an-settings-tabs form#an-shortcode-form #an-custom-field-container {
   background: transparent;
+}
+#an-options-container #an-settings-tabs form#an-shortcode-form #an-custom-field-container legend {
+  background: #fff;
 }
 #an-options-container #an-settings-tabs form#an-shortcode-form #an-custom-field-container .control-group {
   width: unset;

@@ -170,7 +170,7 @@ function an_build_shortcode($tool_key = 'item', $tool_data = []) {
 	$out = '[' . an_get_config('shortcode') . ' tool="' . $tool_key . '"';
 
 	foreach($tool_data as $key => $value) {
-		$out .= ' ' + strtolower($key) + '="' + $value + '"';
+		$out .= ' ' . strtolower($key) . '="' . $value . '"';
 	}
 
  	$out .= ']';
