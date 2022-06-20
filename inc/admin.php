@@ -505,10 +505,6 @@ function an_options_page() {
 		do_settings_sections('an_legacy');
 		echo '			</div>' . "\n";
 
-		//Theme
-		echo '			<div style="display:none">' . "\n";
-		do_settings_sections('an_theme');
-		echo '			</div>' . "\n";
 		echo '		</div>' . "\n";
 
 		//Submit
@@ -718,25 +714,6 @@ function an_ebay_site_setting() {
 }
 
 /**
- * CSS text
- */
-function an_css_text() {
-	echo '<p>You can modify the appearance of Auction Nudge by pasting <abbr title="Cascading Style Sheets">CSS</abbr> rules into this box.</p>' . "\n";
-	echo '<p>For example <code>div#auction-nudge-items a { color: red }</code> will make all links displayed by the Your eBay Listings tool red. You can find more information and demos on modifying the appearance of Auction Nudge <a target="_blank" href="https://www.auctionnudge.com/customize/appearance">here</a>.</p>' . "\n";
-}
-
-/**
- * Output CSS option
- */
-function an_css_setting() {
-	$an_settings = an_get_settings();
-	
-	$an_css_rules = isset($an_settings['an_css_rules']) ? $an_settings['an_css_rules'] : '';
-	
-	echo '<textarea id="an_css_rules" name="an_options[an_css_rules]">' . $an_css_rules . '</textarea>' . "\n";		
-}
-
-/**
  * Request text
  */
 function an_request_text() {
@@ -765,6 +742,25 @@ function an_local_requests_setting() {
 /**
  * ==================== LEGACY ============================
  */
+
+/**
+ * CSS text
+ */
+function an_css_text() {
+	echo '<p>You can modify the appearance of Auction Nudge by pasting <abbr title="Cascading Style Sheets">CSS</abbr> rules into this box.</p>' . "\n";
+	echo '<p>For example <code>div#auction-nudge-items a { color: red }</code> will make all links displayed by the Your eBay Listings tool red. You can find more information and demos on modifying the appearance of Auction Nudge <a target="_blank" href="https://www.auctionnudge.com/customize/appearance">here</a>.</p>' . "\n";
+}
+
+/**
+ * Output CSS option
+ */
+function an_css_setting() {
+	$an_settings = an_get_settings();
+	
+	$an_css_rules = isset($an_settings['an_css_rules']) ? $an_settings['an_css_rules'] : '';
+	
+	echo '<textarea id="an_css_rules" name="an_options[an_css_rules]">' . $an_css_rules . '</textarea>' . "\n";		
+}
 
 /**
  * Items

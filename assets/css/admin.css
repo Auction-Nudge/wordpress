@@ -143,9 +143,9 @@ a.an-tooltip {
   border: 1px solid #ccc;
 }
 #an-options-container #an-settings-tabs .an-tab-left {
-  width: 65%;
+  width: 63%;
   float: left;
-  padding: 1%;
+  padding: 2%;
 }
 #an-options-container #an-settings-tabs .an-tab-right {
   width: 31%;
@@ -167,6 +167,7 @@ a.an-tooltip {
 }
 #an-options-container #an-settings-tabs form#an-shortcode-form {
   width: 31%;
+  padding: 15px 0;
   background: #f7f7f7;
 }
 #an-options-container #an-settings-tabs form#an-shortcode-form #an-custom-field-container {
