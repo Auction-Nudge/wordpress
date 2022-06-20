@@ -224,14 +224,18 @@ function an_create_custom_fields_box() {
 	}
 
 	foreach(array('post', 'page') as $post_type) {
-		add_meta_box('an-custom-fields', an_get_config('plugin_name'), 'an_create_custom_field_form', $post_type, 'normal', 'high');
+		add_meta_box('an-custom-fields', an_get_config('plugin_name'), 'an_create_custom_field_callback', $post_type, 'normal', 'high');
 	}
+}
+
+function an_create_custom_field_callback($tools_meta) {
+	echo an_create_custom_field_form($tools_meta);
 }
 
 /**
  * Create the custom field form
  */
-function an_create_custom_field_form($tools_meta = []) {	
+function an_create_custom_field_form($tools_meta = [], $inital_tool = 'item') {	
 	global $post;
 
 	//Do we have?
@@ -243,14 +247,21 @@ function an_create_custom_field_form($tools_meta = []) {
 	$out = '<div id="an-custom-field-container">' . "\n";
 	
 	//Tabs
-	$out .= '<select id="an-tab-links">' . "\n";
-	$out .= '	<option class="an-tab-link active" data-tab="listings-tab">Your eBay Listings</option>' . "\n";
-	$out .= '	<option class="an-tab-link" data-tab="profile-tab">Your eBay Profile</option>' . "\n";
-	$out .= '	<option class="an-tab-link" data-tab="feedback-tab">Your eBay Feedback</option>' . "\n";	
+	$out .= '<select name="tool_key" id="an-tab-links">' . "\n";
+	
+	$selected = ($inital_tool == 'item') ? ' selected="selected"' : '';
+	$out .= '	<option' . $selected . ' value="item" class="an-tab-link active" data-tab="listings-tab">Your eBay Listings</option>' . "\n";
+
+	$selected = ($inital_tool == 'profile') ? ' selected="selected"' : '';
+	$out .= '	<option' . $selected . ' value="profile" class="an-tab-link" data-tab="profile-tab">Your eBay Profile</option>' . "\n";
+	
+	$selected = ($inital_tool == 'feedback') ? ' selected="selected"' : '';
+	$out .= '	<option' . $selected . ' value="feedback" class="an-tab-link" data-tab="feedback-tab">Your eBay Feedback</option>' . "\n";	
 	$out .= '</select>' . "\n";
 	
 	//Item tool
-	$out .= '<div id="listings-tab" class="an-custom-field-tab">' . "\n";			
+	$style = ($inital_tool == 'item') ? '' : ' style="display:none"';
+	$out .= '<div' . $style . ' id="listings-tab" class="an-custom-field-tab">' . "\n";			
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
 	$out .= '		<textarea readonly="readonly" id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea>' . "\n";
@@ -274,7 +285,8 @@ function an_create_custom_field_form($tools_meta = []) {
 	}
 			
 	//Profile tool
-	$out .= '<div id="profile-tab" class="an-custom-field-tab" style="display:none">' . "\n";				
+	$style = ($inital_tool == 'profile') ? '' : ' style="display:none"';
+	$out .= '<div' . $style . ' id="profile-tab" class="an-custom-field-tab">' . "\n";				
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
 	$out .= '		<textarea readonly="readonly" id="an-shortcode-profile">[' . an_get_config('shortcode') . ' tool="profile"]</textarea>' . "\n";
@@ -287,7 +299,8 @@ function an_create_custom_field_form($tools_meta = []) {
 	$out .= '</div>' . "\n";			
 
 	//Feedback tool
-	$out .= '<div id="feedback-tab" class="an-custom-field-tab" style="display:none">' . "\n";			
+	$style = ($inital_tool == 'feedback') ? '' : ' style="display:none"';
+	$out .= '<div' . $style . ' id="feedback-tab" class="an-custom-field-tab">' . "\n";			
 
 	$out .= '	<div class="an-custom-field-help">' . "\n";
 	$out .= '		<textarea readonly="readonly" id="an-shortcode-feedback">[' . an_get_config('shortcode') . ' tool="feedback"]</textarea>' . "\n";
@@ -463,7 +476,7 @@ function an_options_page() {
 	echo '	<h1>' . an_get_config('plugin_name') . '</h1>' . "\n";
 
 	//Tabs
-	$active_tab = (isset($_GET['tab'])) ? $_GET['tab'] : 'general';
+	$active_tab = (isset($_GET['tab'])) ? $_GET['tab'] : 'shortcodes';
 	an_admin_tabs($active_tab);
 
  	echo '	<div id="an-settings-tabs">' . "\n";
@@ -501,37 +514,22 @@ function an_options_page() {
 	//Not Settings
 	} else {
 		$tab_url = 'options-general.php?page=an_options_page&tab=shortcodes';
-		
-		//Are we previewing?
-		$tool_key = 'item';
-		if(isset($_GET['tool_key']) && an_validate_tool_key($_GET['tool_key'])) {
-			$tool_key = an_validate_tool_key($_GET['tool_key']);
-		}
-	
+
 		//Start Preview Form
-		$tab_url .= '&tool_key=' . $tool_key;
 		echo '		<form action="' . admin_url($tab_url) . '" method="post">' . "\n";
+		
+		//Get tool key
+		$tool_key = (isset($_POST['tool_key'])) ? $_POST['tool_key'] : 'item';
 
 		//Display form, propogated with any user submitted values
+		echo an_create_custom_field_form($_POST, $tool_key);
+
+		//Parse for Preview request
 		$request_params = an_request_parameters_from_assoc_array($tool_key, $_POST);
-		echo an_create_custom_field_form($request_params);
-
 		if(sizeof($request_params)) {
-			an_debug(an_build_snippet('item', $request_params));
+			//Preview
+			echo an_build_snippet($tool_key, $request_params);
 		}
-	
-		//Display form, propogated with any user submitted values
-// 		switch($tool_key) {
-// 			case 'profile' :
-// 
-// 			case 'feedback' :
-// 				$request_params = an_request_parameters_from_assoc_array($tool_key, $_POST);
-// 				echo an_create_custom_field_form($request_params);
-// 			default: 
-// 			case 'item' :
-// 				$request_params = an_request_parameters_from_assoc_array('item', $_POST);
-// 				echo an_create_custom_field_form($request_params);
-// 		}
 	}
 
 	echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
