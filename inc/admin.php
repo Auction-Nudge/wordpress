@@ -499,6 +499,13 @@ function an_options_page() {
 		$style = ($active_tab != 'legacy') ? ' style="display:none"' : '';
 		echo '		<div id="an-settings-legacy"' . $style . '>' . "\n";
 		echo '			<p>[HTML ;)]</p>' . "\n";
+		
+		//CSS
+		echo '			<div id="an-legacy-css">' . "\n";
+		do_settings_sections('an_legacy');
+		echo '			</div>' . "\n";
+
+		//Theme
 		echo '			<div style="display:none">' . "\n";
 		do_settings_sections('an_theme');
 		echo '			</div>' . "\n";
@@ -607,16 +614,16 @@ function an_admin_settings(){
 		add_settings_field('an_ebay_user', 'eBay Username', 'an_ebay_user_setting', 'an_general', 'an_ebay_defaults');
 		add_settings_field('an_ebay_site', 'eBay Site', 'an_ebay_site_setting', 'an_general', 'an_ebay_defaults');
 
-		//CSS
-		add_settings_section('an_css', 'Your CSS Rules', 'an_css_text', 'an_general');
-		add_settings_field('an_css_rules', 'Insert CSS Rules', 'an_css_setting', 'an_general', 'an_css');		
-
 		//Requests
 		add_settings_section('an_request', 'Caching', 'an_request_text', 'an_general');
 		add_settings_field('an_local_requests', 'Use WordPress Cache?', 'an_local_requests_setting', 'an_general', 'an_request');		
 
 		
-		//Within Your Theme...
+		//Legacy...
+
+		//CSS
+		add_settings_section('an_css', 'Your CSS Rules', 'an_css_text', 'an_legacy');
+		add_settings_field('an_css_rules', 'Insert CSS Rules', 'an_css_setting', 'an_legacy', 'an_css');		
 
 		//Items
 		add_settings_section('an_items', 'Your eBay Listings', 'an_items_text', 'an_theme');
