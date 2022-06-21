@@ -184,7 +184,8 @@ function an_setup_settings_ui() {
 		var default_data = [];
 		var shortcode_data = [];
 		var tool_data = {};
-
+		
+		//Update Shortcode
 		var update_shortcode = function(input) {
 			//Determine key
 			var data_key = input.attr('name');
@@ -210,6 +211,50 @@ function an_setup_settings_ui() {
 			tool_data = an_create_tool_data(shortcode_data);
 			an_update_tool_snippets(tool_data);		
 		};
+		
+		//Username check
+		var username_check = function() {
+			var check_input = function(input) {
+				if(! input.val()) {
+					input.addClass('an-error');	
+				
+					return false;								
+				} else {
+					input.removeClass('an-error');						
+
+					return true;
+				}
+			};
+		
+			var check_form = function(form, input) {
+				var success = check_input(input);
+				var button = jQuery('input[type="submit"]', form);
+			
+				if(! success) {
+					button.attr('disabled', 'disabled');
+				} else {
+					button.removeAttr('disabled');			
+				}
+
+				return success;
+			};
+		
+			var input = jQuery('#SellerID', container);			
+			var form = jQuery('#an-shortcode-form');
+		
+			//Initial
+			check_form(form, input);
+		
+			//Form submit
+			form.on('submit', function() {
+				check_form(form, input);
+			});
+		
+			//Input change
+			input.on('keypress change', function() {
+				check_form(form, input);		
+			});
+		};
 
 		//Get inputs
 		var inputs = jQuery('.controls input, .controls select', container);
@@ -217,6 +262,12 @@ function an_setup_settings_ui() {
 		//Each
 		inputs.each(function() {
 			var input = jQuery(this);
+			
+// 			switch(input.attr('id')) {
+// 				case 'SellerID' :
+// 
+// 					break;
+// 			}
 
 			//On change	
 			input.on('change', function() {
@@ -226,6 +277,8 @@ function an_setup_settings_ui() {
 			//Initial
 			update_shortcode(input);
 		});
+	
+		username_check();
 	}
 }
 

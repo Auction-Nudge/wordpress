@@ -167,6 +167,9 @@ a.an-tooltip {
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-custom-field-container .control-group .control-label {
   float: none;
 }
+#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-custom-field-container .control-group .controls input.an-error {
+  border: 1px solid red;
+}
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form input[type="submit"] {
   margin-left: 15px;
 }
