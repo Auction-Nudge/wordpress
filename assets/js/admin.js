@@ -131,6 +131,29 @@ function an_create_tool_data(shortcode_data) {
 	return tool_data;
 }
 
+//Tooltips
+function an_setup_tooltips() {
+	jQuery('a.an-tooltip').on({
+    mouseenter: function(e) {
+		  var title = jQuery(this).data('title');
+		  jQuery('<p id="an-tooltip-active"></p>').text(title).appendTo('body').fadeIn('slow');
+    },
+    mouseleave: function(e) {
+		  jQuery('#an-tooltip-active').remove();
+    },
+    mousemove: function(e) {
+			if(an_is_touch_device()) {
+			  var mousex = e.pageX - 250;			
+			} else {
+			  var mousex = e.pageX - 220;				
+			}
+
+		  var mousey = e.pageY + 5;
+		  jQuery('#an-tooltip-active').css({ top: mousey, left: mousex });
+    }	
+	});
+}
+
 function an_build_shortcode(tool_key = 'item', tool_data = {}) {
 	//Legacy
 	tool_key = (tool_key == 'item') ? 'listings' : tool_key;
@@ -148,10 +171,7 @@ function an_update_tool_snippets(tool_data = []) {
 	for(tool_key in tool_data) {
 		var shortcode = an_build_shortcode(tool_key, tool_data[tool_key]);
 		
-		var font_size = 120 / (shortcode.length / 4 );
-		
-		console.log(font_size);
-		
+		var font_size = 120 / (shortcode.length / 4 );		
 		var shortcode_container = jQuery('#an-shortcode-' + tool_key);
 
 		shortcode_container.html(shortcode);
@@ -304,6 +324,7 @@ function an_setup_settings_ui() {
 jQuery(document).ready(function() {
 	setup_parameter_groups();
 	setup_widget_theme_dropdown();
+	an_setup_tooltips();
 	an_setup_settings_ui();
 	
 	var custom_field_parent = jQuery('#listings-tab');
@@ -325,18 +346,6 @@ jQuery(document).ready(function() {
 		return false;
 	});
 
-	//Tooltips
-	jQuery('a.an-tooltip').hover(function(){
-	  var title = jQuery(this).data('title');
-	  jQuery('<p id="tooltip-active"></p>').text(title).appendTo('body').fadeIn('slow');
-	}, function() {
-	  jQuery('#tooltip-active').remove();
-	})
-	.mousemove(function(e) {
-	  var mousex = e.pageX + 5;
-	  var mousey = e.pageY + 5;
-	  jQuery('#tooltip-active').css({ top: mousey, left: mousex });
-	});
 	//Widgets
 	jQuery('.widgets-holder-wrap')
 		.on('mouseenter', 'a.an-tooltip', function() {
@@ -356,6 +365,24 @@ jQuery(document).ready(function() {
 	//Adblock check
 	window.setTimeout(adblock_check, 500);	
 });
+
+//Touch device?	
+//Thanks https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript/4819886#4819886
+function an_is_touch_device() {
+  var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
+  var mq = function(media_qry) {
+    return window.matchMedia(media_qry).matches;
+  }
+
+  if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+    return true;
+  }
+
+  // include the 'heartz' as a way to have a non matching MQ to help terminate the join
+  // https://git.io/vznFH
+  var media_qry = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
+  return mq(media_qry);
+}
 
 jQuery(document).ajaxSuccess(function(e, xhr, settings) {
 	var widget_ids = ['an_listings_widget', 'an_ads_widget'];
