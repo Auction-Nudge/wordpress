@@ -25,14 +25,11 @@ a.an-tooltip {
   /* Help */
 }
 #an-custom-field-container #an-tool-selector select#an-tab-links {
+  margin: 0 0 30px 0;
   width: 100%;
-  color: #fff;
-  padding: 5px 15px 5px 45px;
+  padding: 5px 15px;
   font-size: 16px;
-  background-color: #79a513;
-  background-image: url(../img/logo.png);
-  background-position: center left;
-  background-size: 35px 35px;
+  font-weight: bold;
 }
 #an-custom-field-container #an-tool-selector select#an-tab-links option span {
   font-size: 24px;
