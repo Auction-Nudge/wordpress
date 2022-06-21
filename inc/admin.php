@@ -576,9 +576,14 @@ function an_options_page() {
 function an_admin_tabs($current = 'general') {
   $tabs = array(
   	'shortcodes' => 'Shortcodes',
-  	'general' => 'Options',
-  	'legacy' => 'Legacy'
+  	'general' => 'Options'
   );
+  
+  //Do we need this?
+  if(an_has_legacy_feature()) {
+  	$tabs['legacy'] = 'Legacy';
+  }
+  
   $links = array();
   foreach($tabs as $slug => $name) {
 		if($slug == $current) {
@@ -645,6 +650,25 @@ function an_admin_settings(){
 	}
 }
 add_action('admin_init', 'an_admin_settings');
+
+function an_has_legacy_feature() {
+	$an_settings = an_get_settings();
+
+	$legacy_keys = [
+		'an_css_rules',
+		'an_items_code',
+		'an_profile_code',
+		'an_feedback_code'			
+	];
+	
+	foreach($legacy_keys as $key) {
+		if(isset($an_settings[$key]) && ! empty($an_settings[$key])) {
+			return true;		
+		}	
+	}
+	
+	return false;
+}
 
 /**
  * eBay defaults
