@@ -24,28 +24,18 @@ a.an-tooltip {
   /* Tool Tabs */
   /* Help */
 }
-#an-custom-field-container ul#an-tab-links {
-  list-style-type: none;
-  border-bottom: 1px solid #DDDDDD;
+#an-custom-field-container #an-tool-selector select#an-tab-links {
+  width: 100%;
+  color: #fff;
+  padding: 5px 15px 5px 45px;
+  font-size: 16px;
+  background-color: #79a513;
+  background-image: url(../img/logo.png);
+  background-position: center left;
+  background-size: 35px 35px;
 }
-#an-custom-field-container ul#an-tab-links li {
-  display: inline-block;
-}
-#an-custom-field-container ul#an-tab-links li:first-child {
-  margin-left: 10px;
-}
-#an-custom-field-container ul#an-tab-links li a {
-  padding: 7px 12px 6px 12px;
-  color: #444;
-  text-decoration: none;
-  border: 1px solid #DDDDDD;
-  border-bottom: none;
-  background: #F9F9F9;
-}
-#an-custom-field-container ul#an-tab-links li a:hover,
-#an-custom-field-container ul#an-tab-links li a.active {
-  padding-bottom: 7px;
-  background: #fff;
+#an-custom-field-container #an-tool-selector select#an-tab-links option span {
+  font-size: 24px;
 }
 #an-custom-field-container .an-custom-field-help {
   margin: 20px 0 0 0;

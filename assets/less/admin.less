@@ -28,33 +28,23 @@ a.an-tooltip {
 	padding: 15px;
 
 	/* Tool Tabs */
-
-	ul#an-tab-links {
-		list-style-type: none;
-		border-bottom: 1px solid #DDDDDD;	
-		li {
-			display: inline-block;
-		
-			&:first-child {
-				margin-left: 10px;
-			}		
-		
-			a {
-				padding: 7px 12px 6px 12px;
-				color: #444;
-				text-decoration: none;
-				border: 1px solid #DDDDDD;
-				border-bottom: none;
-				background: #F9F9F9;
-
-				&:hover,
-				&.active {
-					padding-bottom: 7px;
-					background: #fff;
-				}			
-			}		
-		}
-	}	
+	#an-tool-selector	{
+		select#an-tab-links {
+			width: 100%;
+			color: #fff;
+			padding: 5px 15px 5px 45px;
+			font-size: 16px;	
+			background-color: #79a513;
+			background-image: url(../img/logo.png);
+			background-position: center left;
+			background-size: 35px 35px;
+			option {
+				span {
+					font-size: 24px;
+				}
+			}
+		}	
+	}
 
 	/* Help */
 	

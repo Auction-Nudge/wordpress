@@ -226,7 +226,13 @@ function an_setup_settings_ui() {
 				}
 			};
 		
-			var check_form = function(form, input) {
+			var check_form = function(tool_key, form) {
+				if(tool_key == 'item') {
+					var input = jQuery('input[name="item_SellerID"]', form);
+				}	else {
+					var input = jQuery('input[name="' + tool_key + '_UserID"]', form);
+				}
+
 				var success = check_input(input);
 				var button = jQuery('input[type="submit"]', form);
 			
@@ -239,20 +245,26 @@ function an_setup_settings_ui() {
 				return success;
 			};
 		
-			var input = jQuery('#SellerID', container);			
 			var form = jQuery('#an-shortcode-form');
+			var tool_select = jQuery('#an-tab-links', form);
 		
 			//Initial
-			check_form(form, input);
-		
+			check_form(tool_select.val(), form);
+			
+			//Tool change
+			tool_select.on('change', function() {
+				check_form(tool_select.val(), form);
+			});		
+			
 			//Form submit
 			form.on('submit', function() {
-				check_form(form, input);
+				check_form(tool_select.val(), form);
 			});
 		
 			//Input change
-			input.on('keypress change', function() {
-				check_form(form, input);		
+			var inputs = jQuery('input[name="item_SellerID"], input[name="profile_UserID"], input[name="feedback_UserID"]', container);			
+			inputs.on('keypress change', function() {
+				check_form(tool_select.val(), form);		
 			});
 		};
 

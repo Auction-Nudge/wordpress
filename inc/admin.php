@@ -247,17 +247,19 @@ function an_create_custom_field_form($tools_meta = [], $inital_tool = 'item', $s
 	$out = '<div id="an-custom-field-container">' . "\n";
 	
 	// == Tabs ==
-	$out .= '<select name="tool_key" id="an-tab-links">' . "\n";
-	
+	$out .= '<div id="an-tool-selector">' . "\n";
+	$out .= '		<select name="tool_key" id="an-tab-links">' . "\n";
+
 	$selected = ($inital_tool == 'item') ? ' selected="selected"' : '';
-	$out .= '	<option' . $selected . ' value="item" class="an-tab-link active" data-tab="listings-tab">Your eBay Listings</option>' . "\n";
+	$out .= '		<option' . $selected . ' value="item" class="an-tab-link active" data-tab="listings-tab">Your eBay Listings&nbsp;&nbsp;&darr;</option>' . "\n";
 
 	$selected = ($inital_tool == 'profile') ? ' selected="selected"' : '';
-	$out .= '	<option' . $selected . ' value="profile" class="an-tab-link" data-tab="profile-tab">Your eBay Profile</option>' . "\n";
+	$out .= '		<option' . $selected . ' value="profile" class="an-tab-link" data-tab="profile-tab">Your eBay Profile</option>' . "\n";
 	
 	$selected = ($inital_tool == 'feedback') ? ' selected="selected"' : '';
-	$out .= '	<option' . $selected . ' value="feedback" class="an-tab-link" data-tab="feedback-tab">Your eBay Feedback</option>' . "\n";	
-	$out .= '</select>' . "\n";
+	$out .= '		<option' . $selected . ' value="feedback" class="an-tab-link" data-tab="feedback-tab">Your eBay Feedback</option>' . "\n";	
+	$out .= '	</select>' . "\n";
+	$out .= '</div>' . "\n";
 	
 	// == Item tool ==
 
