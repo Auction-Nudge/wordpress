@@ -508,6 +508,7 @@ function an_options_page() {
 
 		$style = ($active_tab != 'legacy') ? ' style="display:none"' : '';
 		echo '		<div id="an-settings-legacy"' . $style . '>' . "\n";
+		echo '<p>These legacy features are no longer recommended.</p>';
 		do_settings_sections('an_legacy');
 		echo '		</div>' . "\n";
 

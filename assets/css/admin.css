@@ -136,6 +136,8 @@ a.an-tooltip {
 #an-options-container #an-settings-tabs .an-tab-content.an-tab-right {
   width: 29%;
   background: #f7f7f7;
+  box-shadow: -3px 3px 3px -3px rgba(0, 0, 0, 0.26);
+  border-bottom-left-radius: 5px;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form {
   width: 29%;
@@ -190,35 +192,35 @@ a.an-tooltip {
   margin-bottom: 5px;
 }
 #an-options-container #an-settings-general h2:first-child,
-#an-options-container an-settings-legacy h2:first-child {
+#an-options-container #an-settings-legacy h2:first-child {
   margin-top: 0;
 }
 #an-options-container #an-settings-general table.form-table,
-#an-options-container an-settings-legacy table.form-table {
+#an-options-container #an-settings-legacy table.form-table {
   display: block;
   margin-bottom: 45px;
 }
 #an-options-container #an-settings-general table.form-table tbody,
-#an-options-container an-settings-legacy table.form-table tbody,
+#an-options-container #an-settings-legacy table.form-table tbody,
 #an-options-container #an-settings-general table.form-table tr,
-#an-options-container an-settings-legacy table.form-table tr,
+#an-options-container #an-settings-legacy table.form-table tr,
 #an-options-container #an-settings-general table.form-table th,
-#an-options-container an-settings-legacy table.form-table th,
+#an-options-container #an-settings-legacy table.form-table th,
 #an-options-container #an-settings-general table.form-table td,
-#an-options-container an-settings-legacy table.form-table td {
+#an-options-container #an-settings-legacy table.form-table td {
   margin: 0;
   padding: 0;
   display: block;
 }
 #an-options-container #an-settings-general table.form-table th[scope="row"],
-#an-options-container an-settings-legacy table.form-table th[scope="row"] {
+#an-options-container #an-settings-legacy table.form-table th[scope="row"] {
   margin: 20px 0 5px 0;
   width: 170px;
 }
 #an-options-container #an-settings-general table.form-table select,
-#an-options-container an-settings-legacy table.form-table select,
+#an-options-container #an-settings-legacy table.form-table select,
 #an-options-container #an-settings-general table.form-table input[type="text"],
-#an-options-container an-settings-legacy table.form-table input[type="text"] {
+#an-options-container #an-settings-legacy table.form-table input[type="text"] {
   width: 180px;
   border-style: solid;
   border-width: 1px;
