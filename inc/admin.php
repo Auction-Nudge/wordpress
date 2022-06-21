@@ -481,7 +481,7 @@ function an_options_page() {
 	//Settings
 	if(in_array($active_tab, ['legacy', 'general'])) {
 		//Open form
-		echo '		<form class="an-tab-left" action="' . admin_url('options.php') . '" method="post">' . "\n";
+		echo '		<form class="an-tab-left an-tab-content" action="' . admin_url('options.php') . '" method="post">' . "\n";
 		settings_fields('an_options');
 	
 		//Options
@@ -507,7 +507,7 @@ function an_options_page() {
 		echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
 		echo '	</form>' . "\n";	
 
-		echo '	<div class="an-tab-right" id="an-about">' . "\n";	
+		echo '	<div class="an-tab-right an-tab-content" id="an-about">' . "\n";	
 		echo '		<img width="60" height="60" alt="Joe\'s mug" src="http://www.josephhawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";		
 		echo '		<p><b>Hi, I\'m Joe and I created this plugin.</b></p>' . "\n";		
 		echo '		<p>I highly recommend watching the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a> on how to use the plugin.</p>' . "\n";	
@@ -521,24 +521,15 @@ function an_options_page() {
 
 	//Not Settings
 	} else {
-		$tab_url = 'options-general.php?page=an_options_page&tab=shortcodes';
-
-		//Start Preview Form
-		echo '		<form id="an-shortcode-form" class="an-tab-left" action="' . admin_url($tab_url) . '" method="post">' . "\n";
-		
 		//Get tool key
 		$tool_key = (isset($_POST['tool_key'])) ? $_POST['tool_key'] : 'item';
 
-		//Display form, propogated with any user submitted values
-		echo an_create_custom_field_form($_POST, $tool_key);
-		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
-
-		echo '	</form>' . "\n";	
+		$tab_url = 'options-general.php?page=an_options_page&tab=shortcodes';
 
 		//Preview submitted?
 		$request_params = an_request_parameters_from_assoc_array($tool_key, $_POST);
 		if(sizeof($request_params)) {
-			echo '		<div id="an-shortcode-preview" class="an-tab-right">' . "\n";
+			echo '		<div id="an-shortcode-preview" class="an-tab-left an-tab-content">' . "\n";
 
 			echo '			<div class="an-shortcode-container" id="an-shortcode-' . $tool_key . '">' . "\n";
 			echo an_build_shortcode($tool_key, $request_params);
@@ -550,16 +541,29 @@ function an_options_page() {
 
 		//Can we do the default preview?
 		} elseif(isset($an_settings['an_ebay_user']) && ! empty($an_settings['an_ebay_user'])) {
-			echo '		<div id="an-shortcode-preview" class="an-tab-right">' . "\n";
+			echo '		<div id="an-shortcode-preview" class="an-tab-left an-tab-content">' . "\n";
 			echo '			<div class="an-shortcode-container" id="an-shortcode-' . $tool_key . '">' . "\n";
 			echo an_build_shortcode($tool_key, an_request_parameters_defaults($tool_key, true));
 			echo '			</div>' . "\n";
 
 			echo an_build_snippet($tool_key, an_request_parameters_defaults($tool_key, true));
 			echo '		</div>' . "\n";
+		//Nothing to Preview - Welcome screen
 		} else {
-			echo '[Welcome!]';
+			echo '		<div id="an-welcome" class="an-tab-left an-tab-content">' . "\n";
+			echo '			<p>Welcome!</p>';
+			echo '		</div>' . "\n";
 		}
+		
+		//Start Preview Form
+		echo '		<form id="an-shortcode-form" class="an-tab-right an-tab-content" action="' . admin_url($tab_url) . '" method="post">' . "\n";
+		
+		//Display form, propogated with any user submitted values
+		echo an_create_custom_field_form($_POST, $tool_key);
+		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
+
+		echo '	</form>' . "\n";	
+		
 	}
 
 	echo '		<div class="clear"></div>' . "\n";

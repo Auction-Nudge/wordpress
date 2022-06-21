@@ -160,10 +160,15 @@ function an_shortcode_input_value(data_key, input) {
 }
 
 function an_setup_settings_ui() {
-	var container = jQuery('body.settings_page_an_options_page');
-
-	//Legacy
-	var legacy_options = jQuery('#an-settings-legacy table', container);
+	//Options page only
+	var body = jQuery('body.settings_page_an_options_page');
+	
+	if(! body.length) {
+		return;
+	}
+	
+	//Legacy Tab
+	var legacy_options = jQuery('#an-settings-legacy table', body);
 	//Legacy tab, but no legacy options
 	if(! legacy_options.length) {
 		var document_location = document.location.toString();
@@ -172,9 +177,9 @@ function an_setup_settings_ui() {
 			document.location = document_location.replace('tab=legacy', 'tab=general');
 		}
 	}
-
-	var container = jQuery('#an-custom-field-container', container);
 	
+	//Shortcode form
+	var container = jQuery('#an-custom-field-container', body);
 	if(container.length) {
 		var default_data = [];
 		var shortcode_data = [];
@@ -213,9 +218,6 @@ function an_setup_settings_ui() {
 		inputs.each(function() {
 			var input = jQuery(this);
 
-// 			console.log(input.attr('name') + ' input => ' + input.val());
-
-
 			//On change	
 			input.on('change', function() {
 				update_shortcode(jQuery(this));
@@ -224,11 +226,6 @@ function an_setup_settings_ui() {
 			//Initial
 			update_shortcode(input);
 		});
-// 		setTimeout(function() {
-// 			inputs.each(function() {
-// 				jQuery(this).trigger('change');
-// 			});		
-// 		}, 500);
 	}
 }
 
