@@ -166,74 +166,78 @@ a.an-tooltip {
 	#an-settings-tabs {
 		background: #fff;
 		border: 1px solid #ccc;
-
+		
+		//Left
 		.an-tab-left {
 			width: 63%;
 			float: left;	
-			padding: 2%;								
-		}		
-		.an-tab-right {
-			width: 31%;
-			float: left;
-			padding: 1%;	
-			background: #f7f7f7;				
-		}
+			padding: 2%;
 
-		//Shortcode Preview
-		#an-shortcode-preview {
-			width: 65%;
-			background: #fff;			
-			.an-shortcode-container {
-				padding: 15px;
-				margin-bottom: 15px;
-				font-size: 16px;
-				text-align: center;
-				background: #f7f7f7;			
-				font-family: monospace;	
-			}				
-		}
-		
-		//Shortcode Form
-		form#an-shortcode-form {
-			width: 31%;
-			padding: 15px 0;
-			background: #f7f7f7;							
-			#an-custom-field-container {
-				background: transparent;
-				legend {
-					background: #fff;
-				}
-				.control-group {
-					width: unset;
-					.control-label {
-						float: none;
+			//Shortcode Form
+			&#an-shortcode-form {
+				width: 31%;
+				padding: 15px 0;
+				background: #f7f7f7;							
+				#an-custom-field-container {
+					background: transparent;
+					legend {
+						background: #fff;
+					}
+					.control-group {
+						width: unset;
+						.control-label {
+							float: none;
+						}
 					}
 				}
-			}
 			
-			input[type="submit"] {
-				margin-left: 15px;
-			}
-		}
-		
-		//Plugin about
-		#an-about {
-			p {
-				margin-top: 0;
-			}
-		
-			img {
-				width: 60px;
-				height: 60px;
-				margin-right: 7px;
-				float: left;
-				border-radius: 50%;
-			}
-		
-			a.button {
-				margin-bottom: 5px;
-			}
+				input[type="submit"] {
+					margin-left: 15px;
+				}
+			}														
 		}		
+		
+		//Right
+		.an-tab-right {
+			width: 29%;
+			float: left;
+			padding: 2%;	
+			background: #f7f7f7;	
+			
+			//Shortcode Preview
+			&#an-shortcode-preview {
+				width: 65%;
+				background: #fff;		
+
+				.an-shortcode-container {
+					padding: 15px;
+					margin-bottom: 15px;
+					font-size: 24px;
+					text-align: center;
+					background: #f7f7f7;			
+					font-family: monospace;	
+				}						
+			}						
+
+			//Plugin about
+			&#an-about {
+				p {
+					margin-top: 0;
+				}
+		
+				img {
+					width: 60px;
+					height: 60px;
+					margin-right: 7px;
+					float: left;
+					border-radius: 50%;
+				}
+		
+				a.button {
+					margin-bottom: 5px;
+				}
+			}			
+		}
 	}
 
 	th[scope="row"] {

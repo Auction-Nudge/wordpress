@@ -554,10 +554,13 @@ function an_options_page() {
 
 		//Can we do the default preview?
 		} elseif(isset($an_settings['an_ebay_user']) && ! empty($an_settings['an_ebay_user'])) {
-
-			echo an_build_shortcode($tool_key);
+			echo '		<div id="an-shortcode-preview" class="an-tab-right">' . "\n";
+			echo '			<div class="an-shortcode-container" id="an-shortcode-' . $tool_key . '">' . "\n";
+			echo an_build_shortcode($tool_key, an_request_parameters_defaults($tool_key, true));
+			echo '			</div>' . "\n";
 
 			echo an_build_snippet($tool_key, an_request_parameters_defaults($tool_key, true));
+			echo '		</div>' . "\n";
 		} else {
 			echo '[Welcome!]';
 		}
@@ -747,8 +750,7 @@ function an_local_requests_setting() {
  * CSS text
  */
 function an_css_text() {
-	echo '<p>You can modify the appearance of Auction Nudge by pasting <abbr title="Cascading Style Sheets">CSS</abbr> rules into this box.</p>' . "\n";
-	echo '<p>For example <code>div#auction-nudge-items a { color: red }</code> will make all links displayed by the Your eBay Listings tool red. You can find more information and demos on modifying the appearance of Auction Nudge <a target="_blank" href="https://www.auctionnudge.com/customize/appearance">here</a>.</p>' . "\n";
+	echo '';
 }
 
 /**

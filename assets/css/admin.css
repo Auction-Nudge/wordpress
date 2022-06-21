@@ -147,55 +147,55 @@ a.an-tooltip {
   float: left;
   padding: 2%;
 }
-#an-options-container #an-settings-tabs .an-tab-right {
-  width: 31%;
-  float: left;
-  padding: 1%;
-  background: #f7f7f7;
-}
-#an-options-container #an-settings-tabs #an-shortcode-preview {
-  width: 65%;
-  background: #fff;
-}
-#an-options-container #an-settings-tabs #an-shortcode-preview .an-shortcode-container {
-  padding: 15px;
-  margin-bottom: 15px;
-  font-size: 16px;
-  text-align: center;
-  background: #f7f7f7;
-  font-family: monospace;
-}
-#an-options-container #an-settings-tabs form#an-shortcode-form {
+#an-options-container #an-settings-tabs .an-tab-left#an-shortcode-form {
   width: 31%;
   padding: 15px 0;
   background: #f7f7f7;
 }
-#an-options-container #an-settings-tabs form#an-shortcode-form #an-custom-field-container {
+#an-options-container #an-settings-tabs .an-tab-left#an-shortcode-form #an-custom-field-container {
   background: transparent;
 }
-#an-options-container #an-settings-tabs form#an-shortcode-form #an-custom-field-container legend {
+#an-options-container #an-settings-tabs .an-tab-left#an-shortcode-form #an-custom-field-container legend {
   background: #fff;
 }
-#an-options-container #an-settings-tabs form#an-shortcode-form #an-custom-field-container .control-group {
+#an-options-container #an-settings-tabs .an-tab-left#an-shortcode-form #an-custom-field-container .control-group {
   width: unset;
 }
-#an-options-container #an-settings-tabs form#an-shortcode-form #an-custom-field-container .control-group .control-label {
+#an-options-container #an-settings-tabs .an-tab-left#an-shortcode-form #an-custom-field-container .control-group .control-label {
   float: none;
 }
-#an-options-container #an-settings-tabs form#an-shortcode-form input[type="submit"] {
+#an-options-container #an-settings-tabs .an-tab-left#an-shortcode-form input[type="submit"] {
   margin-left: 15px;
 }
-#an-options-container #an-settings-tabs #an-about p {
+#an-options-container #an-settings-tabs .an-tab-right {
+  width: 29%;
+  float: left;
+  padding: 2%;
+  background: #f7f7f7;
+}
+#an-options-container #an-settings-tabs .an-tab-right#an-shortcode-preview {
+  width: 65%;
+  background: #fff;
+}
+#an-options-container #an-settings-tabs .an-tab-right#an-shortcode-preview .an-shortcode-container {
+  padding: 15px;
+  margin-bottom: 15px;
+  font-size: 24px;
+  text-align: center;
+  background: #f7f7f7;
+  font-family: monospace;
+}
+#an-options-container #an-settings-tabs .an-tab-right#an-about p {
   margin-top: 0;
 }
-#an-options-container #an-settings-tabs #an-about img {
+#an-options-container #an-settings-tabs .an-tab-right#an-about img {
   width: 60px;
   height: 60px;
   margin-right: 7px;
   float: left;
   border-radius: 50%;
 }
-#an-options-container #an-settings-tabs #an-about a.button {
+#an-options-container #an-settings-tabs .an-tab-right#an-about a.button {
   margin-bottom: 5px;
 }
 #an-options-container th[scope="row"] {
