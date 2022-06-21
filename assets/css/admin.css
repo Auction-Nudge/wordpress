@@ -151,8 +151,7 @@ a.an-tooltip {
   background: #f7f7f7;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form {
-  width: 31%;
-  padding: 15px 0;
+  width: 29%;
   background: #f7f7f7;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-custom-field-container {
@@ -174,7 +173,7 @@ a.an-tooltip {
   margin-left: 15px;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-preview {
-  width: 65%;
+  width: 63%;
   background: #fff;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-preview .an-shortcode-container {
@@ -184,6 +183,9 @@ a.an-tooltip {
   text-align: center;
   background: #f7f7f7;
   font-family: monospace;
+}
+#an-options-container #an-settings-tabs .an-tab-content#an-welcome p {
+  display: block;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-about p {
   margin-top: 0;
@@ -205,7 +207,7 @@ a.an-tooltip {
 #an-options-container #an-settings-general table.form-table,
 #an-options-container an-settings-legacy table.form-table {
   display: block;
-  margin-bottom: 30px;
+  margin-bottom: 45px;
 }
 #an-options-container #an-settings-general table.form-table tbody,
 #an-options-container an-settings-legacy table.form-table tbody,
