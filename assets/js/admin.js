@@ -187,10 +187,7 @@ function an_setup_settings_ui() {
 				//Remove
 				delete shortcode_data[data_key];				
 			}
-	
-			//Update shortcode
-			//var textarea = jQuery('.an-custom-field-help textarea', input.parents('.an-custom-field-tab'));
-				
+			
 			//Update snippet
 			tool_data = an_create_tool_data(shortcode_data);
 			an_update_tool_snippets(tool_data);		
@@ -214,7 +211,6 @@ function an_setup_settings_ui() {
 			//Initial
 			update_shortcode(input);
 		});
-		
 // 		setTimeout(function() {
 // 			inputs.each(function() {
 // 				jQuery(this).trigger('change');

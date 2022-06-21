@@ -484,24 +484,23 @@ function an_options_page() {
 		echo '		<form class="an-tab-left" action="' . admin_url('options.php') . '" method="post">' . "\n";
 		settings_fields('an_options');
 	
-		//Propagate username change?
-		if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
-			an_propagate_username_change($an_settings['an_ebay_user']);
-		}
-
+		//Options
 		$style = ($active_tab != 'general') ? ' style="display:none"' : '';
 		echo '		<div id="an-settings-general"' . $style . '>' . "\n";
 		do_settings_sections('an_general');
 		echo '		</div>';
 
 
-		//Removed from UI, but kept for backwards compatibility
+		//Legacy
+
+		//Propagate username change?
+		if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
+			an_propagate_username_change($an_settings['an_ebay_user']);
+		}
+
 		$style = ($active_tab != 'legacy') ? ' style="display:none"' : '';
 		echo '		<div id="an-settings-legacy"' . $style . '>' . "\n";
-		echo '			<p>[HTML ;)]</p>' . "\n";
-		echo '			<div style="display:none">' . "\n";
-		do_settings_sections('an_theme');
-		echo '			</div>' . "\n";
+		do_settings_sections('an_legacy');
 		echo '		</div>' . "\n";
 
 		//Submit
@@ -551,10 +550,13 @@ function an_options_page() {
 
 		//Can we do the default preview?
 		} elseif(isset($an_settings['an_ebay_user']) && ! empty($an_settings['an_ebay_user'])) {
-
-			echo an_build_shortcode($tool_key);
+			echo '		<div id="an-shortcode-preview" class="an-tab-right">' . "\n";
+			echo '			<div class="an-shortcode-container" id="an-shortcode-' . $tool_key . '">' . "\n";
+			echo an_build_shortcode($tool_key, an_request_parameters_defaults($tool_key, true));
+			echo '			</div>' . "\n";
 
 			echo an_build_snippet($tool_key, an_request_parameters_defaults($tool_key, true));
+			echo '		</div>' . "\n";
 		} else {
 			echo '[Welcome!]';
 		}
@@ -598,6 +600,8 @@ function an_admin_tabs($current = 'general') {
 function an_admin_settings(){
 	//Permissions
 	if(current_user_can('manage_options')) {
+		$an_settings = an_get_settings();
+
 		register_setting('an_options', 'an_options', 'an_options_validate');
 
 		//General...
@@ -607,28 +611,37 @@ function an_admin_settings(){
 		add_settings_field('an_ebay_user', 'eBay Username', 'an_ebay_user_setting', 'an_general', 'an_ebay_defaults');
 		add_settings_field('an_ebay_site', 'eBay Site', 'an_ebay_site_setting', 'an_general', 'an_ebay_defaults');
 
-		//CSS
-		add_settings_section('an_css', 'Your CSS Rules', 'an_css_text', 'an_general');
-		add_settings_field('an_css_rules', 'Insert CSS Rules', 'an_css_setting', 'an_general', 'an_css');		
-
 		//Requests
 		add_settings_section('an_request', 'Caching', 'an_request_text', 'an_general');
 		add_settings_field('an_local_requests', 'Use WordPress Cache?', 'an_local_requests_setting', 'an_general', 'an_request');		
 
 		
-		//Within Your Theme...
+		//Legacy...
+		//Only display each if value exists
 
+		//CSS - only if it exists
+		if(isset($an_settings['an_css_rules']) && ! empty($an_settings['an_css_rules'])) {
+			add_settings_section('an_css', 'Your CSS Rules', 'an_css_text', 'an_legacy');
+			add_settings_field('an_css_rules', 'Insert CSS Rules', 'an_css_setting', 'an_legacy', 'an_css');		
+		}
+		
 		//Items
-		add_settings_section('an_items', 'Your eBay Listings', 'an_items_text', 'an_theme');
-		add_settings_field('an_items_code_snippet', 'Insert code snippet', 'an_items_setting', 'an_theme', 'an_items');
+		if(isset($an_settings['an_items_code']) && ! empty($an_settings['an_items_code'])) {
+			add_settings_section('an_items', 'Your eBay Listings', 'an_items_text', 'an_legacy');
+			add_settings_field('an_items_code_snippet', 'Insert code snippet', 'an_items_setting', 'an_legacy', 'an_items');
+		}
 
 		//Profile
-		add_settings_section('an_profile', 'Your eBay Profile', 'an_profile_text', 'an_theme');
-		add_settings_field('an_profile_code_snippet', 'Insert code snippet', 'an_profile_setting', 'an_theme', 'an_profile');
+		if(isset($an_settings['an_profile_code']) && ! empty($an_settings['an_profile_code'])) {
+			add_settings_section('an_profile', 'Your eBay Profile', 'an_profile_text', 'an_legacy');
+			add_settings_field('an_profile_code_snippet', 'Insert code snippet', 'an_profile_setting', 'an_legacy', 'an_profile');
+		}
 
 		//Feedback
-		add_settings_section('an_feedback', 'Your eBay Feedback', 'an_feedback_text', 'an_theme');
-		add_settings_field('an_feedback_code_snippet', 'Insert code snippet', 'an_feedback_setting', 'an_theme', 'an_feedback');
+		if(isset($an_settings['an_feedback_code']) && ! empty($an_settings['an_feedback_code'])) {
+			add_settings_section('an_feedback', 'Your eBay Feedback', 'an_feedback_text', 'an_legacy');
+			add_settings_field('an_feedback_code_snippet', 'Insert code snippet', 'an_feedback_setting', 'an_legacy', 'an_feedback');
+		}
 	}
 }
 add_action('admin_init', 'an_admin_settings');
@@ -655,10 +668,14 @@ function an_ebay_user_setting() {
 		
 	echo '<input type="text" id="an_ebay_user" class="regular-text" name="an_options[an_ebay_user]" value="' . $ebay_user_setting . '" />' . "\n";
 	echo '<a class="an-tooltip" data-title="This is your eBay ID &ndash; the username you are known by on eBay and appears on your listings. This is not your store name." href="#" onclick="return false;">?</a>' . "\n";
-	echo '<div style="margin-top:5px;">' . "\n";
-	echo '<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
-	echo '<small>Update every instance</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Auction Nudge instance with the new setting." href="#" onclick="return false;">?</a>' . "\n";
-	echo '</div>' . "\n";	
+	
+	//Not if disabled
+	if(isset($an_settings['an_meta_disable']) && ! $an_settings['an_meta_disable']) {
+		echo '<div style="margin-top:5px;">' . "\n";
+		echo '<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
+		echo '<small>Update every instance</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Auction Nudge instance with the new setting." href="#" onclick="return false;">?</a>' . "\n";
+		echo '</div>' . "\n";	
+	}
 }
 
 /**
@@ -700,25 +717,6 @@ function an_ebay_site_setting() {
 }
 
 /**
- * CSS text
- */
-function an_css_text() {
-	echo '<p>You can modify the appearance of Auction Nudge by pasting <abbr title="Cascading Style Sheets">CSS</abbr> rules into this box.</p>' . "\n";
-	echo '<p>For example <code>div#auction-nudge-items a { color: red }</code> will make all links displayed by the Your eBay Listings tool red. You can find more information and demos on modifying the appearance of Auction Nudge <a target="_blank" href="https://www.auctionnudge.com/customize/appearance">here</a>.</p>' . "\n";
-}
-
-/**
- * Output CSS option
- */
-function an_css_setting() {
-	$an_settings = an_get_settings();
-	
-	$an_css_rules = isset($an_settings['an_css_rules']) ? $an_settings['an_css_rules'] : '';
-	
-	echo '<textarea id="an_css_rules" name="an_options[an_css_rules]">' . $an_css_rules . '</textarea>' . "\n";		
-}
-
-/**
  * Request text
  */
 function an_request_text() {
@@ -747,6 +745,24 @@ function an_local_requests_setting() {
 /**
  * ==================== LEGACY ============================
  */
+
+/**
+ * CSS text
+ */
+function an_css_text() {
+	echo '';
+}
+
+/**
+ * Output CSS option
+ */
+function an_css_setting() {
+	$an_settings = an_get_settings();
+	
+	$an_css_rules = isset($an_settings['an_css_rules']) ? $an_settings['an_css_rules'] : '';
+	
+	echo '<textarea id="an_css_rules" name="an_options[an_css_rules]">' . $an_css_rules . '</textarea>' . "\n";		
+}
 
 /**
  * Items
