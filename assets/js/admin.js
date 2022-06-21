@@ -148,7 +148,14 @@ function an_update_tool_snippets(tool_data = []) {
 	for(tool_key in tool_data) {
 		var shortcode = an_build_shortcode(tool_key, tool_data[tool_key]);
 		
-		jQuery('#an-shortcode-' + tool_key).html(shortcode);
+		var font_size = 120 / (shortcode.length / 4 );
+		
+		console.log(font_size);
+		
+		var shortcode_container = jQuery('#an-shortcode-' + tool_key);
+
+		shortcode_container.html(shortcode);
+		shortcode_container.css('fontSize', font_size + 'px');
 	}
 }
 
@@ -215,7 +222,7 @@ function an_setup_settings_ui() {
 		//Username check
 		var username_check = function() {
 			var check_input = function(input) {
-				if(! input.val()) {
+				if(! input.val().trim()) {
 					input.addClass('an-error');	
 				
 					return false;								

@@ -171,6 +171,7 @@ a.an-tooltip {
   text-align: center;
   background: #f7f7f7;
   font-family: monospace;
+  border: 1px solid #8c8f94;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-welcome p {
   display: block;

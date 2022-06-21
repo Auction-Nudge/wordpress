@@ -474,8 +474,14 @@ function an_options_page() {
 
 	echo '	<h1>' . an_get_config('plugin_name') . '</h1>' . "\n";
 
+	//Determine default tab
+	$default_tab = 'general';
+	if(isset($an_settings['an_ebay_user']) && ! empty($an_settings['an_ebay_user'])) {
+		$default_tab = 'shortcodes';	
+	}
+	
 	//Tabs
-	$active_tab = (isset($_GET['tab'])) ? $_GET['tab'] : 'shortcodes';
+	$active_tab = (isset($_GET['tab'])) ? $_GET['tab'] : $default_tab;
 	an_admin_tabs($active_tab);
 
  	echo '	<div id="an-settings-tabs">' . "\n";
