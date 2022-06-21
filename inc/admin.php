@@ -484,27 +484,23 @@ function an_options_page() {
 		echo '		<form class="an-tab-left" action="' . admin_url('options.php') . '" method="post">' . "\n";
 		settings_fields('an_options');
 	
-		//Propagate username change?
-		if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
-			an_propagate_username_change($an_settings['an_ebay_user']);
-		}
-
+		//Options
 		$style = ($active_tab != 'general') ? ' style="display:none"' : '';
 		echo '		<div id="an-settings-general"' . $style . '>' . "\n";
 		do_settings_sections('an_general');
 		echo '		</div>';
 
 
-		//Removed from UI, but kept for backwards compatibility
+		//Legacy
+
+		//Propagate username change?
+		if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
+			an_propagate_username_change($an_settings['an_ebay_user']);
+		}
+
 		$style = ($active_tab != 'legacy') ? ' style="display:none"' : '';
 		echo '		<div id="an-settings-legacy"' . $style . '>' . "\n";
-		echo '			<p>[HTML ;)]</p>' . "\n";
-		
-		//CSS
-		echo '			<div id="an-legacy-css">' . "\n";
 		do_settings_sections('an_legacy');
-		echo '			</div>' . "\n";
-
 		echo '		</div>' . "\n";
 
 		//Submit
@@ -672,10 +668,14 @@ function an_ebay_user_setting() {
 		
 	echo '<input type="text" id="an_ebay_user" class="regular-text" name="an_options[an_ebay_user]" value="' . $ebay_user_setting . '" />' . "\n";
 	echo '<a class="an-tooltip" data-title="This is your eBay ID &ndash; the username you are known by on eBay and appears on your listings. This is not your store name." href="#" onclick="return false;">?</a>' . "\n";
-	echo '<div style="margin-top:5px;">' . "\n";
-	echo '<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
-	echo '<small>Update every instance</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Auction Nudge instance with the new setting." href="#" onclick="return false;">?</a>' . "\n";
-	echo '</div>' . "\n";	
+	
+	//Not if disabled
+	if(isset($an_settings['an_meta_disable']) && ! $an_settings['an_meta_disable']) {
+		echo '<div style="margin-top:5px;">' . "\n";
+		echo '<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
+		echo '<small>Update every instance</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Auction Nudge instance with the new setting." href="#" onclick="return false;">?</a>' . "\n";
+		echo '</div>' . "\n";	
+	}
 }
 
 /**

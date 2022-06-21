@@ -27,20 +27,19 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name){
 	unset($shortcode_attrs['tool']);
 	
 	// 1 - Defaults from Config / Settings
- 	$request_parameters = an_request_parameters_defaults($tool_key);
+ 	$request_parameters = an_request_parameters_defaults($tool_key, true);
 
 	// 2 - Post Meta
 	$meta_parameters = an_get_post_meta($post->ID);
 	$meta_parameters = an_request_parameters_from_assoc_array($tool_key, $meta_parameters);
-	$request_parameters = shortcode_atts($request_parameters, $meta_parameters);
+	$request_parameters = array_merge($request_parameters, $meta_parameters);
 
 	// 3 - Shortcode attribtues (Item tool only)
-	$shortcode_attrs = an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_attrs);
+	$request_parameters = array_merge($request_parameters, an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_attrs, true));
 	if($tool_key == 'item' && sizeof($shortcode_attrs)) {
 		$request_parameters['item_target'] = substr(md5(json_encode($shortcode_attrs)), 0, 9);
-
-		$request_parameters = shortcode_atts($request_parameters, $shortcode_attrs);
 	}
+
 
 	$out = an_build_snippet($tool_key, $request_parameters);
 	
@@ -166,21 +165,6 @@ function an_output_load_check_js() {
 add_action('wp_head', 'an_output_load_check_js');
 
 /**
- * Load custom CSS
- */
-function an_load_css() {
-	$an_settings = an_get_settings();
-	
-	//Only output if CSS rules set
-	if(isset($an_settings['an_css_rules']) && strlen($an_settings['an_css_rules'])) {
-		echo '<style type="text/css">' . "\n";
-		echo $an_settings['an_css_rules'] . "\n";
-		echo '</style>' . "\n";		
-	}
-}
-add_action('wp_head', 'an_load_css');
-
-/**
  * =================== LOCAL REQUESTS =====================
  */
 
@@ -216,6 +200,21 @@ add_action('template_redirect', 'an_trigger_check');
 /**
  * ==================== LEGACY ============================
  */
+
+/**
+ * Load custom CSS
+ */
+function an_load_css() {
+	$an_settings = an_get_settings();
+	
+	//Only output if CSS rules set
+	if(isset($an_settings['an_css_rules']) && strlen($an_settings['an_css_rules'])) {
+		echo '<style type="text/css">' . "\n";
+		echo $an_settings['an_css_rules'] . "\n";
+		echo '</style>' . "\n";		
+	}
+}
+add_action('wp_head', 'an_load_css');
 
 /**
  * Replace markers
