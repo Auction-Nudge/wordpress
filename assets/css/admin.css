@@ -63,7 +63,7 @@ a.an-tooltip {
   display: block;
   padding: 7px;
   width: 95%;
-  font-weight: bold;
+  font-weight: lighter;
   font-size: 14px;
   border: 1px solid #DDDDDD;
   background: #F9F9F9;
@@ -157,6 +157,8 @@ a.an-tooltip {
   border: 1px solid red;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form input[type="submit"] {
+  padding: 5px 15px;
+  font-size: 16px;
   margin-left: 15px;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-preview {
@@ -166,7 +168,6 @@ a.an-tooltip {
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-preview .an-shortcode-container {
   padding: 15px;
   margin-bottom: 15px;
-  font-size: 24px;
   text-align: center;
   background: #f7f7f7;
   font-family: monospace;
