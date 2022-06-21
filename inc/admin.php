@@ -540,9 +540,7 @@ function an_options_page() {
 		if(sizeof($request_params)) {
 			echo '		<div id="an-shortcode-preview" class="an-tab-left an-tab-content">' . "\n";
 
-			echo '			<div class="an-shortcode-container" id="an-shortcode-' . $tool_key . '">' . "\n";
 			echo an_build_shortcode($tool_key, $request_params);
-			echo '			</div>' . "\n";
 			
 			echo an_build_snippet($tool_key, $request_params);
 
@@ -551,11 +549,11 @@ function an_options_page() {
 		//Can we do the default preview?
 		} elseif(isset($an_settings['an_ebay_user']) && ! empty($an_settings['an_ebay_user'])) {
 			echo '		<div id="an-shortcode-preview" class="an-tab-left an-tab-content">' . "\n";
-			echo '			<div class="an-shortcode-container" id="an-shortcode-' . $tool_key . '">' . "\n";
+
 			echo an_build_shortcode($tool_key, an_request_parameters_defaults($tool_key, true));
-			echo '			</div>' . "\n";
 
 			echo an_build_snippet($tool_key, an_request_parameters_defaults($tool_key, true));
+
 			echo '		</div>' . "\n";
 		//Nothing to Preview - Welcome screen
 		} else {

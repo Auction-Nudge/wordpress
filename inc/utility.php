@@ -155,11 +155,17 @@ function an_validate_tool_key($tool_key) {
 // 		$out .= '		<textarea readonly="readonly" id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea>' . "\n";
 // 		$out .= '	</div>' . "\n";
 
-function an_build_shortcode($tool_key = 'item', $tool_data = []) {
+function an_build_shortcode($tool_key = 'item', $tool_data = [], $wrap = true) {
 	if(! an_validate_tool_key($tool_key)) {
 		return false;
 	}
-
+	
+	if($wrap) {
+		$out = '<div class="an-shortcode-container" id="an-shortcode-' . $tool_key . '">' . "\n";
+	} else {
+		$out = '';	
+	}
+	
 	//Parse
 	$tool_data = an_request_parameters_from_assoc_array($tool_key, $tool_data);
 	
@@ -167,13 +173,17 @@ function an_build_shortcode($tool_key = 'item', $tool_data = []) {
 	$tool_key = ($tool_key == 'item') ? 'listings' : $tool_key;
 	
 	//Output	
-	$out = '[' . an_get_config('shortcode') . ' tool="' . $tool_key . '"';
+	$out .= '[' . an_get_config('shortcode') . ' tool="' . $tool_key . '"';
 
 	foreach($tool_data as $key => $value) {
 		$out .= ' ' . strtolower($key) . '="' . $value . '"';
 	}
 
  	$out .= ']';
+
+	if($wrap) {
+		$out .= '</div>';
+	}
 	
 	return $out;
 }
