@@ -196,15 +196,15 @@ function an_setup_settings_ui() {
 	}
 	
 	//Legacy Tab
-	var legacy_options = jQuery('#an-settings-legacy table', body);
-	//Legacy tab, but no legacy options
-	if(! legacy_options.length) {
-		var document_location = document.location.toString();
-		
-		if(document_location.toString().indexOf('tab=legacy') !== -1) {
-			document.location = document_location.replace('tab=legacy', 'tab=general');
-		}
-	}
+// 	var legacy_options = jQuery('#an-settings-legacy table', body);
+// 	//Legacy tab, but no legacy options
+// 	if(! legacy_options.length) {
+// 		var document_location = document.location.toString();
+// 		
+// 		if(document_location.toString().indexOf('tab=legacy') !== -1) {
+// 			document.location = document_location.replace('tab=legacy', 'tab=general');
+// 		}
+// 	}
 	
 	//Shortcode form
 	var container = jQuery('#an-custom-field-container', body);

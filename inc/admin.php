@@ -492,18 +492,26 @@ function an_options_page() {
 		echo '		<form class="an-tab-left an-tab-content" action="' . admin_url('options.php') . '" method="post">' . "\n";
 		settings_fields('an_options');
 	
-		//Options
+		// == Options ==
+		
 		$style = ($active_tab != 'general') ? ' style="display:none"' : '';
 		echo '		<div id="an-settings-general"' . $style . '>' . "\n";
 		do_settings_sections('an_general');
 		echo '		</div>';
 
-
-		//Legacy
+		// == Legacy ==
 
 		//Propagate username change?
 		if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
 			an_propagate_username_change($an_settings['an_ebay_user']);
+		}
+
+		//If enabled
+		if(isset($an_settings['an_meta_disable']) && ! $an_settings['an_meta_disable']) {
+			echo '<div style="margin-top:5px;">' . "\n";
+			echo '<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
+			echo '<small>Update every instance</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Auction Nudge instance with the new setting." href="#" onclick="return false;">?</a>' . "\n";
+			echo '</div>' . "\n";	
 		}
 
 		$style = ($active_tab != 'legacy') ? ' style="display:none"' : '';
@@ -587,13 +595,9 @@ function an_options_page() {
 function an_admin_tabs($current = 'general') {
   $tabs = array(
   	'shortcodes' => 'Shortcodes',
-  	'general' => 'Options'
+  	'general' => 'Options',
+  	'legacy' => 'Legacy'
   );
-  
-  //Do we need this?
-  if(an_has_legacy_feature()) {
-  	$tabs['legacy'] = 'Legacy';
-  }
   
   $links = array();
   foreach($tabs as $slug => $name) {
@@ -633,6 +637,11 @@ function an_admin_settings(){
 
 		
 		//Legacy...
+
+		//Meta Box
+		add_settings_section('an_items', 'Meta Boxes', 'an_meta_disable_text', 'an_legacy');
+		add_settings_field('an_meta_disable_setting', 'Disable', 'an_meta_disable_setting', 'an_legacy', 'an_items');
+
 		//Only display each if value exists
 
 		//CSS - only if it exists
@@ -661,25 +670,6 @@ function an_admin_settings(){
 	}
 }
 add_action('admin_init', 'an_admin_settings');
-
-function an_has_legacy_feature() {
-	$an_settings = an_get_settings();
-
-	$legacy_keys = [
-		'an_css_rules',
-		'an_items_code',
-		'an_profile_code',
-		'an_feedback_code'			
-	];
-	
-	foreach($legacy_keys as $key) {
-		if(isset($an_settings[$key]) && ! empty($an_settings[$key])) {
-			return true;		
-		}	
-	}
-	
-	return false;
-}
 
 /**
  * eBay defaults
@@ -781,12 +771,26 @@ function an_local_requests_setting() {
  * ==================== LEGACY ============================
  */
 
+function an_meta_disable_text() {
+	echo 'Text about disabling meta boxes';
+}
+
+function an_meta_disable_setting() {
+	$an_meta_disable = an_get_settings('an_meta_disable', true);
+	
+	echo '<select id="an_meta_disable" name="an_options[an_meta_disable]">' . "\n";		
+	$selected = ($an_meta_disable) ? ' selected="selected"' : '';
+	echo '	<option' . $selected . ' value="1">Yes</option>' . "\n";		
+	$selected = (! $an_meta_disable) ? ' selected="selected"' : '';
+	echo '	<option' . $selected . ' value="0">No</option>' . "\n";		
+	echo '</select>' . "\n";		
+// 	echo '<a class="an-tooltip" data-title="Tip tip tip" href="#" onclick="return false;">?</a>' . "\n";
+}
+
 /**
  * CSS text
  */
-function an_css_text() {
-	echo '';
-}
+
 
 /**
  * Output CSS option
