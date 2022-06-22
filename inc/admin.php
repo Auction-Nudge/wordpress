@@ -654,19 +654,19 @@ function an_admin_settings(){
 		
 		//Items
 		if(isset($an_settings['an_items_code']) && ! empty($an_settings['an_items_code'])) {
-			add_settings_section('an_items', 'Your eBay Listings', 'an_legacy_snippet_text', 'an_legacy');
+			add_settings_section('an_items', 'Legacy Listings', 'an_legacy_snippet_text', 'an_legacy');
 			add_settings_field('an_items_code_snippet', 'Insert code snippet', 'an_items_setting', 'an_legacy', 'an_items');
 		}
 
 		//Profile
 		if(isset($an_settings['an_profile_code']) && ! empty($an_settings['an_profile_code'])) {
-			add_settings_section('an_profile', 'Your eBay Profile', 'an_legacy_snippet_text', 'an_legacy');
+			add_settings_section('an_profile', 'Legacy Profile', 'an_legacy_snippet_text', 'an_legacy');
 			add_settings_field('an_profile_code_snippet', 'Insert code snippet', 'an_profile_setting', 'an_legacy', 'an_profile');
 		}
 
 		//Feedback
 		if(isset($an_settings['an_feedback_code']) && ! empty($an_settings['an_feedback_code'])) {
-			add_settings_section('an_feedback', 'Your eBay Feedback', 'an_legacy_snippet_text', 'an_legacy');
+			add_settings_section('an_feedback', 'Legacy Feedback', 'an_legacy_snippet_text', 'an_legacy');
 			add_settings_field('an_feedback_code_snippet', 'Insert code snippet', 'an_feedback_setting', 'an_legacy', 'an_feedback');
 		}
 	}

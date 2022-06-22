@@ -156,15 +156,7 @@ a.an-tooltip {
 #an-options-container {
 	position: relative;
  	margin-right: 20px;
-// 	width: 100%;
-
-	input[type="submit"] {
-		padding: 5px 15px;
-		font-size: 16px;
-		&[disabled] {
-			cursor: not-allowed;
-		}
-	}
+ 	max-width: 850px;
 
 	.nav-tab-wrapper {
 		position: relative;
@@ -187,6 +179,26 @@ a.an-tooltip {
 	#an-settings-tabs {
 		background: #fff;
 		border: 1px solid #ccc;
+
+		//Typeography
+		h2 {
+			font-size: 18px;
+			padding-bottom: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px solid #8c8f94;
+	
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+
+		input[type="submit"] {
+			padding: 5px 15px;
+			font-size: 16px;
+			&[disabled] {
+				cursor: not-allowed;
+			}
+		}
 		
 		//Tab	content	
 		.an-tab-content {
@@ -210,9 +222,7 @@ a.an-tooltip {
 				width: 29%;
 				background: #f7f7f7;		
 				> h2 {
-					margin: 0 15px 10px 15px;
-					padding-bottom: 10px;
-					border-bottom: 1px solid #8c8f94;
+					margin: 0 15px;
 				}			
 				> p {
 					margin: 15px;
@@ -278,12 +288,6 @@ a.an-tooltip {
 	//Form tables... yuk!
 	#an-settings-general,
 	#an-settings-legacy {
-		h2 {
-			&:first-child {
-				margin-top: 0;
-			}
-		}
-
 		table.form-table {
 			display: block;
 			margin-bottom: 45px;
