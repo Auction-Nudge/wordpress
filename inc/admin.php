@@ -513,9 +513,6 @@ function an_options_page() {
 		$style = ($active_tab != 'legacy') ? ' style="display:none"' : '';
 		echo '		<div id="an-settings-legacy"' . $style . '>' . "\n";
 		
-		//Notice!
-		echo an_admin_notice('These features are no longer recommended and remain for backwards compatibility only!', 'warning');
-		
 		do_settings_sections('an_legacy');
 		echo '		</div>' . "\n";
 
@@ -655,19 +652,19 @@ function an_admin_settings(){
 		
 		//Items
 		if(isset($an_settings['an_items_code']) && ! empty($an_settings['an_items_code'])) {
-			add_settings_section('an_items', 'Your eBay Listings', 'an_items_text', 'an_legacy');
+			add_settings_section('an_items', 'Your eBay Listings', 'an_legacy_snippet_text', 'an_legacy');
 			add_settings_field('an_items_code_snippet', 'Insert code snippet', 'an_items_setting', 'an_legacy', 'an_items');
 		}
 
 		//Profile
 		if(isset($an_settings['an_profile_code']) && ! empty($an_settings['an_profile_code'])) {
-			add_settings_section('an_profile', 'Your eBay Profile', 'an_profile_text', 'an_legacy');
+			add_settings_section('an_profile', 'Your eBay Profile', 'an_legacy_snippet_text', 'an_legacy');
 			add_settings_field('an_profile_code_snippet', 'Insert code snippet', 'an_profile_setting', 'an_legacy', 'an_profile');
 		}
 
 		//Feedback
 		if(isset($an_settings['an_feedback_code']) && ! empty($an_settings['an_feedback_code'])) {
-			add_settings_section('an_feedback', 'Your eBay Feedback', 'an_feedback_text', 'an_legacy');
+			add_settings_section('an_feedback', 'Your eBay Feedback', 'an_legacy_snippet_text', 'an_legacy');
 			add_settings_field('an_feedback_code_snippet', 'Insert code snippet', 'an_feedback_setting', 'an_legacy', 'an_feedback');
 		}
 	}
@@ -782,13 +779,13 @@ function an_admin_notice($text = '', $type = 'info') {
  */
 
 function an_meta_disable_text() {
-	echo '<p>Text about disabling meta boxes</p>';
+	echo an_admin_notice('<strong>The Meta Box is now a legacy feature and is not recommended!</strong></br >Instead, add <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcodes</a> anywhere they are supported.', 'warning');
 }
 
 function an_username_propagate_setting() {
 	echo '<div style="margin-top:5px;">' . "\n";
 	echo '<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
-	echo '<small>Update every instance</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Auction Nudge instance with the new setting." href="#" onclick="return false;">?</a>' . "\n";
+	echo '<small>Update every Meta Box</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Meta Box with the new setting." href="#" onclick="return false;">?</a>' . "\n";
 	echo '</div>' . "\n";	
 }
 
@@ -801,13 +798,15 @@ function an_meta_disable_setting() {
 	$selected = (! $an_meta_disable) ? ' selected="selected"' : '';
 	echo '	<option' . $selected . ' value="0">Enabled</option>' . "\n";		
 	echo '</select>' . "\n";		
-// 	echo '<a class="an-tooltip" data-title="Tip tip tip" href="#" onclick="return false;">?</a>' . "\n";
+ 	echo '<a class="an-tooltip" data-title="For backwards compatibility, even when disabled, each post retains it\'s Meta Box settings." href="#" onclick="return false;">?</a>' . "\n";
 }
 
 /**
  * CSS text
  */
-
+function an_css_text() {
+	echo an_admin_notice('<strong>This feature will be removed from the plugin soon!</strong><br />You can now add Additional CSS to your own theme from the <a href="' . admin_url('customize.php') . '">Appearance Customize Screen</a>.', 'error');
+}
 
 /**
  * Output CSS option
@@ -823,8 +822,8 @@ function an_css_setting() {
 /**
  * Items
  */
-function an_items_text() {
-	echo '';
+function an_legacy_snippet_text() {
+	echo an_admin_notice('<strong>This feature will be removed from the plugin soon!</strong><br />Instead, add <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcodes</a> anywhere they are supported.', 'error');
 }
 
 function an_items_setting() {
@@ -835,26 +834,12 @@ function an_items_setting() {
 	echo '<textarea name="an_options[an_items_code]">' . $an_items_code  . '</textarea>' . "\n";
 }
 
-/**
- * Profile
- */
-function an_profile_text() {
-	echo '';
-}
-
 function an_profile_setting() {
 	$an_settings = an_get_settings();
 	
 	$an_profile_code = isset($an_settings['an_profile_code']) ? $an_settings['an_profile_code'] : '';	
 	
 	echo '<textarea name="an_options[an_profile_code]">' . $an_profile_code . '</textarea>' . "\n";
-}
-
-/**
- * Feedback
- */
-function an_feedback_text() {
-	echo '';
 }
 
 function an_feedback_setting() {

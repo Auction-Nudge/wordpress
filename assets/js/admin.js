@@ -143,9 +143,9 @@ function an_setup_tooltips() {
     },
     mousemove: function(e) {
 			if(an_is_touch_device()) {
-			  var mousex = e.pageX - 250;			
+			  var mousex = e.pageX - 150;			
 			} else {
-			  var mousex = e.pageX - 220;				
+			  var mousex = e.pageX - 120;				
 			}
 
 		  var mousey = e.pageY + 5;
