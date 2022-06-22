@@ -158,6 +158,14 @@ a.an-tooltip {
  	margin-right: 20px;
 // 	width: 100%;
 
+	input[type="submit"] {
+		padding: 5px 15px;
+		font-size: 16px;
+		&[disabled] {
+			cursor: not-allowed;
+		}
+	}
+
 	.nav-tab-wrapper {
 		position: relative;
 		border-bottom: none;
@@ -222,19 +230,14 @@ a.an-tooltip {
 						}
 						.controls {
 							input.an-error {
-								border: 1px solid red;
+								border: 2px solid red;
 							}
 						}
 					}
 				}
 		
 				input[type="submit"] {
-					padding: 5px 15px;
-					font-size: 16px;
 					margin-left: 15px;
-					&[disabled] {
-						cursor: not-allowed;
-					}
 				}
 			}	
 

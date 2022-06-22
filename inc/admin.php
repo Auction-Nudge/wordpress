@@ -562,7 +562,8 @@ function an_options_page() {
 		//Nothing to Preview - Welcome screen
 		} else {
 			echo '		<div id="an-welcome" class="an-tab-left an-tab-content">' . "\n";
-			echo '			<p>Welcome!</p>';
+			echo '			<p class="an-lead">Your eBay Username is required.</p>' . "\n";
+			echo '			<p>Save time by <a href="' . admin_url('options-general.php?page=an_options_page') . '">setting a default</a>!</p>';
 			echo '		</div>' . "\n";
 		}
 		

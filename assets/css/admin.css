@@ -124,6 +124,13 @@ a.an-tooltip {
   position: relative;
   margin-right: 20px;
 }
+#an-options-container input[type="submit"] {
+  padding: 5px 15px;
+  font-size: 16px;
+}
+#an-options-container input[type="submit"][disabled] {
+  cursor: not-allowed;
+}
 #an-options-container .nav-tab-wrapper {
   position: relative;
   border-bottom: none;
@@ -180,15 +187,10 @@ a.an-tooltip {
   float: none;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-custom-field-container .control-group .controls input.an-error {
-  border: 1px solid red;
+  border: 2px solid red;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form input[type="submit"] {
-  padding: 5px 15px;
-  font-size: 16px;
   margin-left: 15px;
-}
-#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form input[type="submit"][disabled] {
-  cursor: not-allowed;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-preview {
   width: 63%;
