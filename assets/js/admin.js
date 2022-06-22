@@ -33,6 +33,7 @@ function an_show_theme_options(theme, context) {
 	jQuery('#grid_width-container', context).hide();
 	jQuery('#grid_cols-container', context).hide();
 	//Common options
+	jQuery('#search_box-container', context).hide();	
 	jQuery('#cats_output-container', context).hide();	
 	jQuery('#page-container', context).hide();		
 	jQuery('#img_size-container', context).hide();		
@@ -58,6 +59,7 @@ function an_show_theme_options(theme, context) {
 			jQuery('#cats_output-container', context).show();			
 			jQuery('#img_size-container', context).show();		
 			jQuery('#show_logo-container', context).show();		
+			jQuery('#search_box-container', context).show();	
 			
 			break;
 	}

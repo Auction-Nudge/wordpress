@@ -521,15 +521,36 @@ function an_options_page() {
 		echo '	</form>' . "\n";	
 
 		echo '	<div class="an-tab-right an-tab-content" id="an-about">' . "\n";	
-		echo '		<img width="60" height="60" alt="Joe\'s mug" src="http://www.josephhawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";		
-		echo '		<p><b>Hi, I\'m Joe and I created this plugin.</b></p>' . "\n";		
-		echo '		<p>I highly recommend watching the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a> on how to use the plugin.</p>' . "\n";	
-		echo '		<p>Most common issues are solved by reading the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Help</a> section. Bugs and errors can be reported <a target="_blank" href="https://www.auctionnudge.com/issues">here</a>. Please do this before leaving a poor review.</p>' . "\n";	
-		echo '		<p>If you like the plugin, please show your appreciation by <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">leaving a rating</a>. It really does help.</p>' . "\n";		
-		echo '		<p><b>Thanks!</b></p>' . "\n";		
-		echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>' . "\n";
-		echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Plugin Help</a>' . "\n";
-		echo '		<a class="button button-primary" target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">Rate the plugin <span class="dashicons dashicons-smiley" style="font-size:20px;padding-top:1px"></span></a>' . "\n";
+		echo '		<img width="120" height="120" alt="Joe\'s mug" src="http://www.josephhawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";		
+		echo '		<p class="an-lead"><b>Hi, I\'m Joe.</b>I created this plugin.</p>' . "\n";		
+	
+		echo '<p>';
+		//Prompt to set default
+		if(! an_get_settings('an_ebay_user')) {
+			//Don't link if already on the defaults tab
+			if($active_tab != 'general') {
+				echo '<a href="' . admin_url('options-general.php?page=an_options_page&tab=general') . '">Set a default eBay Username</a>,' . "\n";	
+			} else {
+				echo 'Set a default eBay Username,' . "\n";	
+			}
+				echo 'then display Your eBay Listings with this Shortcode:' . "\n";	
+		//Username set
+		} else {
+			echo 'Display Your eBay Listings with this Shortcode:' . "\n";		
+		}
+		echo '</p>';
+
+		echo an_build_shortcode('item');
+
+		echo '		<p>Use the <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcode Generator</a> to customise your content.</p>' . "\n";	
+		echo '		<p>Most common issues are solved by reading the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Help</a> section.</p>' . "\n";	
+		echo '		<p>Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">report bugs and errors</a>, I will do my best to help.</p>' . "\n";	
+		echo '		<p>If you like the plugin, please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/#new-post">leave a review</a>.</p>' . "\n";		
+
+		echo '		<p><b>Cheers!</b></p>' . "\n";		
+// 		echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>' . "\n";
+// 		echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Plugin Help</a>' . "\n";
+// 		echo '		<a class="button button-primary" target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">Rate the plugin <span class="dashicons dashicons-smiley" style="font-size:20px;padding-top:1px"></span></a>' . "\n";
 		echo '	</div>' . "\n";
 
 	//Not Settings

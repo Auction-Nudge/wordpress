@@ -22,9 +22,9 @@ a.an-tooltip {
 /* Shortcodes */
 
 .an-shortcode-container {
-	padding: 15px;
+	padding: 15px 0;
 	margin-bottom: 15px;
-// 					font-size: 24px;
+	font-size: 14px;
 	text-align: center;
 	background: #f7f7f7;			
 	font-family: monospace;	
@@ -187,9 +187,9 @@ a.an-tooltip {
 			margin-bottom: 10px;
 			border-bottom: 1px solid #8c8f94;
 	
-			&:first-child {
-				margin-top: 0;
-			}
+// 			&:first-child {
+// 				margin-top: 0;
+// 			}
 		}
 
 		input[type="submit"] {
@@ -222,7 +222,7 @@ a.an-tooltip {
 				width: 29%;
 				background: #f7f7f7;		
 				> h2 {
-					margin: 0 15px;
+					margin: 10px 15px;
 				}			
 				> p {
 					margin: 15px;
@@ -268,12 +268,23 @@ a.an-tooltip {
 			&#an-about {
 				p {
 					margin-top: 0;
+					font-size: 15px;
+					&.an-lead {
+						padding-top: 20px;
+						height: 100px;
+						font-size: 22px;
+						line-height: 1.2em;
+						b {
+							display: block;
+							margin-bottom: 10px;
+						}
+					}
 				}
 	
 				img {
-					width: 60px;
-					height: 60px;
-					margin-right: 7px;
+					width: 120px;
+					height: 120px;
+					margin-right: 10px;
 					float: left;
 					border-radius: 50%;
 				}
