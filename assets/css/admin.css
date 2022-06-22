@@ -26,6 +26,9 @@ a.an-tooltip {
   font-family: monospace;
   border: 1px solid #8c8f94;
 }
+.an-lead {
+  font-size: 135%;
+}
 /* Meta Box */
 #an-custom-field-container {
   background: #fff;

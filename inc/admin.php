@@ -623,13 +623,13 @@ function an_admin_settings(){
 		//General...
 		
 		//eBay ID
-		add_settings_section('an_ebay_defaults', 'Your eBay Defaults', 'an_ebay_defaults_text', 'an_general');
+		add_settings_section('an_ebay_defaults', 'Defaults', 'an_ebay_defaults_text', 'an_general');
 		add_settings_field('an_ebay_user', 'eBay Username', 'an_ebay_user_setting', 'an_general', 'an_ebay_defaults');
 		add_settings_field('an_ebay_site', 'eBay Site', 'an_ebay_site_setting', 'an_general', 'an_ebay_defaults');
 
 		//Requests
 		add_settings_section('an_request', 'Caching', 'an_request_text', 'an_general');
-		add_settings_field('an_local_requests', 'Use WordPress Cache?', 'an_local_requests_setting', 'an_general', 'an_request');		
+		add_settings_field('an_local_requests', '', 'an_local_requests_setting', 'an_general', 'an_request');		
 
 		
 		//Legacy...
@@ -675,7 +675,7 @@ add_action('admin_init', 'an_admin_settings');
  * eBay defaults
  */
 function an_ebay_defaults_text() {
-	echo '<p>Entering a default eBay username and site here will save you from re-entering them every time.</p>' . "\n";
+	echo '<p class="an-lead">Save time when generating <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcodes</a>!</p>' . "\n";
 }
 
 /**
@@ -737,9 +737,7 @@ function an_ebay_site_setting() {
  * Request text
  */
 function an_request_text() {
-	echo '<p>The plugin utilises the in-built WordPress caching mechanism to deliver Auction Nudge content, increasing performance.</p>' . "\n";
-
-	echo '<p>If you are experiencing issues with Auction Nudge (like if nothing is displayed), try changing this setting to "No". Don\'t worry, other caching mechanisms are still in place.</p>' . "\n";
+	echo '<p class="an-lead">The WordPress cache improves load performance.</p>' . "\n";
 }
 
 /**
@@ -752,10 +750,12 @@ function an_local_requests_setting() {
 	
 	echo '<select id="an_local_requests" name="an_options[an_local_requests]">' . "\n";		
 	$selected = ($an_local_requests == '1') ? ' selected="selected"' : '';
-	echo '	<option value="1"' . $selected . '>Yes</option>' . "\n";		
+	echo '	<option value="1"' . $selected . '>Enabled</option>' . "\n";		
 	$selected = ($an_local_requests == '0') ? ' selected="selected"' : '';
-	echo '	<option value="0"' . $selected . '>No</option>' . "\n";		
-	echo '</select>' . "\n";			
+	echo '	<option value="0"' . $selected . '>Disabled</option>' . "\n";		
+	echo '</select>' . "\n";
+
+	echo '<a class="an-tooltip" data-title="Try disabling if you are experiencing issues with Auction Nudge (like if nothing is displayed). Don\'t worry, other caching mechanisms are still in place." href="#" onclick="return false;">?</a>' . "\n";			
 }
 
 function an_admin_notice($text = '', $type = 'info') {
@@ -784,8 +784,8 @@ function an_meta_disable_text() {
 
 function an_username_propagate_setting() {
 	echo '<div style="margin-top:5px;">' . "\n";
-	echo '<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
-	echo '<small>Update every Meta Box</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Meta Box with the new setting." href="#" onclick="return false;">?</a>' . "\n";
+	echo '	<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
+	echo '	<small>Update every Meta Box</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Meta Box with the new setting." href="#" onclick="return false;">?</a>' . "\n";
 	echo '</div>' . "\n";	
 }
 
