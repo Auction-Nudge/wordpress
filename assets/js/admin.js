@@ -171,11 +171,12 @@ function an_update_tool_snippets(tool_data = []) {
 	for(tool_key in tool_data) {
 		var shortcode = an_build_shortcode(tool_key, tool_data[tool_key]);
 		
-		var font_size = 120 / (shortcode.length / 4 );		
 		var shortcode_container = jQuery('#an-shortcode-' + tool_key);
 
 		shortcode_container.html(shortcode);
-		shortcode_container.css('fontSize', font_size + 'px');
+
+// 		var font_size = 120 / (shortcode.length / 4 );		
+// 		shortcode_container.css('fontSize', font_size + 'px');
 	}
 }
 
