@@ -158,12 +158,13 @@ a.an-tooltip {
 }
 #an-options-container #an-settings-tabs .an-tab-content {
   float: left;
-  padding: 2%;
 }
 #an-options-container #an-settings-tabs .an-tab-content.an-tab-left {
-  width: 63%;
+  width: 65%;
+  padding: 1%;
 }
 #an-options-container #an-settings-tabs .an-tab-content.an-tab-right {
+  padding: 2%;
   width: 29%;
   background: #f7f7f7;
   box-shadow: -3px 3px 3px -3px rgba(0, 0, 0, 0.26);
@@ -199,7 +200,7 @@ a.an-tooltip {
   margin-left: 15px;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-preview {
-  width: 63%;
+  width: 65%;
   background: #fff;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-welcome p {
