@@ -127,9 +127,18 @@ function an_get_post_meta($post_id) {
 	return $post_meta;
 }
 
-function an_get_settings() {
+function an_get_settings($key = false, $default_value = null) {
 	$settings = get_option('an_options');
 	
+	//By key?
+	if(is_string($key)) {
+		if(isset($settings[$key])) {
+			return trim($settings[$key]);
+		} else {
+			return $default_value;
+		}
+	}	
+
 	//Not yet set
 	if(! is_array($settings)) {
 		$settings = [];
