@@ -234,7 +234,11 @@ function an_create_custom_fields_box() {
 }
 
 function an_create_custom_field_callback($tools_meta) {
+	echo an_admin_notice('<strong>This Meta Box Is Now a Legacy Feature!</strong><br />Instead, try generating <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcodes</a> and adding them anywhere Shortcodes are supported.', 'warning');
+	
 	echo an_create_custom_field_form($tools_meta, 'item', true);	//Show Help
+
+	echo an_admin_notice('For backwards compatibility, even when the Meta Box is <a href="' . admin_url('options-general.php?page=an_options_page&tab=legacy') . '"><b>disabled</b></a>, these settings remain for this post.');
 }
 
 /**
@@ -510,7 +514,7 @@ function an_options_page() {
 		echo '		<div id="an-settings-legacy"' . $style . '>' . "\n";
 		
 		//Notice!
-		echo an_admin_notice('These features are no longer recommended!');
+		echo an_admin_notice('These features are no longer recommended and remain for backwards compatibility only!', 'warning');
 		
 		do_settings_sections('an_legacy');
 		echo '		</div>' . "\n";
@@ -635,7 +639,7 @@ function an_admin_settings(){
 
 		//Meta Box
 		add_settings_section('an_meta', 'Meta Boxes', 'an_meta_disable_text', 'an_legacy');
-		add_settings_field('an_meta_disable_setting', 'Enable', 'an_meta_disable_setting', 'an_legacy', 'an_meta');
+		add_settings_field('an_meta_disable_setting', '', 'an_meta_disable_setting', 'an_legacy', 'an_meta');
 		//If Meta enabled
 		if(! an_get_settings('an_meta_disable', true)) {
 			add_settings_field('an_username_propagate_setting', 'Update Username', 'an_username_propagate_setting', 'an_legacy', 'an_meta');
@@ -793,9 +797,9 @@ function an_meta_disable_setting() {
 	
 	echo '<select id="an_meta_disable" name="an_options[an_meta_disable]">' . "\n";		
 	$selected = ($an_meta_disable) ? ' selected="selected"' : '';
-	echo '	<option' . $selected . ' value="1">No</option>' . "\n";		
+	echo '	<option' . $selected . ' value="1">Disabled</option>' . "\n";		
 	$selected = (! $an_meta_disable) ? ' selected="selected"' : '';
-	echo '	<option' . $selected . ' value="0">Yes</option>' . "\n";		
+	echo '	<option' . $selected . ' value="0">Enabled</option>' . "\n";		
 	echo '</select>' . "\n";		
 // 	echo '<a class="an-tooltip" data-title="Tip tip tip" href="#" onclick="return false;">?</a>' . "\n";
 }

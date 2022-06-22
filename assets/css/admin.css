@@ -26,9 +26,6 @@ a.an-tooltip {
   font-family: monospace;
   border: 1px solid #8c8f94;
 }
-.an-notice {
-  margin-left: 0;
-}
 /* Meta Box */
 #an-custom-field-container {
   background: #fff;
@@ -133,6 +130,9 @@ a.an-tooltip {
   bottom: -1px;
   border-bottom: none;
   background: #fff;
+}
+#an-options-container .an-notice {
+  margin-left: 0;
 }
 #an-options-container #an-settings-tabs {
   background: #fff;
