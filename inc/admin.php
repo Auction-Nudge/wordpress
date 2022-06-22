@@ -506,18 +506,12 @@ function an_options_page() {
 
 		// == Legacy ==
 
-
-		//If enabled
-		if(isset($an_settings['an_meta_disable']) && ! $an_settings['an_meta_disable']) {
-			echo '<div style="margin-top:5px;">' . "\n";
-			echo '<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
-			echo '<small>Update every instance</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Auction Nudge instance with the new setting." href="#" onclick="return false;">?</a>' . "\n";
-			echo '</div>' . "\n";	
-		}
-
 		$style = ($active_tab != 'legacy') ? ' style="display:none"' : '';
 		echo '		<div id="an-settings-legacy"' . $style . '>' . "\n";
-		echo '<p>These legacy features are no longer recommended.</p>';
+		
+		//Notice!
+		echo an_admin_notice('These features are no longer recommended!');
+		
 		do_settings_sections('an_legacy');
 		echo '		</div>' . "\n";
 
@@ -640,8 +634,12 @@ function an_admin_settings(){
 		//Legacy...
 
 		//Meta Box
-		add_settings_section('an_meta_disable', 'Meta Boxes', 'an_meta_disable_text', 'an_legacy');
-		add_settings_field('an_meta_disable_setting', 'Enable', 'an_meta_disable_setting', 'an_legacy', 'an_meta_disable');
+		add_settings_section('an_meta', 'Meta Boxes', 'an_meta_disable_text', 'an_legacy');
+		add_settings_field('an_meta_disable_setting', 'Enable', 'an_meta_disable_setting', 'an_legacy', 'an_meta');
+		//If Meta enabled
+		if(! an_get_settings('an_meta_disable', true)) {
+			add_settings_field('an_username_propagate_setting', 'Update Username', 'an_username_propagate_setting', 'an_legacy', 'an_meta');
+		}
 
 		//Only display each if value exists
 
@@ -694,14 +692,6 @@ function an_ebay_user_setting() {
 		
 	echo '<input type="text" id="an_ebay_user" class="regular-text" name="an_options[an_ebay_user]" value="' . $ebay_user_setting . '" />' . "\n";
 	echo '<a class="an-tooltip" data-title="This is your eBay ID &ndash; the username you are known by on eBay and appears on your listings. This is not your store name." href="#" onclick="return false;">?</a>' . "\n";
-	
-	//Not if disabled
-	if(isset($an_settings['an_meta_disable']) && ! $an_settings['an_meta_disable']) {
-		echo '<div style="margin-top:5px;">' . "\n";
-		echo '<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
-		echo '<small>Update every instance</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Auction Nudge instance with the new setting." href="#" onclick="return false;">?</a>' . "\n";
-		echo '</div>' . "\n";	
-	}
 }
 
 /**
@@ -767,6 +757,21 @@ function an_local_requests_setting() {
 	echo '</select>' . "\n";			
 }
 
+function an_admin_notice($text = '', $type = 'info') {
+	if(! $text) {
+		return;
+	}
+	
+	$out = '<div class="an-notice notice notice-alt inline';
+	
+	if(in_array($type, ['info', 'success', 'warning', 'error'])) {
+		$out .= ' notice-' . $type . '';	
+	}
+	
+	$out .= '"><p>' . $text . '</p></div>';
+	
+	return $out;
+}
 
 /**
  * ==================== LEGACY ============================
@@ -774,6 +779,13 @@ function an_local_requests_setting() {
 
 function an_meta_disable_text() {
 	echo '<p>Text about disabling meta boxes</p>';
+}
+
+function an_username_propagate_setting() {
+	echo '<div style="margin-top:5px;">' . "\n";
+	echo '<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
+	echo '<small>Update every instance</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Auction Nudge instance with the new setting." href="#" onclick="return false;">?</a>' . "\n";
+	echo '</div>' . "\n";	
 }
 
 function an_meta_disable_setting() {
