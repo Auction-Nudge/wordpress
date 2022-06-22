@@ -200,7 +200,16 @@ a.an-tooltip {
 			//Shortcode Form
 			&#an-shortcode-form {
 				width: 29%;
-				background: #f7f7f7;							
+				background: #f7f7f7;		
+				> h2 {
+					margin: 0 15px 10px 15px;
+					padding-bottom: 10px;
+					border-bottom: 1px solid #8c8f94;
+				}			
+				> p {
+					margin: 15px;
+					margin-bottom: 0;				
+				}		
 				#an-custom-field-container {
 					background: transparent;
 					legend {
@@ -223,6 +232,9 @@ a.an-tooltip {
 					padding: 5px 15px;
 					font-size: 16px;
 					margin-left: 15px;
+					&[disabled] {
+						cursor: not-allowed;
+					}
 				}
 			}	
 

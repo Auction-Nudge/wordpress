@@ -158,6 +158,15 @@ a.an-tooltip {
   width: 29%;
   background: #f7f7f7;
 }
+#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form > h2 {
+  margin: 0 15px 10px 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #8c8f94;
+}
+#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form > p {
+  margin: 15px;
+  margin-bottom: 0;
+}
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-custom-field-container {
   background: transparent;
 }
@@ -177,6 +186,9 @@ a.an-tooltip {
   padding: 5px 15px;
   font-size: 16px;
   margin-left: 15px;
+}
+#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form input[type="submit"][disabled] {
+  cursor: not-allowed;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-preview {
   width: 63%;

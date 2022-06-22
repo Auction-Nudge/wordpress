@@ -568,11 +568,12 @@ function an_options_page() {
 		
 		//Start Preview Form
 		echo '		<form id="an-shortcode-form" class="an-tab-right an-tab-content" action="' . admin_url($tab_url) . '" method="post">' . "\n";
+		echo '			<h2>Shortcode Generator</h2>' . "\n";
+		echo '			<p>Add Shortcodes anywhere they are supported.</p>' . "\n";
 		
 		//Display form, propogated with any user submitted values
 		echo an_create_custom_field_form($_POST, $tool_key);
 		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
-
 		echo '	</form>' . "\n";	
 		
 	}
