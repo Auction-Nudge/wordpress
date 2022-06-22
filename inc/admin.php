@@ -63,6 +63,11 @@ function an_legacy_features() {
 	global $wpdb;
 		
 	$an_settings = an_get_settings();
+
+	//Propagate username change?
+	if(an_get_settings('an_username_propagate') && an_get_settings('an_username_propagate')) {
+		an_propagate_username_change($an_settings['an_ebay_user']);
+	}
 	
 	//Meta disable
 	if(! array_key_exists('an_meta_disable', $an_settings)) {
@@ -501,10 +506,6 @@ function an_options_page() {
 
 		// == Legacy ==
 
-		//Propagate username change?
-		if(isset($an_settings['an_username_propagate']) && $an_settings['an_username_propagate'] == 'true') {
-			an_propagate_username_change($an_settings['an_ebay_user']);
-		}
 
 		//If enabled
 		if(isset($an_settings['an_meta_disable']) && ! $an_settings['an_meta_disable']) {
@@ -639,8 +640,8 @@ function an_admin_settings(){
 		//Legacy...
 
 		//Meta Box
-		add_settings_section('an_items', 'Meta Boxes', 'an_meta_disable_text', 'an_legacy');
-		add_settings_field('an_meta_disable_setting', 'Disable', 'an_meta_disable_setting', 'an_legacy', 'an_items');
+		add_settings_section('an_meta_disable', 'Meta Boxes', 'an_meta_disable_text', 'an_legacy');
+		add_settings_field('an_meta_disable_setting', 'Enable', 'an_meta_disable_setting', 'an_legacy', 'an_meta_disable');
 
 		//Only display each if value exists
 
@@ -772,7 +773,7 @@ function an_local_requests_setting() {
  */
 
 function an_meta_disable_text() {
-	echo 'Text about disabling meta boxes';
+	echo '<p>Text about disabling meta boxes</p>';
 }
 
 function an_meta_disable_setting() {
@@ -780,9 +781,9 @@ function an_meta_disable_setting() {
 	
 	echo '<select id="an_meta_disable" name="an_options[an_meta_disable]">' . "\n";		
 	$selected = ($an_meta_disable) ? ' selected="selected"' : '';
-	echo '	<option' . $selected . ' value="1">Yes</option>' . "\n";		
+	echo '	<option' . $selected . ' value="1">No</option>' . "\n";		
 	$selected = (! $an_meta_disable) ? ' selected="selected"' : '';
-	echo '	<option' . $selected . ' value="0">No</option>' . "\n";		
+	echo '	<option' . $selected . ' value="0">Yes</option>' . "\n";		
 	echo '</select>' . "\n";		
 // 	echo '<a class="an-tooltip" data-title="Tip tip tip" href="#" onclick="return false;">?</a>' . "\n";
 }

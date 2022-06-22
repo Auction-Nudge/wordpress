@@ -133,7 +133,7 @@ function an_get_settings($key = false, $default_value = null) {
 	//By key?
 	if(is_string($key)) {
 		if(isset($settings[$key])) {
-			return $settings[$key];
+			return trim($settings[$key]);
 		} else {
 			return $default_value;
 		}
