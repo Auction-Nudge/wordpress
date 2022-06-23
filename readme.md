@@ -4,17 +4,17 @@
 **Requires at least:** 3.2  
 **Tested up to:** 6.0  
 **Requires PHP:** 5.2  
-**Stable tag:** 6.2.3  
+**Stable tag:** 7.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
-Embed your live eBay listings, profile and feedback information in no time!
+Display your live eBay Listings, Profile and Feedback information in seconds!
 
 ## Description ##
 
-Display your live eBay information on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>. Once installed, all tools will update automatically to display your most recent eBay information.
+Display your live eBay information on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>, an approved eBay Compatible Application. Once installed, all tools will update automatically.
 
-The following tools are available to integrate eBay into your own website:
+These Auction Nudge tools can be added anywhere that Shortcodes are supported:
 
 * **Your eBay Listings** - displays your active items, with lots of options and filters to choose from. You visitors can:
 	* Browse multiple pages of items
@@ -24,8 +24,6 @@ The following tools are available to integrate eBay into your own website:
 * **Your eBay Profile** - displays your eBay profile information like feedback rating and date of registration as a badge
 
 * **Your eBay Feedback** - displays your most recent feedback comments
-
-This plugin allows you to add Auction Nudge within your posts and pages using shortcodes, as widgets or directly from within your theme.
 
 **Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/help#faq">Help section</a>. Bugs and errors can be reported <a href="https://www.auctionnudge.com/issues">here</a>. Please do this before leaving a poor review.**
 
@@ -57,6 +55,7 @@ The following shows just some of the options available for the Your eBay Listing
 ### Display Options ###
 
 * **Theme** - There are a number of themes and options to choose from, including a responsive design theme
+* **Language** - All tools support the following languages: English, French, German, Spanish and Italian.
 * **Category List** - Allow visitors to your site to filter your items by category
 * **Items per Page** - How many items you wish to show per page
 * **Show Multiple Pages?** - Multiple pages can show all of your items for sale
@@ -71,19 +70,23 @@ The following shows just some of the options available for the Your eBay Listing
 * **Filter by Keyword** - Specify to only show items which match a certain keyword query
 * **Filter by Category ID** - Specify to only show items listed in a certain category/categories
 
-*Auction Nudge is not owned or operated by eBay Inc. eBay and the eBay logo are trademarks of eBay Inc. As a member of the eBay Partner Network, Auction Nudge may receive anonymous referral commissions from eBay if a successful transaction occurs after clicking a link to eBay, at no cost to the user.*
+*Auction Nudge is an approved eBay Compatible Application. Auction Nudge is not owned or operated by eBay Inc. eBay and the eBay logo are trademarks of eBay Inc. As a member of the eBay Partner Network, Auction Nudge may receive anonymous referral commissions from eBay if a successful transaction occurs after clicking a link to eBay, at no cost to the user.*
 
 ## Installation ##
 
 **Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/help#faq">Help section</a>. Bugs and errors can be reported <a href="https://www.auctionnudge.com/issues">here</a>. Please do this before leaving a poor review.**
 
-Once you have installed and activated the plugin you are able to add your eBay information in a number of ways:
 
-### Within Your Pages/ Posts ###
 
-Once the plugin has been enabled, an Auction Nudge box will appear on your edit page/post admin pages under the content editor. This box enables you to specify the desired options for the Your eBay Listings, Your eBay Profile and Your eBay Feedback tools.
 
-Once you have set your options, you can add the relevant Auction Nudge shortcode (e.g. `[auction-nudge tool="listings"]`) to the content editor where you would like the content to display.
+
+
+
+
+
+
+
+
 
 Each Auction Nudge tool has it's own shortcode format:
 
@@ -96,24 +99,19 @@ Each Auction Nudge tool has it's own shortcode format:
 <!-- To display Your eBay Feedback -->
 [auction-nudge tool="feedback"]`
 
-### As Widgets ###
 
-Once the plugin is activated, Auction Nudge widgets for each tool will appear on the *Appearance > Widgets* page. Here you can create widgets with the full range of options and add them to a widget area.
 
-### From Within Your Theme ###
 
-As well as adding Auction Nudge content to your pages/posts using the shortcode you can also call the plugin directly from your theme files.
 
-To use this feature, generate your code snippets from the <a href="https://www.auctionnudge.com/tools">Auction Nudge website</a> and paste them in to the appropriate boxes in the *Settings &gt; Auction Nudge &gt; Within Your Theme* page. You can then use the following functions to add Auction Nudge within your theme files:
 
-`/* To display Your eBay Listings */
-<?php an_items(); ?>
 
-/* To display Your eBay Profile */
-<?php an_profile(); ?>
 
-/* To display Your eBay Feedback */
-<?php an_feedback(); ?>`
+
+
+
+
+
+
 
 ### Nothing Displaying? ###
 
@@ -162,6 +160,29 @@ The following links should help with most questions and issues:
 * Read through the <a href="https://www.auctionnudge.com/wordpress-plugin/help#faq">Help section</a>
 * Read through the <a href="https://www.auctionnudge.com/wordpress-plugin/usage#customize">Customize section</a>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Screenshots ##
 
 ### 1. Once installed on your site, Auction Nudge will always display your active eBay listings. ###
@@ -183,14 +204,88 @@ The following links should help with most questions and issues:
 ![Setting a default eBay username & eBay site will save you from entering them each time you want to add Auction Nudge to your page.](https://ps.w.org/auction-nudge/assets/screenshot-6.png)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Changelog ##
+
+### 7.0 ###
+
+* Release date: June 23rd, 2020
+
+This is a major update to the plugin.
+
+**Added**
+
+* Multiple Shortcodes
+* Shortcode Generator
+
+**Updated**
+
+* **Design Refresh**
+* **Code overhaul** - the plugin code has been completely refactored to make maintenance and the development of new features less sucky.
+* **<a href="https://www.auctionnudge.com/wordpress-plugin/usage">Documentation</a>** - the plugin documentation has been updated.
+* Many many other bug fixes and improvements.
+
+**Removed**
+
+* 
+
+**Legacy**
+
+* Meta
+* Widgets
+
+This is a recommended update, with lots of new features and further improvements in the works.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### 6.2.3 ###
 
 * Release date: June 9th, 2022
 
 Meta Box layout updates.
-
 
 ### 6.2.2 ###
 

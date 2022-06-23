@@ -8,7 +8,7 @@
  
 $an_plugin_config = array(
 	'plugin_name' => 'Auction Nudge',
-	'plugin_version' => '6.2.3',
+	'plugin_version' => '7.0',
 	'custom_field_prefix' => 'an',
 	'shortcode' => 'auction-nudge',
 	'tool_keys' => ['item', 'ad', 'profile', 'feedback'],
