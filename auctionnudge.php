@@ -3,7 +3,7 @@
 /*
 Plugin Name: Auction Nudge
 Plugin URI: https://www.auctionnudge.com/wordpress-plugin
-Description: This plugin enables you to display your live eBay information on your WordPress site using Auction Nudge. <strong>Add to pages/posts using the options box below the content editor, or to your theme as a <a href="widgets.php">widget</a></strong>. If you like the plugin, please show your appreciation by <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">leaving a rating</a>.
+Description: Set a default eBay Username in Settings, then display Your eBay Listings with the Shortcode [auction-nudge tool="listings"]. Use the Shortcode Generator to customize your content and to display you eBay Profile information.
 Version: 6.2.3
 Author: Joe Hawes
 Author URI: https://www.auctionnudge.com/

@@ -206,6 +206,7 @@ function an_add_action_links($links) {
  $links_before = array();
  $links_after = array(
  	'<a href="' . admin_url('options-general.php?page=an_options_page') . '">Settings</a>',	 
+ 	'<a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcode Generator</a>',	 
  );
  
  return array_merge($links_before, $links, $links_after);
