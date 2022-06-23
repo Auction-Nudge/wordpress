@@ -623,9 +623,14 @@ function an_admin_tabs($current = 'general') {
 		if($slug == $current) {
 			$links[] = '<a class="nav-tab nav-tab-active nav-tab-' . $slug . '" href="?page=an_options_page&tab=' . $slug . '">' . $name . '</a>';
 		} else {
-			$links[] = '<a class="nav-tab" href="?page=an_options_page&tab=' . $slug . '">' . $name . '</a>';
+			$links[] = '<a class="nav-tab nav-tab-' . $slug . '" href="?page=an_options_page&tab=' . $slug . '">' . $name . '</a>';
 		}
   }
+	
+	//Add Help
+	$links[] = '<a class="nav-tab nav-tab-help" href="https://www.auctionnudge.com/wordpress-plugin/help" target="_blank">Help <span class="wp-menu-image dashicons-before dashicons-external"></span></a>';
+  
+  
   echo '<h2 class="nav-tab-wrapper">';
   foreach($links as $link) {
 		echo $link; 

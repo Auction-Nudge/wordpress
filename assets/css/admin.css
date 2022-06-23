@@ -130,11 +130,16 @@ a.an-tooltip {
   position: relative;
   border-bottom: none;
 }
-#an-options-container .nav-tab-wrapper .nav-tab-active {
+#an-options-container .nav-tab-wrapper .nav-tab.nav-tab-help,
+#an-options-container .nav-tab-wrapper .nav-tab.nav-tab-active {
   position: relative;
   bottom: -1px;
   border-bottom: none;
   background: #fff;
+}
+#an-options-container .nav-tab-wrapper .nav-tab.nav-tab-help {
+  float: right;
+  background: #f7f7f7;
 }
 #an-options-container .an-notice {
   margin-left: 0;

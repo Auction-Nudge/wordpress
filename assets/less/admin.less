@@ -161,14 +161,18 @@ a.an-tooltip {
 	.nav-tab-wrapper {
 		position: relative;
 		border-bottom: none;
-		.nav-tab-active {
-			position: relative;
-			bottom: -1px;
-			border-bottom: none;
-			background: #fff;
-// 			&.nav-tab-shortcodes {
-// 				background: #f7f7f7;							
-// 			}
+		.nav-tab {
+			&.nav-tab-help,
+			&.nav-tab-active {
+				position: relative;
+				bottom: -1px;
+				border-bottom: none;
+				background: #fff;
+			}
+			&.nav-tab-help {
+				float: right;							
+				background: #f7f7f7;					
+			}
 		}
 	}
 
