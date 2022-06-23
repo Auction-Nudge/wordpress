@@ -187,7 +187,52 @@ The following links should help with most questions and issues:
 
 ### 7.0 ###
 
-* 
+* Release date: June 23rd, 2020
+
+This is a major update to the plugin.
+
+**Added**
+
+* Multiple Shortcodes
+* Shortcode Generator
+
+**Updated**
+
+* **Design Refresh**
+* **Code overhaul** - the plugin code has been completely refactored to make maintenance and the development of new features less sucky.
+* **<a href="https://www.auctionnudge.com/wordpress-plugin/usage">Documentation</a>** - the plugin documentation has been updated.
+* Many many other bug fixes and improvements.
+
+**Removed**
+
+
+
+**Legacy**
+
+
+
+This is a recommended update, with lots of new features and further improvements in the works.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### 6.2.3 ###
 
