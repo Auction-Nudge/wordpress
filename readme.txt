@@ -4,7 +4,7 @@ Tags: eBay, widget, embed, feed, integration, display, sidebar, integrate, listi
 Requires at least: 3.2
 Tested up to: 6.0
 Requires PHP: 5.2
-Stable tag: 6.2.3
+Stable tag: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,12 +177,15 @@ The following links should help with most questions and issues:
 
 == Changelog ==
 
+= 7.0 =
+
+* 
+
 = 6.2.3 =
 
 * Release date: June 9th, 2022
 
 Meta Box layout updates.
-
 
 = 6.2.2 =
 
