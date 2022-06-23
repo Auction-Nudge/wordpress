@@ -165,8 +165,8 @@ a.an-tooltip {
   float: left;
 }
 #an-options-container #an-settings-tabs .an-tab-content.an-tab-left {
-  width: 65%;
-  padding: 1%;
+  width: 63%;
+  padding: 2%;
 }
 #an-options-container #an-settings-tabs .an-tab-content.an-tab-right {
   padding: 2%;
@@ -206,6 +206,7 @@ a.an-tooltip {
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-preview {
   width: 65%;
+  padding: 1%;
   background: #fff;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-welcome p {
