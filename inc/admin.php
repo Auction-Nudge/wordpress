@@ -239,7 +239,7 @@ function an_create_custom_field_callback($tools_meta) {
 	
 	echo an_create_custom_field_form($tools_meta, 'item', true);	//Show Help
 
-	echo an_admin_notice('For backwards compatibility, even when the Meta Box is <a href="' . admin_url('options-general.php?page=an_options_page&tab=legacy') . '"><b>disabled</b></a>, these settings remain for this post.');
+	echo an_admin_notice('For backwards compatibility, even when the Meta Box is <a href="' . admin_url('options-general.php?page=an_options_page&tab=legacy') . '"><b>disabled</b></a>, these options remain for this post.');
 }
 
 /**
@@ -469,7 +469,7 @@ function an_save_custom_fields($post_id, $post) {
 function an_admin_page() {
 	//Permissions
 	if(current_user_can('manage_options')) {
-		add_options_page(an_get_config('plugin_name') . ' Options', an_get_config('plugin_name'), 'manage_options', 'an_options_page', 'an_options_page');
+		add_options_page(an_get_config('plugin_name') . ' Settings', an_get_config('plugin_name'), 'manage_options', 'an_options_page', 'an_options_page');
 	}
 }
 add_action('admin_menu', 'an_admin_page');
@@ -502,7 +502,7 @@ function an_options_page() {
 		echo '		<form class="an-tab-left an-tab-content" action="' . admin_url('options.php') . '" method="post">' . "\n";
 		settings_fields('an_options');
 	
-		// == Options ==
+		// == Settings ==
 		
 		$style = ($active_tab != 'general') ? ' style="display:none"' : '';
 		echo '		<div id="an-settings-general"' . $style . '>' . "\n";
@@ -616,7 +616,7 @@ function an_options_page() {
 function an_admin_tabs($current = 'general') {
   $tabs = array(
   	'shortcodes' => 'Shortcodes',
-  	'general' => 'Options',
+  	'general' => 'Settings',
   	'legacy' => 'Legacy'
   );
   

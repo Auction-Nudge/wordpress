@@ -258,6 +258,7 @@ function an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_par
 	
 	return $request_parameters;
 }
+
 function an_shortcode_parameters_help_table($tool_keys = [ 'item', 'profile', 'feedback' ]) {
 	$out = '<table>';
 	

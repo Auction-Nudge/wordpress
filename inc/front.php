@@ -66,7 +66,7 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 	//Request string
 	$request_string = an_request_parameters_to_request_string($request_parameters);
 	
-	//Get options
+	//Get Settings
 	$an_settings = an_get_settings();
 	
 	//Local requests
