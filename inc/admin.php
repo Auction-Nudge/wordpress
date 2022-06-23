@@ -544,14 +544,15 @@ function an_options_page() {
 		echo an_build_shortcode('item');
 
 		echo '		<p>Use the <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcode Generator</a> to customise your content.</p>' . "\n";	
+
+		echo '		<hr />' . "\n";	
+
 		echo '		<p>Most common issues are solved by reading the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Help</a> section.</p>' . "\n";	
 		echo '		<p>Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">report bugs and errors</a>, I will do my best to help.</p>' . "\n";	
 		echo '		<p>If you like the plugin, please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/#new-post">leave a review</a>.</p>' . "\n";		
 
 		echo '		<p><b>Cheers!</b></p>' . "\n";		
-// 		echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through Video</a>' . "\n";
-// 		echo '		<a class="button" target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Plugin Help</a>' . "\n";
-// 		echo '		<a class="button button-primary" target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/">Rate the plugin <span class="dashicons dashicons-smiley" style="font-size:20px;padding-top:1px"></span></a>' . "\n";
+		echo '		<footer>v' . an_get_config('plugin_version') . ' | Since 2008</footer>' . "\n";		
 		echo '	</div>' . "\n";
 
 	//Not Settings
