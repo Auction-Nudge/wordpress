@@ -137,114 +137,39 @@ The following links should help with most questions and issues:
 * The <a href="https://www.auctionnudge.com/help">Full Auction Nudge Help</a> section.
 * The <a href="https://wordpress.org/support/plugin/auction-nudge/">Plugin Support</a> forum on WordPress.org.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 == Screenshots ==
 
-1. Once installed on your site, Auction Nudge will always display your active eBay listings.
-2. You can also display your eBay profile.
-3. As well as your most recent eBay feedback.
-4. Setup the tools using the Auction Nudge box that appears under the content editor, then add the shortcode to the content editor.
-5. Widgets are available for each tool.
-6. Setting a default eBay username & eBay site will save you from entering them each time you want to add Auction Nudge to your page.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+1. Preview and customize your Shortcode.
+2. Display your eBay profile.
+3. Display your feedback profile.
+4. Add Shortcodes anywhere they are supported.
+5. Promote your eBay content on your site.
+6. A default eBay username saves time!
 
 == Changelog ==
 
 = 7.0 =
 
-* Release date: June 23rd, 2020
+* Release date: June 2020
 
-This is a major update to the plugin.
+**This is a major re-working of the plugin. The Meta Box is being retired in favour of full Shortcode support.**
+
+I have attempted to make every change backwards compatible to cater for all users. Please do <a href="https://wordpress.org/support/plugin/auction-nudge/#new-post">reach out</a> if you have any issues after updating. Cheers, Joe.
 
 **Added**
 
-* Multiple Shortcodes
-* Shortcode Generator
-
-**Updated**
-
-* **Design Refresh**
-* **Code overhaul** - the plugin code has been completely refactored to make maintenance and the development of new features less sucky.
-* **<a href="https://www.auctionnudge.com/wordpress-plugin/usage">Documentation</a>** - the plugin documentation has been updated.
-* Many many other bug fixes and improvements.
+* **Multiple Shortcodes** - Add Shortcodes anywhere they are supported. Customize your content using Shortcode parameters (e.g. `[auction-nudge tool="listings" lang="french" maxentries="100" search_box="0"]`).
+* **Shortcode Generator** - This tool allows you to preview and customize your eBay content, providing you with the appropriate Shortcode.
 
 **Removed**
 
-* 
+* **Legacy Widget Support** - This feature is no longer supported. Check out the Shortcode Generator (Settings > Auction Nudge), or refer to the <a href="https://www.auctionnudge.com/wordpress-plugin/usage">Using the Plugin</a> page.
 
-**Legacy**
+**Changed**
 
-* Meta
-* Widgets
-
-This is a recommended update, with lots of new features and further improvements in the works.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* **Meta Box** - This is now a legacy feature and is not recommended! Instead, try generating Shortcodes (Settings > Auction Nudge) and adding them anywhere Shortcodes are supported, or refer to the <a href="https://www.auctionnudge.com/wordpress-plugin/usage">Using the Plugin</a> page. For backwards compatibility, even with the Meta Box disabled (Settings > Auction Nudge), each post retains it\'s Meta Box options.
+* Major design and code overhaul.
+* Many many other bug fixes and improvements.
 
 = 6.2.3 =
 
@@ -257,7 +182,6 @@ Meta Box layout updates.
 * Release date: May 24th, 2022
 
 Minor bug fixes. Thanks to <a href="https://wordpress.org/support/users/bkjproductions/">bkjproductions</a> for letting me know about <a href="https://wordpress.org/support/topic/undefined-offset-in-parameters-php/">this one</a>.
-
 
 = 6.2.1 =
 
