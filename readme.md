@@ -1,6 +1,6 @@
 # Auction Nudge - Your eBay on Your Site #
 **Contributors:** [morehawes](https://profiles.wordpress.org/morehawes/)  
-**Tags:** eBay, widget, embed, feed, integration, display, sidebar, integrate, listings, item, items, search, pagination, profile, feedback, free, products, ad, ads, adverts, banner, banners, shop, store, advertise, advertising, on your own site, automatic, automatically, update, category, keywords, seller, user, username, links, images, pictures, international, US, UK, Canada, Australia, Belgium, Germany, France, Spain, Austria, Italy, Netherlands, Ireland, Switzerland, ebay.com, ebay.co.uk, ebay.ca, ebay.com.au, ebay.be, ebay.de, ebay.fr, ebay.at, ebay.it, ebay.nl, ebay.ie, ebay.pl, ebay.es, ebay.ch, Auction Nudge, auctionnudge.com, plugin, widgets  
+**Tags:** ebay, item, listing, profile, feedback, feed, embed, store, shop  
 **Requires at least:** 3.2  
 **Tested up to:** 6.0  
 **Requires PHP:** 5.2  
@@ -8,11 +8,11 @@
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
-Display your live eBay Listings, Profile and Feedback information in seconds!
+Display your live eBay Listings, Profile and Feedback information with a Shortcode.
 
 ## Description ##
 
-Display your live eBay information on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>, an approved eBay Compatible Application. Once installed, all tools will update automatically.
+Display your live eBay information on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>, an approved eBay Compatible Application.
 
 These Auction Nudge tools can be added anywhere that Shortcodes are supported:
 
@@ -25,37 +25,35 @@ These Auction Nudge tools can be added anywhere that Shortcodes are supported:
 
 * **Your eBay Feedback** - displays your most recent feedback comments
 
-**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/help#faq">Help section</a>. Bugs and errors can be reported <a href="https://www.auctionnudge.com/issues">here</a>. Please do this before leaving a poor review.**
-
-### Auction Nudge Options ###
-
-Available for the following international eBay sites:
-
-* eBay US
-* eBay UK
-* eBay Canada
-* eBay Australia
-* eBay Belgium
-* eBay Germany
-* eBay France
-* eBay Spain
-* eBay Austria
-* eBay Italy
-* eBay Netherlands
-* eBay Ireland
-* eBay Switzerland
-
-The following shows just some of the options available for the Your eBay Listings tool:
+**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/help">Help section</a>. Bugs and errors can be reported <a href="https://wordpress.org/support/plugin/auction-nudge/">here</a>. Please do this before leaving a poor review.**
 
 ### Feed Options ###
 
-* **eBay Username** - The eBay account name you want to display items for
-* **eBay Site** - Which international eBay site your items are listed on
+* **eBay Username** - You eBay account username (not your Store ID)
+* **eBay Site** - Where your items are listed:
+	* eBay US
+	* eBay UK
+	* eBay Canada
+	* eBay Australia
+	* eBay Belgium
+	* eBay Germany
+	* eBay France
+	* eBay Spain
+	* eBay Austria
+	* eBay Italy
+	* eBay Netherlands
+	* eBay Ireland
+	* eBay Switzerland
 
 ### Display Options ###
 
 * **Theme** - There are a number of themes and options to choose from, including a responsive design theme
-* **Language** - All tools support the following languages: English, French, German, Spanish and Italian.
+* **Language** - All tools support the following languages: 
+	* English
+	* French
+	* German
+	* Spanish
+	* Italian
 * **Category List** - Allow visitors to your site to filter your items by category
 * **Items per Page** - How many items you wish to show per page
 * **Show Multiple Pages?** - Multiple pages can show all of your items for sale
@@ -74,21 +72,11 @@ The following shows just some of the options available for the Your eBay Listing
 
 ## Installation ##
 
-**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/help#faq">Help section</a>. Bugs and errors can be reported <a href="https://www.auctionnudge.com/issues">here</a>. Please do this before leaving a poor review.**
+**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/help">Help section</a>. Bugs and errors can be reported <a href="https://wordpress.org/support/plugin/auction-nudge/">here</a>. Please do this before leaving a poor review.**
 
+Once the plugin has been activated, go to Settings > Auction Nudge to set your default eBay username and eBay site. These aren't required, but this will save you time.
 
-
-
-
-
-
-
-
-
-
-
-
-Each Auction Nudge tool has it's own shortcode format:
+Now you can add the appropriate Auction Nudge Shortcode to your WordPress site anywhere Shortcodes are supported:
 
 `<!-- To display Your eBay Listings -->
 [auction-nudge tool="listings"]
@@ -99,19 +87,13 @@ Each Auction Nudge tool has it's own shortcode format:
 <!-- To display Your eBay Feedback -->
 [auction-nudge tool="feedback"]`
 
+Use the Shortcode Generator (Settings > Auction Nudge) to customise your content, or pass your options to the Shortcode like this:
 
+`<!-- Showing items for the eBay username "ebay_username" -->
+[auction-nudge tool="listings" sellerid="ebay_username"]
 
-
-
-
-
-
-
-
-
-
-
-
+<!-- Show 100 items, in French and disable search -->
+[auction-nudge tool="listings" lang="french" maxentries="100" search_box="0"]`
 
 ### Nothing Displaying? ###
 
@@ -119,18 +101,13 @@ A common reason for Auction Nudge not loading is the use of **ad blocking browse
 
 ## Frequently Asked Questions ##
 
-**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/help#faq">Help section</a>. Bugs and errors can be reported <a href="https://www.auctionnudge.com/issues">here</a>. Please do this before leaving a poor review.**
-
-Please refer to the Auction Nudge website to:
-
-* Read the <a href="https://www.auctionnudge.com/wordpress-plugin/help#faq">plugin FAQ</a> for common issues.
-* Watch the <a href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through video</a> to ensure you have the plugin set up correctly.
+**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/help">Help section</a>. Bugs and errors can be reported <a href="https://wordpress.org/support/plugin/auction-nudge/">here</a>. Please do this before leaving a poor review.**
 
 ### Nothing is Displaying, What's Wrong? ###
 
 A common reason for Auction Nudge not loading is the use of **ad blocking browser plugins**. If you are using such a plugin, disable it, or add an exception to see if Auction Nudge loads without it.
 
-<a href="https://www.auctionnudge.com/wordpress-plugin/help#faq">More help</a>
+<a href="https://www.auctionnudge.com/wordpress-plugin/help">More help</a>
 
 ### How Often Does Auction Nudge Update? ###
 
@@ -146,19 +123,19 @@ These update times aim to optimise server resources by updating the most importa
 
 Auction Nudge funds itself through referral commissions from eBay. As a member of the eBay Partner Network, Auction Nudge may receive anonymous referral commissions from eBay if a successful transaction occurs after clicking a link to eBay, at no cost to the user.
 
-This means Auction Nudge is free to use and there are no 'pay to unlock' type restrictions and no signups - just obtain your code snippet and install it on your site!
+This means Auction Nudge is free to use and there are no 'pay to unlock' restrictions.
 
 ### How Can I Modify the Appearance of Auction Nudge? ###
 
-Please see the <a href="https://www.auctionnudge.com/wordpress-plugin/usage#customize">Customize</a> section of the Auction Nudge website.
+Please see the <a href="https://www.auctionnudge.com/wordpress-plugin/usage">Using the Plugin</a> page of the Auction Nudge website.
 
 ### Where Can I Find More Help? ###
 
 The following links should help with most questions and issues:
 	
-* Watch the <a href="https://www.auctionnudge.com/wordpress-plugin/usage#video">Walk-through video</a>
-* Read through the <a href="https://www.auctionnudge.com/wordpress-plugin/help#faq">Help section</a>
-* Read through the <a href="https://www.auctionnudge.com/wordpress-plugin/usage#customize">Customize section</a>
+* The <a href="https://www.auctionnudge.com/wordpress-plugin/help">WordPress Help</a> page.
+* The <a href="https://www.auctionnudge.com/help">Full Auction Nudge Help</a> section.
+* The <a href="https://wordpress.org/support/plugin/auction-nudge/">Plugin Support</a> forum on WordPress.org.
 
 
 
