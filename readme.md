@@ -31,7 +31,7 @@ Tools available:
 
 * **Your eBay Feedback** - displays your most recent feedback comments
 
-**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/help">Help section</a>. Bugs and errors can be reported <a href="https://wordpress.org/support/plugin/auction-nudge/">here</a>. Please do this before leaving a poor review.**
+**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/usage">Help section</a>. Bugs and errors can be reported <a href="https://wordpress.org/support/plugin/auction-nudge/">here</a>. Please do this before leaving a poor review.**
 
 ### Feed Options ###
 
@@ -78,7 +78,7 @@ Tools available:
 
 ## Installation ##
 
-**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/help">Help section</a>. Bugs and errors can be reported <a href="https://wordpress.org/support/plugin/auction-nudge/">here</a>. Please do this before leaving a poor review.**
+**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/usage">Help section</a>. Bugs and errors can be reported <a href="https://wordpress.org/support/plugin/auction-nudge/">here</a>. Please do this before leaving a poor review.**
 
 Once the plugin has been activated, go to Settings > Auction Nudge to set your default eBay username and eBay site. These aren't required, but this will save you time.
 
@@ -107,13 +107,13 @@ A common reason for Auction Nudge not loading is the use of **ad blocking browse
 
 ## Frequently Asked Questions ##
 
-**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/help">Help section</a>. Bugs and errors can be reported <a href="https://wordpress.org/support/plugin/auction-nudge/">here</a>. Please do this before leaving a poor review.**
+**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/usage">Help section</a>. Bugs and errors can be reported <a href="https://wordpress.org/support/plugin/auction-nudge/">here</a>. Please do this before leaving a poor review.**
 
 ### Nothing is Displaying, What's Wrong? ###
 
 A common reason for Auction Nudge not loading is the use of **ad blocking browser plugins**. If you are using such a plugin, disable it, or add an exception to see if Auction Nudge loads without it.
 
-<a href="https://www.auctionnudge.com/wordpress-plugin/help">More help</a>
+<a href="https://www.auctionnudge.com/wordpress-plugin/usage">More help</a>
 
 ### How Often Does Auction Nudge Update? ###
 
@@ -139,7 +139,7 @@ Please see the <a href="https://www.auctionnudge.com/wordpress-plugin/usage">Usi
 
 The following links should help with most questions and issues:
 	
-* The <a href="https://www.auctionnudge.com/wordpress-plugin/help">WordPress Help</a> page.
+* The <a href="https://www.auctionnudge.com/wordpress-plugin/usage">WordPress Help</a> page.
 * The <a href="https://www.auctionnudge.com/help">Full Auction Nudge Help</a> section.
 * The <a href="https://wordpress.org/support/plugin/auction-nudge/">Plugin Support</a> forum on WordPress.org.
 

@@ -524,8 +524,10 @@ function an_options_page() {
 		echo '	<div class="an-tab-right an-tab-content" id="an-about">' . "\n";	
 		echo '		<img width="120" height="120" alt="Joe\'s mug" src="http://www.josephhawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";		
 		echo '		<p class="an-lead"><b>Hi, I\'m Joe.</b>I created this plugin.</p>' . "\n";		
+
+		echo an_admin_notice('<strong>Version 7</strong><br />Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">reach out</a> if you experience any issues after updating.', 'warning');
 	
-		echo '<p>';
+		echo '<p style="margin-top: 15px">';
 		//Prompt to set default
 		if(! an_get_settings('an_ebay_user')) {
 			//Don't link if already on the defaults tab
@@ -547,7 +549,7 @@ function an_options_page() {
 
 		echo '		<hr />' . "\n";	
 
-		echo '		<p>Most common issues are solved by reading the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/help">Help</a> section.</p>' . "\n";	
+		echo '		<p>Most common issues are solved by reading the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a> section.</p>' . "\n";	
 		echo '		<p>Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">report bugs and errors</a>, I will do my best to help.</p>' . "\n";	
 		echo '		<p>If you like the plugin, please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/#new-post">leave a review</a>.</p>' . "\n";		
 
@@ -630,7 +632,7 @@ function an_admin_tabs($current = 'general') {
   }
 	
 	//Add Help
-	$links[] = '<a class="nav-tab nav-tab-help" href="https://www.auctionnudge.com/wordpress-plugin/help" target="_blank">Help <span class="wp-menu-image dashicons-before dashicons-external"></span></a>';
+	$links[] = '<a class="nav-tab nav-tab-help" href="https://www.auctionnudge.com/wordpress-plugin/usage" target="_blank">Help <span class="wp-menu-image dashicons-before dashicons-external"></span></a>';
   
   
   echo '<h2 class="nav-tab-wrapper">';
