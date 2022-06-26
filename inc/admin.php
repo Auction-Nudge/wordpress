@@ -788,18 +788,18 @@ function an_local_requests_setting() {
 	echo '<a class="an-tooltip" data-title="Try disabling if you are experiencing issues with Auction Nudge (like if nothing is displayed). Don\'t worry, other caching mechanisms are still in place." href="#" onclick="return false;">?</a>' . "\n";			
 }
 
-function an_admin_notice($text = '', $type = 'info') {
+function an_admin_notice($text = '', $type = 'info', $tag = 'div') {
 	if(! $text) {
 		return;
 	}
 	
-	$out = '<div class="an-notice notice notice-alt inline';
+	$out = '<' . $tag . ' class="an-notice notice notice-alt inline';
 	
 	if(in_array($type, ['info', 'success', 'warning', 'error'])) {
 		$out .= ' notice-' . $type . '';	
 	}
 	
-	$out .= '"><p>' . $text . '</p></div>';
+	$out .= '"><p>' . $text . '</p></' . $tag . '>';
 	
 	return $out;
 }

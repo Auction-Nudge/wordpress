@@ -61,6 +61,12 @@ a.an-tooltip {
   float: right;
   margin-left: 40px;
 }
+/* Legacy Widgets */
+.wp-block-legacy-widget .an-widget-container .notice {
+  display: block !important;
+  margin-left: 0;
+  font-size: 12px;
+}
 /* Meta Box & Widgets */
 #an-custom-field-container,
 .an-widget-container {

@@ -45,6 +45,9 @@ class Auction_Nudge_Widget extends WP_Widget {
 		//Form wrap
 		echo '<div class="an-widget-container">' . "\n";	
 		
+		//Legacy warning
+		echo an_admin_notice('<strong>Support for Legacy Widgets has been removed from the plugin!</strong><br /> Instead add <em>Shortcodes</em> anywhere they are supported, customize them with the <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcode Generator</a>.', 'warning');
+	
 		//Widget title input
 		echo $this->an_build_widget_title_input($instance, $this->get_field_name('an_widget_title'));
 
