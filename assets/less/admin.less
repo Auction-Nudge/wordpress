@@ -5,14 +5,13 @@ a.an-tooltip {
 	padding: 0 5px;
 	text-decoration: none;
 	cursor: help;
-	background: #F9F9F9;
 	color: #444;
 	border: 1px solid #DDDDDD;
 	border-radius: 50%;
 }
-#tooltip-active {
+#an-tooltip-active {
 	position: absolute;
-	max-width: 240px;
+	width: 180px;
 	border: 1px solid #333;
 	background-color: #161616;
 	border-radius: 5px;
@@ -20,53 +19,65 @@ a.an-tooltip {
 	color: #fff;
 }
 
+/* Shortcodes */
+
+.an-shortcode-container {
+	padding: 15px 0;
+	margin-bottom: 15px;
+	font-size: 14px;
+	text-align: center;
+	background: #f7f7f7;			
+	font-family: monospace;	
+	border: 1px solid #8c8f94;
+}
+
+.an-lead {
+	font-size: 135%;
+}
+
 /* Meta Box */
 
 #an-custom-field-container {
-	max-width: 440px;
-	min-height: 370px;
+// 	max-width: 440px;
+// 	min-height: 370px;
+	background: #fff;
+	padding: 15px;
 
 	/* Tool Tabs */
-
-	ul#an-tab-links {
-		list-style-type: none;
-		border-bottom: 1px solid #DDDDDD;	
-		li {
-			display: inline-block;
-		
-			&:first-child {
-				margin-left: 10px;
-			}		
-		
-			a {
-				padding: 7px 12px 6px 12px;
-				color: #444;
-				text-decoration: none;
-				border: 1px solid #DDDDDD;
-				border-bottom: none;
-				background: #F9F9F9;
-
-				&:hover,
-				&.active {
-					padding-bottom: 7px;
-					background: #fff;
-				}			
-			}		
-		}
-	}	
+	#an-tool-selector	{
+		select#an-tab-links {
+			margin: 0 0 30px 0;
+			width: 100%;
+// 			color: #fff;
+// 			padding: 5px 15px 5px 45px;
+			padding: 5px 15px;
+			font-size: 16px;
+			font-weight: bold;
+// 			background-color: #79a513;
+// 			background-image: url(../img/logo.png);
+// 			background-position: center left;
+// 			background-size: 35px 35px;
+			option {
+				span {
+					font-size: 24px;
+				}
+			}
+		}	
+	}
 
 	/* Help */
 	
 	.an-custom-field-help {
 		margin: 20px 0 0 0;
-		padding: 10px;
-		border: 1px solid #DDDDDD;
-		background: #F9F9F9;
+// 		padding: 10px;
+// 		border: 1px solid #DDDDDD;
+// 		background: #F9F9F9;
 		 p {
 			margin: 0 0 12px 0;
 		}
 		textarea {
-			width: 300px;
+			font-size: 10px;
+			width: 100%;
 		}
 		a.button {
 			float: right;
@@ -74,6 +85,14 @@ a.an-tooltip {
 		}		
 	}		
 }
+
+/* Legacy Widgets */
+.wp-block-legacy-widget .an-widget-container .notice {
+	display: block !important;
+	margin-left: 0;
+	font-size: 12px;
+}
+
 
 /* Meta Box & Widgets */
 
@@ -83,14 +102,14 @@ a.an-tooltip {
 	/* Groups */
 
 	fieldset.an-parameter-group {
-		width: 420px;
+// 		width: 420px;
 		margin: 10px 0 20px 0;	
 	
 		legend {
 			display: block;
 			padding: 7px;
 			width: 95%;
-			font-weight: bold;
+			font-weight: lighter;
 			font-size: 14px;
 			border: 1px solid #DDDDDD;
 			background: #F9F9F9;
@@ -144,44 +163,182 @@ a.an-tooltip {
 
 #an-options-container {
 	position: relative;
-	padding-right: 200px;
-	width: 600px;
+ 	margin-right: 20px;
+ 	max-width: 850px;
 
-	#an-about {
-		position: absolute;
-		top: 0;
-		right: 0;
-		width: 150px;
-		height: 555px;
-		padding: 15px;
+	.nav-tab-wrapper {
+		position: relative;
+		border-bottom: none;
+		.nav-tab {
+			&.nav-tab-help,
+			&.nav-tab-active {
+				position: relative;
+				bottom: -1px;
+				border-bottom: none;
+				background: #fff;
+			}
+			&.nav-tab-help {
+				float: right;							
+				background: #f7f7f7;					
+			}
+		}
+	}
+
+	.an-notice {
+		margin-left: 0;
+	}
+
+	#an-settings-tabs {
+		background: #fff;
 		border: 1px solid #ccc;
-		background: #f7f7f7;
 
-		p {
-			margin-top: 0;
-		}
-		img {
-			width: 60px;
-			height: 60px;
-			margin-right: 7px;
-			float: left;
-			border-radius: 50%;
-		}
-		a.button {
-			margin-bottom: 5px;
-		}
-	}
+		//Typeography
+		h2 {
+			font-size: 18px;
+			padding-bottom: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px solid #8c8f94;
 	
-	th[scope="row"] {
-		width: 170px;
+// 			&:first-child {
+// 				margin-top: 0;
+// 			}
+		}
+
+		input[type="submit"] {
+			padding: 5px 15px;
+			font-size: 16px;
+			&[disabled] {
+				cursor: not-allowed;
+			}
+		}
+		
+		//Tab	content	
+		.an-tab-content {
+			float: left;	
+		
+			//Left
+			&.an-tab-left {
+				width: 63%;
+				padding: 2%;
+			}
+			//Right
+			&.an-tab-right {
+				padding: 2%;
+				width: 29%;
+				background: #f7f7f7;	
+   			box-shadow: -3px 3px 3px -3px rgba(0,0,0,0.26);
+   			border-bottom-left-radius: 5px;
+   		}			
+
+			//Shortcode Form
+			&#an-shortcode-form {
+				width: 29%;
+				background: #f7f7f7;		
+				> h2 {
+					margin: 10px 15px;
+				}			
+				> p {
+					margin: 15px;
+					margin-bottom: 0;				
+				}		
+				#an-custom-field-container {
+					background: transparent;
+					legend {
+						background: #fff;
+					}
+					.control-group {
+						width: unset;
+						.control-label {
+							float: none;
+						}
+						.controls {
+							input.an-error {
+								border: 2px solid red;
+							}
+						}
+					}
+				}
+		
+				input[type="submit"] {
+					margin-left: 15px;
+				}
+			}	
+
+			//Shortcode Preview
+			&#an-shortcode-preview {
+				width: 65%;
+				padding: 1%;
+				background: #fff;		
+			}						
+			
+			//Welcome
+			&#an-welcome {
+				p {
+					display: block;
+				}
+			}
+
+			//Plugin about
+			&#an-about {
+				p {
+					margin-top: 0;
+					font-size: 15px;
+					&.an-lead {
+						padding-top: 25px;
+						height: 100px;
+						font-size: 18px;
+						line-height: 1.2em;
+						b {
+							display: block;
+							font-size: 20px;
+							margin-bottom: 10px;
+						}
+					}
+				}
+	
+				img {
+					width: 120px;
+					height: 120px;
+					margin-right: 10px;
+					float: left;
+					border-radius: 50%;
+				}
+	
+				a.button {
+					margin-bottom: 5px;
+				}
+				footer {
+					float: right;
+					color: #999;
+				}
+			}	
+		}
 	}
-	select,
-	input[type="text"] {
-		width: 200px;
-		border-style: solid;
-		border-width: 1px;
-		border-color: #DDDDDD;
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07) inset;	
+
+	//Form tables... yuk!
+	#an-settings-general,
+	#an-settings-legacy {
+		table.form-table {
+			display: block;
+			margin-bottom: 45px;
+			tbody, tr, th, td {
+				margin: 0;
+				padding: 0;
+				display: block;
+			}
+			th[scope="row"] {
+				margin: 20px 0 5px 0;
+				width: 170px;
+			}
+			select,
+			input[type="text"] {
+				width: 180px;
+				border-style: solid;
+				border-width: 1px;
+				border-color: #DDDDDD;
+				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07) inset;	
+			}
+		}
 	}
 }
 

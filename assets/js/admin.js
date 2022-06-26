@@ -33,6 +33,7 @@ function an_show_theme_options(theme, context) {
 	jQuery('#grid_width-container', context).hide();
 	jQuery('#grid_cols-container', context).hide();
 	//Common options
+	jQuery('#search_box-container', context).hide();	
 	jQuery('#cats_output-container', context).hide();	
 	jQuery('#page-container', context).hide();		
 	jQuery('#img_size-container', context).hide();		
@@ -58,6 +59,7 @@ function an_show_theme_options(theme, context) {
 			jQuery('#cats_output-container', context).show();			
 			jQuery('#img_size-container', context).show();		
 			jQuery('#show_logo-container', context).show();		
+			jQuery('#search_box-container', context).show();	
 			
 			break;
 	}
@@ -101,9 +103,232 @@ function an_alt_inputs() {
 	});
 }
 
+function an_create_tool_data(shortcode_data) {
+	var tool_data = {
+		'item': {},
+		'profile': {},
+		'feedback': {}
+	}
+	
+	for(data_key in shortcode_data) {
+		switch(0) {
+			case data_key.indexOf('item_') :
+				tool_data['item'][data_key.replace('item_', '')] = shortcode_data[data_key];
+
+				break;
+
+			case data_key.indexOf('profile_') :
+				tool_data['profile'][data_key.replace('profile_', '')] = shortcode_data[data_key];
+				
+				break;
+
+			case data_key.indexOf('feedback_') :
+				tool_data['feedback'][data_key.replace('feedback_', '')] = shortcode_data[data_key];
+				
+				break;
+
+		}
+	}
+	
+	return tool_data;
+}
+
+//Tooltips
+function an_setup_tooltips() {
+	jQuery('a.an-tooltip').on({
+    mouseenter: function(e) {
+		  var title = jQuery(this).data('title');
+		  jQuery('<p id="an-tooltip-active"></p>').text(title).appendTo('body').fadeIn('slow');
+    },
+    mouseleave: function(e) {
+		  jQuery('#an-tooltip-active').remove();
+    },
+    mousemove: function(e) {
+			if(an_is_touch_device()) {
+			  var mousex = e.pageX - 150;			
+			} else {
+			  var mousex = e.pageX - 120;				
+			}
+
+		  var mousey = e.pageY + 5;
+		  jQuery('#an-tooltip-active').css({ top: mousey, left: mousex });
+    }	
+	});
+}
+
+function an_build_shortcode(tool_key = 'item', tool_data = {}) {
+	//Legacy
+	tool_key = (tool_key == 'item') ? 'listings' : tool_key;
+	
+	var out = '[auction-nudge tool="' + tool_key + '"';
+	for(attr_key in tool_data) {
+		out += ' ' + attr_key.toLowerCase() + '="' + tool_data[attr_key] + '"';
+	}
+	out += ']';
+	
+	return out;
+}
+
+function an_update_tool_snippets(tool_data = []) {
+	for(tool_key in tool_data) {
+		var shortcode = an_build_shortcode(tool_key, tool_data[tool_key]);
+		
+		var shortcode_container = jQuery('#an-shortcode-' + tool_key);
+
+		shortcode_container.html(shortcode);
+
+// 		var font_size = 120 / (shortcode.length / 4 );		
+// 		shortcode_container.css('fontSize', font_size + 'px');
+	}
+}
+
+function an_shortcode_input_value(data_key, input) {
+	var value = input.val();
+	var input_type = input.prop('tagName').toUpperCase();
+	
+	return value;
+}
+
+function an_setup_settings_ui() {
+	//Options page only
+	var body = jQuery('body.settings_page_an_options_page');
+	
+	if(! body.length) {
+		return;
+	}
+	
+	//Legacy Tab
+// 	var legacy_options = jQuery('#an-settings-legacy table', body);
+// 	//Legacy tab, but no legacy options
+// 	if(! legacy_options.length) {
+// 		var document_location = document.location.toString();
+// 		
+// 		if(document_location.toString().indexOf('tab=legacy') !== -1) {
+// 			document.location = document_location.replace('tab=legacy', 'tab=general');
+// 		}
+// 	}
+	
+	//Shortcode form
+	var container = jQuery('#an-custom-field-container', body);
+	if(container.length) {
+		var default_data = [];
+		var shortcode_data = [];
+		var tool_data = {};
+		
+		//Update Shortcode
+		var update_shortcode = function(input) {
+			//Determine key
+			var data_key = input.attr('name');
+			if(data_key == 'cats_output' || data_key == 'search_box') {
+				data_key = 'item_' + data_key;
+			}
+
+			default_data[data_key] = input.data('default').toString();
+
+			var input_value = an_shortcode_input_value(data_key, input);
+
+			//Compare
+			if(input_value != default_data[data_key]) {
+				//Update
+				shortcode_data[data_key] = input_value;
+			//Is default
+			} else {
+				//Remove
+				delete shortcode_data[data_key];				
+			}
+			
+			//Update snippet
+			tool_data = an_create_tool_data(shortcode_data);
+			an_update_tool_snippets(tool_data);		
+		};
+		
+		//Username check
+		var username_check = function() {
+			var check_input = function(input) {
+				if(! input.val().trim()) {
+					input.addClass('an-error');	
+				
+					return false;								
+				} else {
+					input.removeClass('an-error');						
+
+					return true;
+				}
+			};
+		
+			var check_form = function(tool_key, form) {
+				if(tool_key == 'item') {
+					var input = jQuery('input[name="item_SellerID"]', form);
+				}	else {
+					var input = jQuery('input[name="' + tool_key + '_UserID"]', form);
+				}
+
+				var success = check_input(input);
+				var button = jQuery('input[type="submit"]', form);
+			
+				if(! success) {
+					button.attr('disabled', 'disabled');
+				} else {
+					button.removeAttr('disabled');			
+				}
+
+				return success;
+			};
+		
+			var form = jQuery('#an-shortcode-form');
+			var tool_select = jQuery('#an-tab-links', form);
+		
+			//Initial
+			check_form(tool_select.val(), form);
+			
+			//Tool change
+			tool_select.on('change', function() {
+				check_form(tool_select.val(), form);
+			});		
+			
+			//Form submit
+			form.on('submit', function() {
+				check_form(tool_select.val(), form);
+			});
+		
+			//Input change
+			var inputs = jQuery('input[name="item_SellerID"], input[name="profile_UserID"], input[name="feedback_UserID"]', container);			
+			inputs.on('keypress change', function() {
+				check_form(tool_select.val(), form);		
+			});
+		};
+
+		//Get inputs
+		var inputs = jQuery('.controls input, .controls select', container);
+
+		//Each
+		inputs.each(function() {
+			var input = jQuery(this);
+			
+// 			switch(input.attr('id')) {
+// 				case 'SellerID' :
+// 
+// 					break;
+// 			}
+
+			//On change	
+			input.on('change', function() {
+				update_shortcode(jQuery(this));
+			});
+			
+			//Initial
+			update_shortcode(input);
+		});
+	
+		username_check();
+	}
+}
+
 jQuery(document).ready(function() {
 	setup_parameter_groups();
 	setup_widget_theme_dropdown();
+	an_setup_tooltips();
+	an_setup_settings_ui();
 	
 	var custom_field_parent = jQuery('#listings-tab');
 	an_show_theme_options(jQuery('#theme').val(), custom_field_parent);
@@ -111,13 +336,10 @@ jQuery(document).ready(function() {
 		an_show_theme_options(jQuery(this).val(), custom_field_parent);
 	});	
 		
-	jQuery('ul#an-tab-links li a').on('click', function(e) {
+	jQuery('select#an-tab-links').on('change', function(e) {
 		e.preventDefault();
 
-		jQuery('ul#an-tab-links li a').removeClass('active');
-		jQuery(this).addClass('active');
-		
-		var tab_show = jQuery(this).data('tab');
+		var tab_show = jQuery('option:selected', this).data('tab');
 		
 		//Hide all
 		jQuery('.an-custom-field-tab').hide();		
@@ -126,26 +348,7 @@ jQuery(document).ready(function() {
 		
 		return false;
 	});
-	
-	jQuery('#an-theme-show').click(function() {
-		jQuery('#an-theme-options').show();
-		jQuery(this).parent('p').hide();
-		
-		return false;		
-	});
 
-	//Tooltips
-	jQuery('a.an-tooltip').hover(function(){
-	  var title = jQuery(this).data('title');
-	  jQuery('<p id="tooltip-active"></p>').text(title).appendTo('body').fadeIn('slow');
-	}, function() {
-	  jQuery('#tooltip-active').remove();
-	})
-	.mousemove(function(e) {
-	  var mousex = e.pageX + 5;
-	  var mousey = e.pageY + 5;
-	  jQuery('#tooltip-active').css({ top: mousey, left: mousex });
-	});
 	//Widgets
 	jQuery('.widgets-holder-wrap')
 		.on('mouseenter', 'a.an-tooltip', function() {
@@ -159,11 +362,30 @@ jQuery(document).ready(function() {
 		})
 		.on('mouseleave', 'a.an-tooltip', function() {
 		  jQuery('#tooltip-active').remove();
-		});	
+		})
+	;	
 
 	//Adblock check
 	window.setTimeout(adblock_check, 500);	
 });
+
+//Touch device?	
+//Thanks https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript/4819886#4819886
+function an_is_touch_device() {
+  var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
+  var mq = function(media_qry) {
+    return window.matchMedia(media_qry).matches;
+  }
+
+  if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+    return true;
+  }
+
+  // include the 'heartz' as a way to have a non matching MQ to help terminate the join
+  // https://git.io/vznFH
+  var media_qry = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
+  return mq(media_qry);
+}
 
 jQuery(document).ajaxSuccess(function(e, xhr, settings) {
 	var widget_ids = ['an_listings_widget', 'an_ads_widget'];

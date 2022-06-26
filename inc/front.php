@@ -27,18 +27,22 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name){
 	unset($shortcode_attrs['tool']);
 	
 	// 1 - Defaults from Config / Settings
- 	$request_parameters = an_request_parameters_defaults($tool_key);
+ 	$request_parameters = an_request_parameters_defaults($tool_key, true);
 
-	// 2 - Post Meta
-	$meta_parameters = an_get_post_meta($post->ID);
-	$meta_parameters = an_request_parameters_from_assoc_array($tool_key, $meta_parameters);
-	$request_parameters = shortcode_atts($request_parameters, $meta_parameters);
+	// 2 - Meta Box (if not disabled)
+	if(! an_get_settings('an_meta_disable', true)) {
+		//All Shortcodes will get id="auction-nudge-items" - Legacy behaviour
+		
+		$meta_parameters = an_get_post_meta($post->ID);
+		$meta_parameters = an_request_parameters_from_assoc_array($tool_key, $meta_parameters);
+		$request_parameters = array_merge($request_parameters, $meta_parameters);
+	// 3 - Shortcode attribtues (Item tool only)
+	} elseif($tool_key == 'item') {
+		//Create target from Shortcode attributes
+		$request_parameters = array_merge($request_parameters, an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_attrs, true));		
+		$request_parameters['item_target'] = substr(md5(json_encode($shortcode_attrs)), 0, 9);
+	}
 
-	// 3 - Shortcode attribtues
-	$shortcode_attrs = an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_attrs);
-	$request_parameters = shortcode_atts($request_parameters, $shortcode_attrs);
-
-	//Get snippet
 	$out = an_build_snippet($tool_key, $request_parameters);
 	
 	return $out;
@@ -52,6 +56,9 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 	wp_enqueue_script('an_check_js');
 	add_action('wp_footer', 'an_output_load_check');
 	
+	//Build unique hash for this request
+	$request_hash = substr(md5(json_encode($request_parameters)), 0, 9);
+	
 	//Profile JS or iframe?
 	$profile_is_framed = array_key_exists('profile_theme', $request_parameters) && $request_parameters['profile_theme'] == 'overview';
 	
@@ -61,11 +68,11 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 	//Request string
 	$request_string = an_request_parameters_to_request_string($request_parameters);
 	
-	//Get options
-	$options = get_option('an_options');
+	//Get Settings
+	$an_settings = an_get_settings();
 	
 	//Local requests
-	if(! array_key_exists('an_local_requests', $options) || $options['an_local_requests'] == '1') {
+	if(! array_key_exists('an_local_requests', $an_settings) || $an_settings['an_local_requests'] == '1') {
 		//We encode this, wp_enqueue_script encodes the others
 		if($tool_key == 'ad' || ($tool_key == 'profile' && $profile_is_framed)) {
 			$request_string = urlencode($request_string);
@@ -78,7 +85,7 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 		$request_config = an_get_config($tool_key . '_request');
 		
 		//Process request parameters
-		$request_parameters = an_request_parameters_from_assoc_array($tool_key, $request_parameters, true, true);
+		$request_parameters = an_request_parameters_from_assoc_array($tool_key, $request_parameters, true, true, ['item_target']);
 
 		//Modify request config
 		$request_config = an_modify_request_config($request_config, $tool_key, $request_parameters);
@@ -96,7 +103,7 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 			//JS
 			} else {
 				//Enqueue
-				wp_enqueue_script(md5($request_url), $request_url, array(), an_get_config('plugin_version'), true);
+				wp_enqueue_script($request_hash, $request_url, array(), an_get_config('plugin_version'), true);
 				
 				return '<div id="auction-nudge-profile">&nbsp;</div>';				
 			}
@@ -104,7 +111,7 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 			break;
 		case 'feedback' :
 				//Enqueue
-				wp_enqueue_script(md5($request_url), $request_url, array(), an_get_config('plugin_version'), true);
+				wp_enqueue_script($request_hash, $request_url, array(), an_get_config('plugin_version'), true);
 
 				return '<div id="auction-nudge-feedback">&nbsp;</div>';
 		
@@ -124,10 +131,14 @@ function an_build_snippet($tool_key = 'item', $request_parameters){
 		case 'item' :
 		default :
 			//Enqueue
-			wp_enqueue_script(md5($request_url), $request_url, array(), an_get_config('plugin_version'), true);
-		
-			return '<div id="auction-nudge-items">&nbsp;</div>';
-					
+			wp_enqueue_script($request_hash, $request_url, array(), an_get_config('plugin_version'), true);
+			
+			if(isset($request_parameters['item_target']) && is_string($request_parameters['item_target'])) {
+				return '<div id="auction-nudge-' . $request_parameters['item_target'] . '">&nbsp;</div>';
+			} else {
+				return '<div id="auction-nudge-items">&nbsp;</div>';			
+			}
+							
 			break;
 	}
 }
@@ -154,21 +165,6 @@ function an_output_load_check_js() {
 	wp_register_script('an_check_js', plugins_url('assets/js/check.js', dirname(__FILE__)), array(), an_get_config('plugin_version'), true);
 }
 add_action('wp_head', 'an_output_load_check_js');
-
-/**
- * Load custom CSS
- */
-function an_load_css() {
-	$options = get_option('an_options');
-	
-	//Only output if CSS rules set
-	if(isset($options['an_css_rules']) && strlen($options['an_css_rules'])) {
-		echo '<style type="text/css">' . "\n";
-		echo $options['an_css_rules'] . "\n";
-		echo '</style>' . "\n";		
-	}
-}
-add_action('wp_head', 'an_load_css');
 
 /**
  * =================== LOCAL REQUESTS =====================
@@ -208,22 +204,37 @@ add_action('template_redirect', 'an_trigger_check');
  */
 
 /**
+ * Load custom CSS
+ */
+function an_load_css() {
+	$an_settings = an_get_settings();
+	
+	//Only output if CSS rules set
+	if(isset($an_settings['an_css_rules']) && strlen($an_settings['an_css_rules'])) {
+		echo '<style type="text/css">' . "\n";
+		echo $an_settings['an_css_rules'] . "\n";
+		echo '</style>' . "\n";		
+	}
+}
+add_action('wp_head', 'an_load_css');
+
+/**
  * Replace markers
  */
 function an_the_content($content) {
-	$options = get_option('an_options');
+	$an_settings = an_get_settings();
 	
 	//Is this legacy feature in use?		
-	if(isset($options['an_items_code']) || isset($options['an_profile_code']) || isset($options['an_feedback_code'])) {
+	if(isset($an_settings['an_items_code']) || isset($an_settings['an_profile_code']) || isset($an_settings['an_feedback_code'])) {
 		$old = array(
 			'[an_items]',
 			'[an_profile]',
 			'[an_feedback]'
 		);
 		$new = array(
-			isset($options['an_items_code']) ? $options['an_items_code'] : '',
-			isset($options['an_profile_code']) ? $options['an_profile_code'] : '',
-			isset($options['an_feedback_code']) ? $options['an_feedback_code'] : ''
+			isset($an_settings['an_items_code']) ? $an_settings['an_items_code'] : '',
+			isset($an_settings['an_profile_code']) ? $an_settings['an_profile_code'] : '',
+			isset($an_settings['an_feedback_code']) ? $an_settings['an_feedback_code'] : ''
 		);	
 		
 		return str_replace($old, $new, $content);		

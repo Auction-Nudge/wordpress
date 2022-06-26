@@ -54,10 +54,15 @@ function an_username_encode($username) {
  */
 function an_create_input($field, $set_value) {
 	$out = '';
+
+	if(! array_key_exists('default', $field)) {
+		$field['default'] = null;
+	}
 	
 	switch($field['type']) {
+		case 'radio' :
 		case 'select' :
-			$out .= '		<select name="' . $field['name'] . '" id="' . $field['id'] . '">' . "\n";
+			$out .= '		<select data-default="' . $field['default'] . '" name="' . $field['name'] . '" id="' . $field['id'] . '">' . "\n";
 			foreach($field['options'] as $value => $description) {
 				//Always use strings
 				$value = (string)$value;
@@ -67,66 +72,27 @@ function an_create_input($field, $set_value) {
 				if($set_value === $value) {
 					$out .= ' selected="selected"';
 				//Do we have a default?
-				}	elseif($set_value === false && (array_key_exists('default', $field) && $field['default'] == $value)) {
+				}	elseif($set_value === false && $field['default'] === $value) {
 					$out .= ' selected="selected"';				
 				}		
 				$out .= '>' . $description . '</option>' . "\n";
 			}
 			$out .= '		</select>' . "\n";
-			break;
-		case 'checkbox' :
-			//Value submitted?
-			$checked = false;
 
-			if($set_value && ($set_value == 'true' || $set_value == $field['value'])) {
-				$checked = true;
-			} elseif($field['default'] == 'true') {
-				$checked = true;								
-			}
-			$value = ($field['value']) ? $field['value'] : 'true';
-			$out .= '		<input type="checkbox" name="' . $field['name'] . '" value="' . $value . '" id="' . $field['id'] . '"';
-			if($checked) {
-				$out .= ' checked="checked"';			
-			}
-			$out .= ' />' . "\n";			
 			break;
-		case 'radio' :
-			foreach($field['options'] as $value => $description) {
-				$checked = false;
 
-				//Always use strings
-				$value = (string)$value;
-				
-				//If we have a stored value
-				if($set_value === $value) {
-					$checked = true;
-				//Otherwise is this the default value?
-				} elseif($set_value === false && $value == $field['default']) {
-					$checked = true;
-				}
-				$out .= '<div class="radio">' . "\n";
-				$out .= '	<input type="radio" name="' . $field['name'] . '" value="' . $value . '"';
-				if($checked) {
-					$out .= ' checked="checked"';			
-				}				
-				$out .= ' />' . "\n";						
-				$out .= $description . '<br />' . "\n";						
-				$out .= '</div>' . "\n";
-			}
-			break;						
 		case 'text' :
 		default :
-			$out .= '		<input type="text" name="' . $field['name'] . '" id="' . $field['id'] . '"';
+			$out .= '		<input data-default="' . $field['default'] . '" type="text" name="' . $field['name'] . '" id="' . $field['id'] . '"';
 			//Do we have a value for this post?
 			if($value = htmlspecialchars($set_value)) {
 				$out .= ' value="' . $value . '"';
-			//Do we have a default?
-			}	elseif(array_key_exists('default', $field)) {
-				$value = $field['default'];
-				
-				$out .= ' value="' . $value . '"';			
+			//Use default
+			}	else {
+				$out .= ' value="' . $field['default'] . '"';			
 			}
 			$out .= ' />' . "\n";
+
 			break;
 	}	
 	
@@ -159,4 +125,74 @@ function an_get_post_meta($post_id) {
 	}
 	
 	return $post_meta;
+}
+
+function an_get_settings($key = false, $default_value = null) {
+	$settings = get_option('an_options');
+	
+	//By key?
+	if(is_string($key)) {
+		if(isset($settings[$key])) {
+			return trim($settings[$key]);
+		} else {
+			return $default_value;
+		}
+	}	
+
+	//Not yet set
+	if(! is_array($settings)) {
+		$settings = [];
+	}
+	
+	return $settings;
+}
+
+function an_validate_tool_key($tool_key) {
+	if(! is_string($tool_key)) {
+		return false;
+	}
+
+	if(! in_array($tool_key, an_get_config('tool_keys'))) {
+		return false;
+	}
+
+	
+	return $tool_key;
+}
+
+// 	<div class="an-custom-field-help">' . "\n";
+// 		$out .= '		<textarea readonly="readonly" id="an-shortcode-item">[' . an_get_config('shortcode') . ' tool="listings"]</textarea>' . "\n";
+// 		$out .= '	</div>' . "\n";
+
+function an_build_shortcode($tool_key = 'item', $tool_data = [], $wrap = true) {
+	if(! an_validate_tool_key($tool_key)) {
+		return false;
+	}
+	
+	if($wrap) {
+		$out = '<div class="an-shortcode-container" id="an-shortcode-' . $tool_key . '">' . "\n";
+	} else {
+		$out = '';	
+	}
+	
+	//Parse
+	$tool_data = an_request_parameters_from_assoc_array($tool_key, $tool_data);
+	
+	//Legacy
+	$tool_key = ($tool_key == 'item') ? 'listings' : $tool_key;
+	
+	//Output	
+	$out .= '[' . an_get_config('shortcode') . ' tool="' . $tool_key . '"';
+
+	foreach($tool_data as $key => $value) {
+		$out .= ' ' . strtolower($key) . '="' . $value . '"';
+	}
+
+ 	$out .= ']';
+
+	if($wrap) {
+		$out .= '</div>';
+	}
+	
+	return $out;
 }
