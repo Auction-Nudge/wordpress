@@ -390,23 +390,6 @@ WordPress plugin released.
 
 == Upgrade Notice ==
 
-= 6.0.1 =
-Thanks for using Auction Nudge! Version 6 of the plugin is a major update with some serious performance improvements. Updating to this version is recommended.
+= 7.0 =
 
-= 6.0 =
-Thanks for using Auction Nudge! This is a major update with some serious performance improvements. Updating to this version is recommended.
-
-= 5.0 =
-This is a major update with new **features**, new and updated **filters** and lots of other improvements.
-
-= 4.4.3 =
-This update is highly recommended as it contains a bug fix which caused Auction Nudge options to be wiped for some users. It is also recommended that you check the pages which use Auction Nudge to ensure you were not affected by this issue.
-
-= 4.4 =
-This update is recommended for all users as it contains a fix for a conflict with the WooCommerce plugin, as well as other bug fixes and improvements
-
-= 4.0.1 = 
-Fixed bug with setting the eBay site. This bug fix is recommended for all users
-
-= 4.0 =
-A major update with lots of new features: faster feed updates, multiple pages of items, larger item images and more
+This is a major re-working of the plugin. Please do reach out if you have any issues after updating. Cheers, Joe.
