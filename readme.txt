@@ -14,7 +14,13 @@ Display your live eBay Listings, Profile and Feedback information with a Shortco
 
 Display your live eBay information on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>, an approved eBay Compatible Application.
 
-These Auction Nudge tools can be added anywhere that Shortcodes are supported:
+Add the Auction Nudge Shortcode anywhere that Shortcodes are supported:
+
+`
+[auction-nudge tool="listings" sellerid="ebay_username"]
+`
+
+Tools available:
 
 * **Your eBay Listings** - displays your active items, with lots of options and filters to choose from. You visitors can:
 	* Browse multiple pages of items
