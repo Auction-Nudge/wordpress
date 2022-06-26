@@ -20,7 +20,7 @@ Add the Auction Nudge Shortcode anywhere that Shortcodes are supported:
 	[auction-nudge tool="listings" sellerid="ebay_username"]
 
 
-Tools available:
+Tools:
 
 * **Your eBay Listings** - displays your active items, with lots of options and filters to choose from. You visitors can:
 	* Browse multiple pages of items
@@ -364,40 +364,49 @@ Minor plugin user interface improvements.
 Fixed bug with setting the eBay site. Thanks to legacy_dzynes for bringing this to my attention on the support forum.
 
 ### 4.0 ###
+
 * **Pagination** – there is no longer a limit to the total number of items Auction Nudge can display using the Your eBay Listings tool. Each page can show up to 100 items at once, if you have more listed "Previous" and "Next" buttons will allow users to navigate through multiple pages. Use the "Show multiple pages?" option to enable this feature
 * **Larger images** – Your eBay Listings item image sizes can now be increased up to 500px x 500px using the "Image Size" option (the previous maximum was 140px x 140px)
 * **Reduced cache time** – the Your eBay Listings and Your eBay Ads tools now automatically update 4 times more frequently. These tools now update every 15 minutes (was previously every 60 minutes)
 * New 'Profile Table' theme added to the Your eBay Feedback tool
 
 ### 3.2 ###
+
 * Made wording on Settings page a little clearer
 * Added 'Open links in new tab?' option to Your eBay Listings, Your eBay Profile and Your eBay Feedback tools
 
 ### 3.1 ###
+
 Fixed issue with older versions of PHP which do not support anonymous functions. Thanks Jeff for pointing this out to me.
 
 ### 3.0 ###
+
 * Added Your eBay Ads tool to plugin
 * All tools now available as widgets
 * Added eBay Switzerland support
 * Small tweaks and bug fixes
 
 ### 2.1 ###
+
 Fixed bug with special characters in seller IDs. Thanks Jon-Paul for pointing this out to me.
 
 ### 2.0 ###
+
 * Plugin completely rewritten
 * Your eBay Listing, Your eBay Profile and Your eBay Feedback tools can now be added through the page/post edit page
 * Allows for feeds to be created on a page-by-page basis, useful if you require multiple item feeds
 
 ### 1.0 ###
+
 * Minor updates
 * Plugin hosted on WordPress Plugin Directory
 
 ### 0.2 ###
+
 Added the ability to specify custom CSS rules within the plugin to modify the appearance of Auction Nudge.
 
 ### 0.1 ###
+
 WordPress plugin released.
 
 ## Upgrade Notice ##
