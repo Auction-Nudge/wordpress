@@ -525,7 +525,7 @@ function an_options_page() {
 		echo '		<img width="120" height="120" alt="Joe\'s mug" src="http://www.josephhawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";		
 		echo '		<p class="an-lead"><b>Hi, I\'m Joe.</b>I created this plugin.</p>' . "\n";		
 
-		echo an_admin_notice('<strong>Version 7</strong><br />Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">reach out</a> if you experience any issues after updating.', 'warning');
+		echo an_admin_notice('<strong>Version 7</strong><br />This is a bug update! Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">reach out</a> if you experience any issues.', 'info');
 	
 		echo '<p style="margin-top: 15px">';
 		//Prompt to set default
