@@ -29,11 +29,13 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name){
 	// 1 - Defaults from Config / Settings
  	$request_parameters = an_request_parameters_defaults($tool_key, true);
 
-	// 2 - Post Meta
-	$meta_parameters = an_get_post_meta($post->ID);
-	$meta_parameters = an_request_parameters_from_assoc_array($tool_key, $meta_parameters);
-	$request_parameters = array_merge($request_parameters, $meta_parameters);
-
+	// 2 - Post Meta (if Meta Box not disabled)
+	if(! an_get_settings('an_meta_disable', true)) {
+		$meta_parameters = an_get_post_meta($post->ID);
+		$meta_parameters = an_request_parameters_from_assoc_array($tool_key, $meta_parameters);
+		$request_parameters = array_merge($request_parameters, $meta_parameters);
+	}
+	
 	// 3 - Shortcode attribtues (Item tool only)
 	$request_parameters = array_merge($request_parameters, an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_attrs, true));
 	if($tool_key == 'item' && sizeof($shortcode_attrs)) {

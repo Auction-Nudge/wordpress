@@ -809,7 +809,10 @@ function an_admin_notice($text = '', $type = 'info') {
  */
 
 function an_meta_disable_text() {
-	echo an_admin_notice('<strong>The Meta Box is now a legacy feature and is not recommended!</strong></br >Instead, add <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcodes</a> anywhere they are supported.', 'warning');
+	$legacy_text = '<strong>The Meta Box is now a legacy feature and is not recommended!</strong></br >';
+	$legacy_text .= 'Instead add <em>Shortcodes</em> anywhere they are supported, customize them with the <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcode Generator</a>. For backwards compatibility, existing Meta Box options remain unchanged for each post even with this feature disabled.';
+	
+	echo an_admin_notice($legacy_text, 'warning');
 }
 
 function an_username_propagate_setting() {
@@ -828,7 +831,7 @@ function an_meta_disable_setting() {
 	$selected = (! $an_meta_disable) ? ' selected="selected"' : '';
 	echo '	<option' . $selected . ' value="0">Enabled</option>' . "\n";		
 	echo '</select>' . "\n";		
- 	echo '<a class="an-tooltip" data-title="For backwards compatibility, even when disabled, each post retains it\'s Meta Box settings." href="#" onclick="return false;">?</a>' . "\n";
+ 	echo '<a class="an-tooltip" data-title="For backwards compatibility, even when disabled, each post retains it\'s Meta Box options." href="#" onclick="return false;">?</a>' . "\n";
 }
 
 /**
