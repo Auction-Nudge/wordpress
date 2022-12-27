@@ -37,10 +37,17 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name){
 		$meta_parameters = an_request_parameters_from_assoc_array($tool_key, $meta_parameters);
 		$request_parameters = array_merge($request_parameters, $meta_parameters);
 	// 3 - Shortcode attribtues (Item tool only)
-	} elseif($tool_key == 'item') {
-		//Create target from Shortcode attributes
+	} else {
 		$request_parameters = array_merge($request_parameters, an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_attrs, true));		
-		$request_parameters['item_target'] = substr(md5(json_encode($shortcode_attrs)), 0, 9);
+
+		//By tool
+		switch($tool_key) {
+			case 'item':
+				//Create target from Shortcode attributes
+				$request_parameters['item_target'] = substr(md5(json_encode($shortcode_attrs)), 0, 9);
+
+				break;		
+		}
 	}
 
 	$out = an_build_snippet($tool_key, $request_parameters);
