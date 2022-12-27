@@ -4,7 +4,7 @@
 **Requires at least:** 3.2  
 **Tested up to:** 6.0  
 **Requires PHP:** 5.2  
-**Stable tag:** 7.0  
+**Stable tag:** 7.0.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -165,6 +165,10 @@ The following links should help with most questions and issues:
 
 
 ## Changelog ##
+
+### 7.0.1 ###
+
+Profile / Feedback Shortcode bug fix
 
 ### 7.0 ###
 
