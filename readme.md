@@ -4,7 +4,7 @@
 **Requires at least:** 3.2  
 **Tested up to:** 6.0  
 **Requires PHP:** 5.2  
-**Stable tag:** 7.0.1  
+**Stable tag:** 7.0.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -165,6 +165,10 @@ The following links should help with most questions and issues:
 
 
 ## Changelog ##
+
+### 7.0.2 ###
+
+Shortcode attributes now override Meta Box values even when Meta Boxes are enabled. Thanks to <a href="https://wordpress.org/support/users/as4kb5/">as4kb5</a> for bringing this to my <a href="https://wordpress.org/support/topic/cannot-change-style-of-listings-wp-plugin/">attention</a>.
 
 ### 7.0.1 ###
 
