@@ -30,25 +30,27 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name){
  	$request_parameters = an_request_parameters_defaults($tool_key, true);
 
 	// 2 - Meta Box (if not disabled)
-	if(! an_get_settings('an_meta_disable', true)) {
-		//All Shortcodes will get id="auction-nudge-items" - Legacy behaviour
-		
+	if(! an_get_settings('an_meta_disable', true)) {	
 		$meta_parameters = an_get_post_meta($post->ID);
 		$meta_parameters = an_request_parameters_from_assoc_array($tool_key, $meta_parameters);
 		$request_parameters = array_merge($request_parameters, $meta_parameters);
-	// 3 - Shortcode attribtues (Item tool only)
-	} else {
-		$request_parameters = array_merge($request_parameters, an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_attrs, true));		
-
-		//By tool
-		switch($tool_key) {
-			case 'item':
-				//Create target from Shortcode attributes
-				$request_parameters['item_target'] = substr(md5(json_encode($shortcode_attrs)), 0, 9);
-
-				break;		
-		}
 	}
+	
+	// 3 - Shortcode attribtues
+	$request_parameters = array_merge($request_parameters, an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_attrs, true));		
+
+	//By tool
+	switch($tool_key) {
+		case 'item':
+			//Create target from Shortcode attributes
+			$request_parameters['item_target'] = substr(md5(json_encode($shortcode_attrs)), 0, 9);
+
+			break;		
+	}
+
+// 	echo '<pre>';
+// 	print_r($request_parameters);
+// 	echo '</pre>';
 
 	$out = an_build_snippet($tool_key, $request_parameters);
 	
