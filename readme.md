@@ -2,7 +2,7 @@
 **Contributors:** [morehawes](https://profiles.wordpress.org/morehawes/)  
 **Tags:** ebay, item, listing, profile, feedback, feed, embed, store, shop  
 **Requires at least:** 3.2  
-**Tested up to:** 6.0  
+**Tested up to:** 6.2  
 **Requires PHP:** 5.2  
 **Stable tag:** 7.0.2  
 **License:** GPLv2 or later  
