@@ -4,7 +4,7 @@ Tags: ebay, item, listing, profile, feedback, feed, embed, store, shop
 Requires at least: 3.2
 Tested up to: 6.2
 Requires PHP: 5.2
-Stable tag: 7.0.2
+Stable tag: 7.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,10 @@ The following links should help with most questions and issues:
 6. A default eBay username saves time!
 
 == Changelog ==
+
+= 7.0.3 =
+
+Minor bug fix.
 
 = 7.0.2 =
 

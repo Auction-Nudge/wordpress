@@ -60,7 +60,7 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name){
 /**
  * Build the snippet
  */
-function an_build_snippet($tool_key = 'item', $request_parameters){
+function an_build_snippet($tool_key = 'item', $request_parameters = []){
 	//We'll want to check that this loaded correctly
 	wp_enqueue_script('an_check_js');
 	add_action('wp_footer', 'an_output_load_check');
