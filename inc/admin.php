@@ -235,7 +235,7 @@ function an_create_custom_fields_box() {
 }
 
 function an_create_custom_field_callback($tools_meta) {
-	echo an_admin_notice('<strong>This Meta Box Is Now a Legacy Feature!</strong><br />Instead, try generating <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcodes</a> and adding them anywhere Shortcodes are supported.', 'warning');
+	echo an_admin_notice('<strong>This legacy feature and will be removed in a future update!</strong><br />Instead, try generating <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcodes</a> and adding them anywhere Shortcodes are supported.', 'error');
 	
 	echo an_create_custom_field_form($tools_meta, 'item', true);	//Show Help
 
@@ -523,11 +523,11 @@ function an_options_page() {
 
 		echo '	<div class="an-tab-right an-tab-content" id="an-about">' . "\n";	
 		echo '		<img width="120" height="120" alt="Joe\'s mug" src="https://www.morehawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";		
-		echo '		<p class="an-lead"><b>Hi, I\'m Joe.</b>I created this plugin.</p>' . "\n";		
+		echo '		<p class="an-lead"><b>Hi, I\'m Joe.</b>Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">reach out</a> if you have any issues.</p>' . "\n";		
 
-		echo an_admin_notice('<strong>Version 7</strong><br />This is a BIG update! Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">reach out</a> if you experience any issues.', 'info');
+		echo an_admin_notice('<a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/#new-post">Reviews appreciated!</a>', 'success');
 	
-		echo '<p style="margin-top: 15px">';
+		echo '<p style="margin-top: 30px">';
 		//Prompt to set default
 		if(! an_get_settings('an_ebay_user')) {
 			//Don't link if already on the defaults tab
@@ -551,7 +551,6 @@ function an_options_page() {
 
 		echo '		<p>Most common issues are solved by reading the <a target="_blank" href="https://www.auctionnudge.com/wordpress-plugin/usage">Help</a> section.</p>' . "\n";	
 		echo '		<p>Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">report bugs and errors</a>, I will do my best to help.</p>' . "\n";	
-		echo '		<p>If you like the plugin, please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/#new-post">leave a review</a>.</p>' . "\n";		
 
 		echo '		<p><b>Cheers!</b></p>' . "\n";		
 		echo '		<footer>v' . an_get_config('plugin_version') . ' | Since 2008</footer>' . "\n";		
@@ -600,8 +599,10 @@ function an_options_page() {
 		//Display form, propogated with any user submitted values
 		echo an_create_custom_field_form($_POST, $tool_key);
 		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
+
+		echo an_admin_notice('As of <a target="_blank" href="https://www.auctionnudge.com/changes#v4.7.1">May 2023</a> an advertising disclosure will be displayed above Auction Nudge tools, in accordance with eBay requirements.', 'info');
+
 		echo '	</form>' . "\n";	
-		
 	}
 
 	echo '		<div class="clear"></div>' . "\n";
@@ -672,32 +673,6 @@ function an_admin_settings(){
 		//If Meta enabled
 		if(! an_get_settings('an_meta_disable', true)) {
 			add_settings_field('an_username_propagate_setting', 'Update Username', 'an_username_propagate_setting', 'an_legacy', 'an_meta');
-		}
-
-		//Only display each if value exists
-
-		//CSS - only if it exists
-		if(isset($an_settings['an_css_rules']) && ! empty($an_settings['an_css_rules'])) {
-			add_settings_section('an_css', 'Your CSS Rules', 'an_css_text', 'an_legacy');
-			add_settings_field('an_css_rules', 'Insert CSS Rules', 'an_css_setting', 'an_legacy', 'an_css');		
-		}
-		
-		//Items
-		if(isset($an_settings['an_items_code']) && ! empty($an_settings['an_items_code'])) {
-			add_settings_section('an_items', 'Legacy Listings', 'an_legacy_snippet_text', 'an_legacy');
-			add_settings_field('an_items_code_snippet', 'Insert code snippet', 'an_items_setting', 'an_legacy', 'an_items');
-		}
-
-		//Profile
-		if(isset($an_settings['an_profile_code']) && ! empty($an_settings['an_profile_code'])) {
-			add_settings_section('an_profile', 'Legacy Profile', 'an_legacy_snippet_text', 'an_legacy');
-			add_settings_field('an_profile_code_snippet', 'Insert code snippet', 'an_profile_setting', 'an_legacy', 'an_profile');
-		}
-
-		//Feedback
-		if(isset($an_settings['an_feedback_code']) && ! empty($an_settings['an_feedback_code'])) {
-			add_settings_section('an_feedback', 'Legacy Feedback', 'an_legacy_snippet_text', 'an_legacy');
-			add_settings_field('an_feedback_code_snippet', 'Insert code snippet', 'an_feedback_setting', 'an_legacy', 'an_feedback');
 		}
 	}
 }
@@ -811,10 +786,10 @@ function an_admin_notice($text = '', $type = 'info', $tag = 'div') {
  */
 
 function an_meta_disable_text() {
-	$legacy_text = '<strong>The Meta Box is now a legacy feature and is not recommended!</strong></br >';
+	$legacy_text = '<strong>This legacy feature and will be removed in a future update!</strong></br >';
 	$legacy_text .= 'Instead add <em>Shortcodes</em> anywhere they are supported, customize them with the <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcode Generator</a>. For backwards compatibility, existing Meta Box options remain unchanged for each post even with this feature disabled.';
 	
-	echo an_admin_notice($legacy_text, 'warning');
+	echo an_admin_notice($legacy_text, 'error');
 }
 
 function an_username_propagate_setting() {
@@ -834,53 +809,4 @@ function an_meta_disable_setting() {
 	echo '	<option' . $selected . ' value="0">Enabled</option>' . "\n";		
 	echo '</select>' . "\n";		
  	echo '<a class="an-tooltip" data-title="For backwards compatibility, even when disabled, each post retains it\'s Meta Box options." href="#" onclick="return false;">?</a>' . "\n";
-}
-
-/**
- * CSS text
- */
-function an_css_text() {
-	echo an_admin_notice('<strong>This feature will be removed from the plugin soon!</strong><br />You can now add Additional CSS to your own theme from the <a href="' . admin_url('customize.php') . '">Appearance Customize Screen</a>.', 'error');
-}
-
-/**
- * Output CSS option
- */
-function an_css_setting() {
-	$an_settings = an_get_settings();
-	
-	$an_css_rules = isset($an_settings['an_css_rules']) ? $an_settings['an_css_rules'] : '';
-	
-	echo '<textarea id="an_css_rules" name="an_options[an_css_rules]">' . $an_css_rules . '</textarea>' . "\n";		
-}
-
-/**
- * Items
- */
-function an_legacy_snippet_text() {
-	echo an_admin_notice('<strong>This feature will be removed from the plugin soon!</strong><br />Instead, add <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcodes</a> anywhere they are supported.', 'error');
-}
-
-function an_items_setting() {
-	$an_settings = an_get_settings();
-
-	$an_items_code = isset($an_settings['an_items_code']) ? $an_settings['an_items_code'] : '';
-	
-	echo '<textarea name="an_options[an_items_code]">' . $an_items_code  . '</textarea>' . "\n";
-}
-
-function an_profile_setting() {
-	$an_settings = an_get_settings();
-	
-	$an_profile_code = isset($an_settings['an_profile_code']) ? $an_settings['an_profile_code'] : '';	
-	
-	echo '<textarea name="an_options[an_profile_code]">' . $an_profile_code . '</textarea>' . "\n";
-}
-
-function an_feedback_setting() {
-	$an_settings = an_get_settings();
-	
-	$an_feedback_code = isset($an_settings['an_feedback_code']) ? $an_settings['an_feedback_code'] : '';		
-	
-	echo '<textarea name="an_options[an_feedback_code]">' . $an_feedback_code . '</textarea>' . "\n";
 }
