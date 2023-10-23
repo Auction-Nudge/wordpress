@@ -209,6 +209,7 @@ a.an-tooltip {
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form input[type="submit"] {
   margin-left: 15px;
+  margin-bottom: 15px;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-preview {
   width: 65%;
@@ -218,13 +219,23 @@ a.an-tooltip {
 #an-options-container #an-settings-tabs .an-tab-content#an-welcome p {
   display: block;
 }
+#an-options-container #an-settings-tabs .an-tab-content#an-about .an-notice {
+  padding: 0;
+  text-align: center;
+  font-weight: bold;
+}
+#an-options-container #an-settings-tabs .an-tab-content#an-about .an-notice p a {
+  height: 40px;
+  line-height: 40px;
+  color: #00a32a;
+}
 #an-options-container #an-settings-tabs .an-tab-content#an-about p {
   margin-top: 0;
   font-size: 15px;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-about p.an-lead {
-  padding-top: 25px;
-  height: 100px;
+  padding-top: 0;
+  height: 145px;
   font-size: 18px;
   line-height: 1.2em;
 }

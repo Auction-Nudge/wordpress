@@ -2,9 +2,9 @@
 **Contributors:** [morehawes](https://profiles.wordpress.org/morehawes/)  
 **Tags:** ebay, item, listing, profile, feedback, feed, embed, store, shop  
 **Requires at least:** 3.2  
-**Tested up to:** 6.2  
+**Tested up to:** 6.3  
 **Requires PHP:** 5.2  
-**Stable tag:** 7.0.3  
+**Stable tag:** 7.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -165,6 +165,11 @@ The following links should help with most questions and issues:
 
 
 ## Changelog ##
+
+### 7.1 ###
+
+* Removed Legacy features.
+* Text updates, including advertising disclosure notice.
 
 ### 7.0.3 ###
 

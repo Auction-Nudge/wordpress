@@ -104,10 +104,11 @@ function an_build_request_url($request_config, $request_string) {
  * Modify the response
  */
 function an_modify_response($response, $tool_key, $request_config) {
+	
 	switch($tool_key) {
 		case 'item' :
 			//Protocol
-			$protocol = is_ssl() ? 'https' : 'http';
+			$protocol = 'https';
 		
 			//Remote endpoint
 			$remote_endpoint = $protocol . ':' . $request_config['endpoint'];
@@ -120,7 +121,7 @@ function an_modify_response($response, $tool_key, $request_config) {
 			
 			break;
 	}	
-	
+
 	return $response;
 }
 

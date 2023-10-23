@@ -261,6 +261,7 @@ a.an-tooltip {
 		
 				input[type="submit"] {
 					margin-left: 15px;
+					margin-bottom: 15px;
 				}
 			}	
 
@@ -280,12 +281,25 @@ a.an-tooltip {
 
 			//Plugin about
 			&#an-about {
+				.an-notice {
+					padding: 0;
+					text-align: center;
+					font-weight: bold;
+					p {
+						a {
+							height: 40px;
+							line-height: 40px;
+							color: #00a32a;
+						}
+					}
+				}
+
 				p {
 					margin-top: 0;
 					font-size: 15px;
 					&.an-lead {
-						padding-top: 25px;
-						height: 100px;
+						padding-top: 0;
+						height: 145px;
 						font-size: 18px;
 						line-height: 1.2em;
 						b {
