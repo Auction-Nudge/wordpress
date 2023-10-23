@@ -17,7 +17,6 @@ function setup_parameter_groups() {
 	  if(! jQuery('.an-parameter-group-content', jQuery(this).parent('.an-parameter-group')).is(':visible')) {
 		  //Hide all
 		  jQuery('.an-parameter-group-content', jQuery(this).parents('.an-custom-field-tab')).slideUp();
-		  jQuery('.an-parameter-group-content', jQuery(this).parents('.an-widget-container')).slideUp();
 		  //Show this
 		  jQuery('.an-parameter-group-content', jQuery(this).parent('.an-parameter-group')).slideDown();		  
 	  }
@@ -63,18 +62,6 @@ function an_show_theme_options(theme, context) {
 			
 			break;
 	}
-}
-
-function setup_widget_theme_dropdown() {
-	jQuery('.an-widget-container select').each(function() {
-		if(jQuery(this).attr('id') == 'theme') {
-			var widget_parent = jQuery(this).parents('.widget');
-			an_show_theme_options(jQuery(this).val(), widget_parent);
-			jQuery(this).change(function() {
-				an_show_theme_options(jQuery(this).val(), widget_parent);							
-			});
-		}
-	});
 }
 
 function adblock_check() {
@@ -326,7 +313,6 @@ function an_setup_settings_ui() {
 
 jQuery(document).ready(function() {
 	setup_parameter_groups();
-	setup_widget_theme_dropdown();
 	an_setup_tooltips();
 	an_setup_settings_ui();
 	
@@ -349,22 +335,6 @@ jQuery(document).ready(function() {
 		return false;
 	});
 
-	//Widgets
-	jQuery('.widgets-holder-wrap')
-		.on('mouseenter', 'a.an-tooltip', function() {
-		  var title = jQuery(this).data('title');
-		  jQuery('<p id="tooltip-active"></p>').text(title).appendTo('body').fadeIn('slow');
-		})
-		.on('mousemove', 'a.an-tooltip', function(e) {
-		  var mousex = e.pageX + 5;
-		  var mousey = e.pageY + 5;
-		  jQuery('#tooltip-active').css({ top: mousey, left: mousex });			
-		})
-		.on('mouseleave', 'a.an-tooltip', function() {
-		  jQuery('#tooltip-active').remove();
-		})
-	;	
-
 	//Adblock check
 	window.setTimeout(adblock_check, 500);	
 });
@@ -386,15 +356,3 @@ function an_is_touch_device() {
   var media_qry = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
   return mq(media_qry);
 }
-
-jQuery(document).ajaxSuccess(function(e, xhr, settings) {
-	var widget_ids = ['an_listings_widget', 'an_ads_widget'];
-	if(typeof settings.data !== 'undefined') {
-		for(i in widget_ids) {
-			if(settings.data.search('action=save-widget') != -1 && settings.data.search('id_base=' + widget_ids[i]) != -1) {
-				setup_parameter_groups();
-				setup_widget_theme_dropdown();	
-			}		
-		}		
-	}
-});
