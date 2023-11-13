@@ -36,7 +36,7 @@ function an_keyword_encode($keyword_string) {
 	if(strpos($keyword_string, ':') === false) {
 		$keyword_string = str_replace(array(', ', '( ', ' )', '()'), array(',', '(', ')', ''), $keyword_string);
 		$keyword_string = urlencode($keyword_string);
-		$keyword_string = str_replace(array('+'), array('%20'), $keyword_string);
+		// $keyword_string = str_replace(array('+'), array('%20'), $keyword_string);
 	}
 	
 	return $keyword_string;		

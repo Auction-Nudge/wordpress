@@ -4,7 +4,7 @@
 **Requires at least:** 3.2  
 **Tested up to:** 6.3  
 **Requires PHP:** 5.2  
-**Stable tag:** 7.1.1  
+**Stable tag:** 7.1.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -166,7 +166,15 @@ The following links should help with most questions and issues:
 
 ## Changelog ##
 
+### 7.1.2 ###
+
+Fix for a Your eBay Listings bug which broke some feeds when filtering by keyword. Thanks to <a href="https://wordpress.org/support/users/andycrossley/">andycrossley</a> for <a href="https://wordpress.org/support/topic/using-filter-by-keyword-advanced-option-disables-the-plug-in/">reaching out</a>.
+
 ### 7.1.1 ###
+
+Minor bug fix.
+
+### 7.1 ###
 
 * Removed Legacy features.
 * Text updates, including advertising disclosure notice.
