@@ -34,8 +34,21 @@ function an_get_config($key) {
  */
 function an_keyword_encode($keyword_string) {
 	if(strpos($keyword_string, ':') === false) {
-		$keyword_string = str_replace(array(', ', '( ', ' )', '()'), array(',', '(', ')', ''), $keyword_string);
-		$keyword_string = urlencode($keyword_string);
+		//Pre-encode tweaks
+		$keyword_string = str_replace(
+			array(', ', '( ', ' )', '()'),
+			array(',', '(', ')', ''),
+			$keyword_string
+		);
+
+		//Replace allowed characters
+		$keyword_string = str_replace(
+			an_get_config('keyword_chars_decoded'),
+			an_get_config('keyword_chars_encoded'),
+			$keyword_string
+		);
+
+		//$keyword_string = urlencode($keyword_string);
 		// $keyword_string = str_replace(array('+'), array('%20'), $keyword_string);
 	}
 	

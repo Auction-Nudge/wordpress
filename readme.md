@@ -4,7 +4,7 @@
 **Requires at least:** 3.2  
 **Tested up to:** 6.3  
 **Requires PHP:** 5.2  
-**Stable tag:** 7.1.2  
+**Stable tag:** 7.1.3  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -165,6 +165,10 @@ The following links should help with most questions and issues:
 
 
 ## Changelog ##
+
+### 7.1.3 ###
+
+Another fix the Your eBay Listings Keyword Filter bug which was still breaking some feeds. Thanks to <a href="https://wordpress.org/support/users/smile2day/">smile2day</a> for <a href="https://wordpress.org/support/topic/nothing-displays-10/">reaching out</a>.
 
 ### 7.1.2 ###
 

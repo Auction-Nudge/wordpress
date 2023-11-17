@@ -8,12 +8,28 @@
  
 $an_plugin_config = array(
 	'plugin_name' => 'Auction Nudge',
-	'plugin_version' => '7.1.2',
+	'plugin_version' => '7.1.3',
 	'custom_field_prefix' => 'an',
 	'shortcode' => 'auction-nudge',
 	'tool_keys' => ['item', 'ad', 'profile', 'feedback'],
 	'username_bad' => array('.', "\$", '!', '*'),
-	'username_good' => array('__dot__', '__dollar__', '__bang__', '__star__'),					
+	'username_good' => array('__dot__', '__dollar__', '__bang__', '__star__'),	
+	'keyword_chars_decoded' => [
+		'%20',
+		' ',
+		'"',
+		',',
+		'(',
+		')'
+	],
+	'keyword_chars_encoded' => [
+		'+',
+		'+',
+		'__quote__',
+		'__comma__',
+		'__lbra__',
+		'__rbra__'
+	],	
 	//Requests
 	'item_request' => array(
 		'endpoint' => '//www.auctionnudge.app/feed/item/js',
