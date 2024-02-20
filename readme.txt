@@ -2,9 +2,9 @@
 Contributors: morehawes
 Tags: ebay, item, listing, profile, feedback, feed, embed, store, shop
 Requires at least: 3.2
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 5.2
-Stable tag: 7.1.3
+Stable tag: 7.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,7 +31,7 @@ Tools:
 
 * **Your eBay Feedback** - displays your most recent feedback comments
 
-**Most common issues are solved by reading the <a href="https://www.auctionnudge.com/wordpress-plugin/usage">Help section</a>. Bugs and errors can be reported <a href="https://wordpress.org/support/plugin/auction-nudge/">here</a>. Please do this before leaving a poor review.**
+**In order to remain free, Auction Nudge is supported by referral commissions from eBay and includes an [Advertising Disclosure](https://www.auctionnudge.com/about#disclosure).**
 
 = Feed Options =
 
@@ -143,6 +143,15 @@ The following links should help with most questions and issues:
 * The <a href="https://www.auctionnudge.com/help">Full Auction Nudge Help</a> section.
 * The <a href="https://wordpress.org/support/plugin/auction-nudge/">Plugin Support</a> forum on WordPress.org.
 
+= Can I Remove The Advertising Disclosure? =
+
+No. The [advertising disclosure](https://www.auctionnudge.com/about#disclosure) is a requirement of the [eBay Partner Network](https://partnernetwork.ebay.com/page/network-agreement#guidelines) and is a condition of use for Auction Nudge.
+
+This means that if you are not happy with the Advertising Disclosure, then Auction Nudge is not the **free tool** for you.
+
+Attempting to hide, obscure or modifying the disclosure puts the service at risk for all users. Therefore, Auction Nudge reserves the right to block any user who attempts to do so.
+
+
 == Screenshots ==
 
 1. Preview and customize your Shortcode.
@@ -153,6 +162,10 @@ The following links should help with most questions and issues:
 6. A default eBay username saves time!
 
 == Changelog ==
+
+= 7.1.4 =
+
+Added extra information about the [Advertising Disclosure](https://www.auctionnudge.com/about#disclosure).
 
 = 7.1.3 =
 
