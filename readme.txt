@@ -4,7 +4,7 @@ Tags: ebay, item, listing, profile, feedback, feed, embed, store, shop
 Requires at least: 3.2
 Tested up to: 6.4
 Requires PHP: 5.2
-Stable tag: 7.1.4
+Stable tag: 7.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -162,6 +162,10 @@ Attempting to hide, obscure or modifying the disclosure puts the service at risk
 6. A default eBay username saves time!
 
 == Changelog ==
+
+= 7.1.5 =
+
+Request endpoint fix. Thanks	to <a href="https://wordpress.org/support/users/hypergalaxy/">hypergalaxy</a> for bringing this to my <a href="https://wordpress.org/support/topic/listings-have-just-stopped-appearing/">attention</a>.
 
 = 7.1.4 =
 

@@ -8,7 +8,7 @@
 
 $an_plugin_config = array(
 	'plugin_name' => 'Auction Nudge',
-	'plugin_version' => '7.1.4',
+	'plugin_version' => '7.1.5',
 	'custom_field_prefix' => 'an',
 	'shortcode' => 'auction-nudge',
 	'tool_keys' => ['item', 'ad', 'profile', 'feedback'],
@@ -32,22 +32,22 @@ $an_plugin_config = array(
 	],
 	//Requests
 	'item_request' => array(
-		'endpoint' => '//www.auctionnudge.app/feed/item/js',
+		'endpoint' => '//www.auctionnudge.com/feed/item/js',
 		'content_type' => 'text/javascript',
 		'cache_minutes' => 15,
 	),
 	'ad_request' => array(
-		'endpoint' => '//www.auctionnudge.app/feed/ad/iframe',
+		'endpoint' => '//www.auctionnudge.com/feed/ad/iframe',
 		'content_type' => 'text/html',
 		'cache_minutes' => 15,
 	),
 	'profile_request' => array(
-		'endpoint' => '//www.auctionnudge.app/feed/profile/js',
+		'endpoint' => '//www.auctionnudge.com/feed/profile/js',
 		'content_type' => 'text/javascript',
 		'cache_minutes' => 720,
 	),
 	'feedback_request' => array(
-		'endpoint' => '//www.auctionnudge.app/feed/feedback/js',
+		'endpoint' => '//www.auctionnudge.com/feed/feedback/js',
 		'content_type' => 'text/javascript',
 		'cache_minutes' => 720,
 	),

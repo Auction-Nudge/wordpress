@@ -4,7 +4,7 @@
 Plugin Name: Auction Nudge
 Plugin URI: https://www.auctionnudge.com/wordpress-plugin
 Description: Set a default eBay Username in Settings, then display Your eBay Listings with the Shortcode [auction-nudge tool="listings"].
-Version: 7.1.4
+Version: 7.1.5
 Author: Joe Hawes
 Author URI: https://www.auctionnudge.com/
 License: GPL2
