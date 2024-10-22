@@ -5,7 +5,7 @@ a.an-tooltip {
   text-decoration: none;
   cursor: help;
   color: #444;
-  border: 1px solid #DDDDDD;
+  border: 1px solid #dddddd;
   border-radius: 50%;
 }
 #an-tooltip-active {
@@ -31,95 +31,79 @@ a.an-tooltip {
   font-size: 135%;
 }
 /* Meta Box */
-#an-custom-field-container {
+#an-shortcode-form-container {
   background: #fff;
   padding: 15px;
   /* Tool Tabs */
   /* Help */
 }
-#an-custom-field-container #an-tool-selector select#an-tab-links {
+#an-shortcode-form-container #an-tool-selector select#an-tab-links {
   margin: 0 0 30px 0;
   width: 100%;
   padding: 5px 15px;
   font-size: 16px;
   font-weight: bold;
 }
-#an-custom-field-container #an-tool-selector select#an-tab-links option span {
+#an-shortcode-form-container #an-tool-selector select#an-tab-links option span {
   font-size: 24px;
 }
-#an-custom-field-container .an-custom-field-help {
+#an-shortcode-form-container .an-custom-field-help {
   margin: 20px 0 0 0;
 }
-#an-custom-field-container .an-custom-field-help p {
+#an-shortcode-form-container .an-custom-field-help p {
   margin: 0 0 12px 0;
 }
-#an-custom-field-container .an-custom-field-help textarea {
+#an-shortcode-form-container .an-custom-field-help textarea {
   font-size: 10px;
   width: 100%;
 }
-#an-custom-field-container .an-custom-field-help a.button {
+#an-shortcode-form-container .an-custom-field-help a.button {
   float: right;
   margin-left: 40px;
 }
-/* Legacy Widgets */
-.wp-block-legacy-widget .an-widget-container .notice {
-  display: block !important;
-  margin-left: 0;
-  font-size: 12px;
-}
 /* Meta Box & Widgets */
-#an-custom-field-container,
-.an-widget-container {
+#an-shortcode-form-container {
   /* Groups */
   /* Inputs */
 }
-#an-custom-field-container fieldset.an-parameter-group,
-.an-widget-container fieldset.an-parameter-group {
+#an-shortcode-form-container fieldset.an-parameter-group {
   margin: 10px 0 20px 0;
 }
-#an-custom-field-container fieldset.an-parameter-group legend,
-.an-widget-container fieldset.an-parameter-group legend {
+#an-shortcode-form-container fieldset.an-parameter-group legend {
   display: block;
   padding: 7px;
   width: 95%;
   font-weight: lighter;
   font-size: 14px;
-  border: 1px solid #DDDDDD;
-  background: #F9F9F9;
+  border: 1px solid #dddddd;
+  background: #f9f9f9;
   border-radius: 5px;
   cursor: pointer;
 }
-#an-custom-field-container fieldset.an-parameter-group .an-parameter-group-content p,
-.an-widget-container fieldset.an-parameter-group .an-parameter-group-content p {
+#an-shortcode-form-container fieldset.an-parameter-group .an-parameter-group-content p {
   margin: 10px 0 0 0;
 }
-#an-custom-field-container .control-group,
-.an-widget-container .control-group {
+#an-shortcode-form-container .control-group {
   position: relative;
   margin: 3px 0;
   padding: 3px;
   width: 400px;
 }
-#an-custom-field-container .control-group:nth-child(2n),
-.an-widget-container .control-group:nth-child(2n) {
+#an-shortcode-form-container .control-group:nth-child(2n) {
   background: #f9f9f9 !important;
 }
-#an-custom-field-container .control-group label,
-.an-widget-container .control-group label {
+#an-shortcode-form-container .control-group label {
   display: block;
   padding: 3px;
   float: left;
   width: 190px;
   font-weight: bold;
 }
-#an-custom-field-container .control-group .controls select,
-.an-widget-container .control-group .controls select,
-#an-custom-field-container .control-group .controls input[type="text"],
-.an-widget-container .control-group .controls input[type="text"] {
+#an-shortcode-form-container .control-group .controls select,
+#an-shortcode-form-container .control-group .controls input[type="text"] {
   width: 180px;
 }
-#an-custom-field-container .control-group .controls a.an-tooltip,
-.an-widget-container .control-group .controls a.an-tooltip {
+#an-shortcode-form-container .control-group .controls a.an-tooltip {
   position: absolute;
   top: 6px;
   right: 0;
@@ -192,19 +176,19 @@ a.an-tooltip {
   margin: 15px;
   margin-bottom: 0;
 }
-#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-custom-field-container {
+#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-shortcode-form-container {
   background: transparent;
 }
-#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-custom-field-container legend {
+#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-shortcode-form-container legend {
   background: #fff;
 }
-#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-custom-field-container .control-group {
+#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-shortcode-form-container .control-group {
   width: unset;
 }
-#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-custom-field-container .control-group .control-label {
+#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-shortcode-form-container .control-group .control-label {
   float: none;
 }
-#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-custom-field-container .control-group .controls input.an-error {
+#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-shortcode-form-container .control-group .controls input.an-error {
   border: 2px solid red;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form input[type="submit"] {
@@ -287,7 +271,7 @@ a.an-tooltip {
   width: 180px;
   border-style: solid;
   border-width: 1px;
-  border-color: #DDDDDD;
+  border-color: #dddddd;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07) inset;
 }
 /* Adblock Message */

@@ -10,23 +10,21 @@
  * Setup admin
  */
 function an_admin_init() {
+	// Set defaults
+	an_update_parameter_defaults();
+
 	//Permissions
 	if (current_user_can('manage_options')) {
-		//Add custom fields
+		// Default parameters
 		add_action('admin_head-post.php', 'an_update_parameter_defaults');
-		add_action('admin_head-post.php', 'an_create_custom_fields_box');
 		add_action('admin_head-post-new.php', 'an_update_parameter_defaults');
-		add_action('admin_head-post-new.php', 'an_create_custom_fields_box');
-
-		//Save custom fields
-		add_action('save_post', 'an_save_custom_fields', 10, 2);
 
 		//Add CSS
-		wp_register_style('an_admin_css', plugins_url('assets/css/admin.css', dirname(__FILE__)), array(), an_get_config('plugin_version'));
+		wp_register_style('an_admin_css', plugins_url('assets/css/admin.css', dirname(__FILE__)), [], an_get_config('plugin_version'));
 		wp_enqueue_style('an_admin_css');
 
 		//Add JS
-		wp_register_script('an_admin_js', plugins_url('assets/js/admin.js', dirname(__FILE__)), array('jquery'), an_get_config('plugin_version'));
+		wp_register_script('an_admin_js', plugins_url('assets/js/admin.js', dirname(__FILE__)), ['jquery'], an_get_config('plugin_version'));
 		wp_enqueue_script('an_admin_js');
 	}
 }
@@ -36,7 +34,7 @@ add_action('admin_init', 'an_admin_init');
  * Validate our options
  */
 function an_options_validate($input) {
-	$output = array();
+	$output = [];
 	foreach ($input as $o_key => $o_value) {
 		$output[$o_key] = trim($o_value);
 	}
@@ -57,138 +55,6 @@ function an_get_option($option_key) {
 }
 
 /**
- * Ads...
- */
-function an_legacy_features() {
-	global $wpdb;
-
-	$an_settings = an_get_settings();
-
-	//Propagate username change?
-	if (an_get_settings('an_username_propagate') && an_get_settings('an_username_propagate')) {
-		an_propagate_username_change($an_settings['an_ebay_user']);
-	}
-
-	//Meta disable
-	if (!array_key_exists('an_meta_disable', $an_settings)) {
-		//Check post meta
-		$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "postmeta` WHERE `meta_key` REGEXP '^(item_|profile_|feedback|ad_)(.*)'", ARRAY_A);
-
-		//If post meta
-		if (sizeof($results) > 0) {
-			//Don't disable
-			$an_settings['an_meta_disable'] = false;
-		} else {
-			//Disable
-			$an_settings['an_meta_disable'] = true;
-		}
-
-		update_option('an_options', $an_settings);
-	}
-
-	//Widgets disable
-	if (!array_key_exists('an_widget_disable', $an_settings)) {
-		//Check post meta
-		$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "options` WHERE option_name LIKE 'widget_an_%_widget' AND option_value LIKE '%_siteid%'", ARRAY_A);
-
-		//If post meta
-		if (sizeof($results) > 0) {
-			//Don't disable
-			$an_settings['an_widget_disable'] = false;
-		} else {
-			//Disable
-			$an_settings['an_widget_disable'] = true;
-		}
-
-		update_option('an_options', $an_settings);
-	}
-
-	//ADs disable?
-	if (!array_key_exists('an_ads_disable', $an_settings)) {
-		//Check post meta
-		$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "postmeta` WHERE `meta_key` LIKE '%ad_SellerID%'", ARRAY_A);
-
-		//If post meta
-		if (sizeof($results) > 0) {
-			//Don't disable
-			$an_settings['an_ads_disable'] = false;
-			//If no page meta
-		} else {
-			//Then check for an Ad widget meta WITH DATA
-			$results = $wpdb->get_results("SELECT * FROM `" . $wpdb->prefix . "options` WHERE option_name LIKE 'widget_an_ads_widget' AND option_value LIKE '%ad_SellerID%'", ARRAY_A);
-
-			//If widget meta
-			if (sizeof($results) > 0) {
-				//Don't disable
-				$an_settings['an_ads_disable'] = false;
-				//No widget meta either
-			} else {
-				//Disable
-				$an_settings['an_ads_disable'] = true;
-			}
-		}
-
-		update_option('an_options', $an_settings);
-	}
-}
-add_action('admin_init', 'an_legacy_features');
-
-/**
- * Username change
- */
-function an_propagate_username_change($an_new_username) {
-	global $wpdb;
-
-	//Update posts...
-
-	$wpdb->query(
-		$wpdb->prepare("
-			UPDATE $wpdb->postmeta
-			SET meta_value = '%s'
-			WHERE meta_key IN('item_SellerID', 'ad_SellerID', 'profile_UserID', 'feedback_UserID')
-		", $an_new_username)
-	);
-
-	//Update widgets...
-
-	//Ad widgets
-	$an_widgets_options = get_option('widget_an_ads_widget');
-	foreach ($an_widgets_options as &$an_widget_options) {
-		if (is_array($an_widget_options) && array_key_exists('ad_SellerID', $an_widget_options)) {
-			$an_widget_options['ad_SellerID'] = $an_new_username;
-		}
-	}
-	update_option('widget_an_ads_widget', $an_widgets_options);
-
-	//Feedback widgets
-	$an_widgets_options = get_option('widget_an_feedback_widget');
-	foreach ($an_widgets_options as &$an_widget_options) {
-		if (is_array($an_widget_options) && array_key_exists('feedback_UserID', $an_widget_options)) {
-			$an_widget_options['feedback_UserID'] = $an_new_username;
-		}
-	}
-	update_option('widget_an_feedback_widget', $an_widgets_options);
-
-	//Profile widgets
-	$an_widgets_options = get_option('widget_an_profile_widget');
-	foreach ($an_widgets_options as &$an_widget_options) {
-		if (is_array($an_widget_options) && array_key_exists('profile_UserID', $an_widget_options)) {
-			$an_widget_options['profile_UserID'] = $an_new_username;
-		}
-	}
-	update_option('widget_an_profile_widget', $an_widgets_options);
-
-	//Listings widget
-	$an_widgets_options = get_option('widget_an_listings_widget');
-	foreach ($an_widgets_options as &$an_widget_options) {
-		if (is_array($an_widget_options) && array_key_exists('item_SellerID', $an_widget_options)) {
-			$an_widget_options['item_SellerID'] = $an_new_username;
-		}
-	}
-	update_option('widget_an_listings_widget', $an_widgets_options);
-}
-
-/**
  * Helpful upgrade notification
  */
 function an_show_upgrade_notification($current_plugin_metadata, $new_plugin_metadata) {
@@ -203,48 +69,20 @@ add_action('in_plugin_update_message-auction-nudge/auctionnudge.php', 'an_show_u
  * Modify plugin action links
  */
 function an_add_action_links($links) {
-	$links_before = array();
-	$links_after = array(
+	$links_before = [];
+	$links_after = [
 		'<a href="' . admin_url('options-general.php?page=an_options_page') . '">Settings</a>',
 		'<a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcode Generator</a>',
-	);
+	];
 
 	return array_merge($links_before, $links, $links_after);
 }
 add_filter('plugin_action_links_auction-nudge/auctionnudge.php', 'an_add_action_links');
 
 /**
- * ================= CUSTOM FIELDS ========================
- */
-
-/**
- * Create the custom fields box
- */
-function an_create_custom_fields_box() {
-	$an_settings = an_get_settings();
-
-	//Not if disabled
-	if (isset($an_settings['an_meta_disable']) && $an_settings['an_meta_disable']) {
-		return false;
-	}
-
-	foreach (array('post', 'page') as $post_type) {
-		add_meta_box('an-custom-fields', an_get_config('plugin_name'), 'an_create_custom_field_callback', $post_type, 'normal', 'high');
-	}
-}
-
-function an_create_custom_field_callback($tools_meta) {
-	echo an_admin_notice('<strong>This legacy feature and will be removed in a future update!</strong><br />Instead, try generating <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcodes</a> and adding them anywhere Shortcodes are supported.', 'error');
-
-	echo an_create_custom_field_form($tools_meta, 'item', true); //Show Help
-
-	echo an_admin_notice('For backwards compatibility, even when the Meta Box is <a href="' . admin_url('options-general.php?page=an_options_page&tab=legacy') . '"><b>disabled</b></a>, these options remain for this post.');
-}
-
-/**
  * Create the custom field form
  */
-function an_create_custom_field_form($tools_meta = [], $inital_tool = 'item', $show_shortcode = false) {
+function an_create_shortcode_form($tools_meta = [], $inital_tool = 'item', $show_shortcode = false) {
 	global $post;
 
 	//Do we have?
@@ -253,22 +91,7 @@ function an_create_custom_field_form($tools_meta = [], $inital_tool = 'item', $s
 		$tools_meta = an_get_post_meta($post->ID);
 	}
 
-	$out = '<div id="an-custom-field-container">' . "\n";
-
-	// == Tabs ==
-	$out .= '<div id="an-tool-selector">' . "\n";
-	$out .= '		<select name="tool_key" id="an-tab-links">' . "\n";
-
-	$selected = ($inital_tool == 'item') ? ' selected="selected"' : '';
-	$out .= '		<option' . $selected . ' value="item" class="an-tab-link active" data-tab="listings-tab">Your eBay Listings</option>' . "\n";
-
-	$selected = ($inital_tool == 'profile') ? ' selected="selected"' : '';
-	$out .= '		<option' . $selected . ' value="profile" class="an-tab-link" data-tab="profile-tab">Your eBay Profile</option>' . "\n";
-
-	$selected = ($inital_tool == 'feedback') ? ' selected="selected"' : '';
-	$out .= '		<option' . $selected . ' value="feedback" class="an-tab-link" data-tab="feedback-tab">Your eBay Feedback</option>' . "\n";
-	$out .= '	</select>' . "\n";
-	$out .= '</div>' . "\n";
+	$out = '<div id="an-shortcode-form-container">' . "\n";
 
 	// == Item tool ==
 
@@ -286,51 +109,7 @@ function an_create_custom_field_form($tools_meta = [], $inital_tool = 'item', $s
 
 	$out .= '</div>' . "\n";
 
-	// == Ad tool (Legacy) ==
-
-	if (isset($post->ID) && an_get_option('an_ads_disable') == false) {
-		$out .= '<div id="ads-tab" class="an-custom-field-tab" style="display:none">' . "\n";
-
-		//Get stored post meta values
-		$tool_parameters = an_request_parameters_from_assoc_array('ad', $tools_meta, false);
-		$out .= an_create_tool_custom_fields('ad', $tool_parameters);
-
-		$out .= '</div>' . "\n";
-	}
-
-	// == Profile tool ==
-
-	$style = ($inital_tool == 'profile') ? '' : ' style="display:none"';
-	$out .= '<div' . $style . ' id="profile-tab" class="an-custom-field-tab">' . "\n";
-
-	//Get stored post meta values
-	$tool_parameters = an_request_parameters_from_assoc_array('profile', $tools_meta, false);
-	$out .= an_create_tool_custom_fields('profile', $tool_parameters);
-
-	//Output Shortcode
-	if ($show_shortcode) {
-		$out .= an_build_shortcode('profile');
-	}
-
-	$out .= '</div>' . "\n";
-
-	// == Feedback tool ==
-
-	$style = ($inital_tool == 'feedback') ? '' : ' style="display:none"';
-	$out .= '<div' . $style . ' id="feedback-tab" class="an-custom-field-tab">' . "\n";
-
-	//Get stored post meta values
-	$tool_parameters = an_request_parameters_from_assoc_array('feedback', $tools_meta, false);
-	$out .= an_create_tool_custom_fields('feedback', $tool_parameters);
-
-	//Output Shortcode
-	if ($show_shortcode) {
-		$out .= an_build_shortcode('feedback');
-	}
-
-	$out .= '</div>' . "\n";
-
-	$out .= '</div> <!-- END #an-custom-field-container -->' . "\n";
+	$out .= '</div> <!-- END #an-shortcode-form-container -->' . "\n";
 	$out .= '<div id="adblock-test" class="auction-nudge"></div>' . "\n";
 
 	echo $out;
@@ -422,7 +201,7 @@ function an_create_custom_field_input($field, $set_value = false, $add_class = '
 	$out .= '	<div class="controls">' . "\n";
 
 	//Default type
-	if (!array_key_exists('type', $field)) {
+	if (! array_key_exists('type', $field)) {
 		$field['type'] = 'text';
 	}
 
@@ -444,18 +223,6 @@ function an_create_custom_field_input($field, $set_value = false, $add_class = '
 	$out .= '</div>' . "\n";
 
 	return $out;
-}
-
-/**
- * Save the custom field data
- */
-function an_save_custom_fields($post_id, $post) {
-	//Ensure the user clicked the Save/Publish button
-	//Credit: https://tommcfarlin.com/wordpress-save_post-called-twice/
-	if (!(wp_is_post_revision($post_id) || wp_is_post_autosave($post_id))) {
-		//Save parameters as post meta
-		an_save_post_meta_from_form_post($post_id, $_POST);
-	}
 }
 
 /**
@@ -485,7 +252,7 @@ function an_options_page() {
 
 	//Determine default tab
 	$default_tab = 'general';
-	if (isset($an_settings['an_ebay_user']) && !empty($an_settings['an_ebay_user'])) {
+	if (isset($an_settings['an_ebay_user']) && ! empty($an_settings['an_ebay_user'])) {
 		$default_tab = 'shortcodes';
 	}
 
@@ -495,26 +262,20 @@ function an_options_page() {
 
 	echo '	<div id="an-settings-tabs">' . "\n";
 
+	echo '	<div style="margin:10px;">' . "\n";
+	echo an_admin_notice('October 2024 – The <b>Your eBay Profile</b> and <b>Your eBay Feedback</b> tools are being retired. Read more <a target="_blank" href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.', 'error');
+	echo '</div>' . "\n";
+
 	//Settings
-	if (in_array($active_tab, ['legacy', 'general'])) {
+	if (in_array($active_tab, ['general'])) {
 		//Open form
 		echo '		<form class="an-tab-left an-tab-content" action="' . admin_url('options.php') . '" method="post">' . "\n";
 		settings_fields('an_options');
-
-		// == Settings ==
 
 		$style = ($active_tab != 'general') ? ' style="display:none"' : '';
 		echo '		<div id="an-settings-general"' . $style . '>' . "\n";
 		do_settings_sections('an_general');
 		echo '		</div>';
-
-		// == Legacy ==
-
-		$style = ($active_tab != 'legacy') ? ' style="display:none"' : '';
-		echo '		<div id="an-settings-legacy"' . $style . '>' . "\n";
-
-		do_settings_sections('an_legacy');
-		echo '		</div>' . "\n";
 
 		//Submit
 		echo '		<input class="button button-primary" name="Submit" type="submit" value="Save Settings" />' . "\n";
@@ -524,11 +285,9 @@ function an_options_page() {
 		echo '		<img width="120" height="120" alt="Joe\'s mug" src="https://www.morehawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";
 		echo '		<p class="an-lead"><b>Hi, I\'m Joe.</b>Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">reach out</a> if you have any issues.</p>' . "\n";
 
-		echo an_admin_notice('<a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/reviews/#new-post">Reviews appreciated!</a>', 'success');
-
 		echo '<p style="margin-top: 30px">';
 		//Prompt to set default
-		if (!an_get_settings('an_ebay_user')) {
+		if (! an_get_settings('an_ebay_user')) {
 			//Don't link if already on the defaults tab
 			if ($active_tab != 'general') {
 				echo '<a href="' . admin_url('options-general.php?page=an_options_page&tab=general') . '">Set a default eBay Username</a>,' . "\n";
@@ -574,7 +333,7 @@ function an_options_page() {
 			echo '		</div>' . "\n";
 
 			//Can we do the default preview?
-		} elseif (isset($an_settings['an_ebay_user']) && !empty($an_settings['an_ebay_user'])) {
+		} elseif (isset($an_settings['an_ebay_user']) && ! empty($an_settings['an_ebay_user'])) {
 			echo '		<div id="an-shortcode-preview" class="an-tab-left an-tab-content">' . "\n";
 
 			echo an_build_shortcode($tool_key, an_request_parameters_defaults($tool_key, true));
@@ -596,10 +355,8 @@ function an_options_page() {
 		echo '			<p>Add Shortcodes anywhere they are supported.</p>' . "\n";
 
 		//Display form, propogated with any user submitted values
-		echo an_create_custom_field_form($_POST, $tool_key);
+		echo an_create_shortcode_form($_POST, $tool_key);
 		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
-
-		echo an_admin_notice('An <a target="_blank" href="https://www.auctionnudge.com/about#disclosure">Advertising Disclosure</a> is displayed above Auction Nudge tools, in accordance with eBay requirements.', 'info');
 
 		echo '	</form>' . "\n";
 	}
@@ -616,13 +373,12 @@ function an_options_page() {
  * Settings page tabs
  */
 function an_admin_tabs($current = 'general') {
-	$tabs = array(
+	$tabs = [
 		'shortcodes' => 'Shortcodes',
 		'general' => 'Settings',
-		'legacy' => 'Legacy',
-	);
+	];
 
-	$links = array();
+	$links = [];
 	foreach ($tabs as $slug => $name) {
 		if ($slug == $current) {
 			$links[] = '<a class="nav-tab nav-tab-active nav-tab-' . $slug . '" href="?page=an_options_page&tab=' . $slug . '">' . $name . '</a>';
@@ -661,16 +417,6 @@ function an_admin_settings() {
 		//Requests
 		add_settings_section('an_request', 'Caching', 'an_request_text', 'an_general');
 		add_settings_field('an_local_requests', '', 'an_local_requests_setting', 'an_general', 'an_request');
-
-		//Legacy...
-
-		//Meta Box
-		add_settings_section('an_meta', 'Meta Boxes', 'an_meta_disable_text', 'an_legacy');
-		add_settings_field('an_meta_disable_setting', '', 'an_meta_disable_setting', 'an_legacy', 'an_meta');
-		//If Meta enabled
-		if (!an_get_settings('an_meta_disable', true)) {
-			add_settings_field('an_username_propagate_setting', 'Update Username', 'an_username_propagate_setting', 'an_legacy', 'an_meta');
-		}
 	}
 }
 add_action('admin_init', 'an_admin_settings');
@@ -712,7 +458,7 @@ function an_ebay_site_setting() {
 		$ebay_site_setting = '0';
 	}
 
-	$siteids = array(
+	$siteids = [
 		'0' => 'eBay US',
 		'3' => 'eBay UK',
 		'2' => 'eBay Canada',
@@ -726,7 +472,7 @@ function an_ebay_site_setting() {
 		'146' => 'eBay Netherlands',
 		'205' => 'eBay Ireland',
 		'193' => 'eBay Switzerland',
-	);
+	];
 
 	echo '<select name="an_options[an_ebay_site]" id="an_ebay_site">' . "\n";
 	foreach ($siteids as $siteid => $description) {
@@ -763,7 +509,7 @@ function an_local_requests_setting() {
 }
 
 function an_admin_notice($text = '', $type = 'info', $tag = 'div') {
-	if (!$text) {
+	if (! $text) {
 		return;
 	}
 
@@ -776,34 +522,4 @@ function an_admin_notice($text = '', $type = 'info', $tag = 'div') {
 	$out .= '"><p>' . $text . '</p></' . $tag . '>';
 
 	return $out;
-}
-
-/**
- * ==================== LEGACY ============================
- */
-
-function an_meta_disable_text() {
-	$legacy_text = '<strong>This legacy feature and will be removed in a future update!</strong></br >';
-	$legacy_text .= 'Instead add <em>Shortcodes</em> anywhere they are supported, customize them with the <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcode Generator</a>. For backwards compatibility, existing Meta Box options remain unchanged for each post even with this feature disabled.';
-
-	echo an_admin_notice($legacy_text, 'error');
-}
-
-function an_username_propagate_setting() {
-	echo '<div style="margin-top:5px;">' . "\n";
-	echo '	<input type="checkbox" id="an_username_propagate" name="an_options[an_username_propagate]" value="true" />' . "\n";
-	echo '	<small>Update every Meta Box</small>	<a class="an-tooltip" data-title="Should you change eBay username, you can also use this option to update every Meta Box with the new setting." href="#" onclick="return false;">?</a>' . "\n";
-	echo '</div>' . "\n";
-}
-
-function an_meta_disable_setting() {
-	$an_meta_disable = an_get_settings('an_meta_disable', true);
-
-	echo '<select id="an_meta_disable" name="an_options[an_meta_disable]">' . "\n";
-	$selected = ($an_meta_disable) ? ' selected="selected"' : '';
-	echo '	<option' . $selected . ' value="1">Disabled</option>' . "\n";
-	$selected = (!$an_meta_disable) ? ' selected="selected"' : '';
-	echo '	<option' . $selected . ' value="0">Enabled</option>' . "\n";
-	echo '</select>' . "\n";
-	echo '<a class="an-tooltip" data-title="For backwards compatibility, even when disabled, each post retains it\'s Meta Box options." href="#" onclick="return false;">?</a>' . "\n";
 }

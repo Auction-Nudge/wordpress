@@ -1,18 +1,18 @@
 === Auction Nudge - Your eBay on Your Site ===
 Contributors: morehawes
-Tags: ebay, item, listing, profile, feedback, feed, embed, store, shop
+Tags: ebay, item, listing, feed, embed, store, shop
 Requires at least: 3.2
-Tested up to: 6.4
+Tested up to: 6.6
 Requires PHP: 5.2
-Stable tag: 7.1.5
+Stable tag: 7.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Display your live eBay Listings, Profile and Feedback information with a Shortcode.
+Display your live eBay Listings with a Shortcode.
 
 == Description ==
 
-Display your live eBay information on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>, an approved eBay Compatible Application.
+Display your active eBay items on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>, an approved eBay Compatible Application.
 
 Add the Auction Nudge Shortcode anywhere that Shortcodes are supported:
 
@@ -20,16 +20,10 @@ Add the Auction Nudge Shortcode anywhere that Shortcodes are supported:
 [auction-nudge tool="listings" sellerid="ebay_username"]
 `
 
-Tools:
-
 * **Your eBay Listings** - displays your active items, with lots of options and filters to choose from. You visitors can:
 	* Browse multiple pages of items
 	* Filter by eBay category
 	* Search of all of your active items by keyword
-
-* **Your eBay Profile** - displays your eBay profile information like feedback rating and date of registration as a badge
-
-* **Your eBay Feedback** - displays your most recent feedback comments
 
 **In order to remain free, Auction Nudge is supported by referral commissions from eBay and includes an [Advertising Disclosure](https://www.auctionnudge.com/about#disclosure).**
 
@@ -87,12 +81,6 @@ Now you can add the appropriate Auction Nudge Shortcode to your WordPress site a
 `<!-- To display Your eBay Listings -->
 [auction-nudge tool="listings"]
 
-<!-- To display Your eBay Profile -->
-[auction-nudge tool="profile"]
-
-<!-- To display Your eBay Feedback -->
-[auction-nudge tool="feedback"]`
-
 Use the Shortcode Generator (Settings > Auction Nudge) to customise your content, or pass your options to the Shortcode like this:
 
 `<!-- Showing items for the eBay username "ebay_username" -->
@@ -117,13 +105,7 @@ A common reason for Auction Nudge not loading is the use of **ad blocking browse
 
 = How Often Does Auction Nudge Update? =
 
-To reduce server load, Auction Nudge does not update every time it is loaded on your site. The tools update as follows:
-
-* Your eBay Listings – updates every 15 minutes
-* Your eBay Profile – updates every 12 hours
-* Your eBay Feedback – updates every 12 hours
-
-These update times aim to optimise server resources by updating the most important feeds (i.e. those displaying active eBay items) more frequently than ones that change only occasionally (i.e. profile/feedback information).
+To reduce server load, Auction Nudge does not update every time it is loaded on your site. The Your eBay Listings tool updates every 15 minutes.
 
 = How Is Such an Awesome Tool Free? =
 
@@ -151,17 +133,19 @@ This means that if you are not happy with the Advertising Disclosure, then Aucti
 
 Attempting to hide, obscure or modifying the disclosure puts the service at risk for all users. Therefore, Auction Nudge reserves the right to block any user who attempts to do so.
 
-
 == Screenshots ==
 
 1. Preview and customize your Shortcode.
-2. Display your eBay profile.
-3. Display your feedback profile.
-4. Add Shortcodes anywhere they are supported.
-5. Promote your eBay content on your site.
-6. A default eBay username saves time!
+2. Add Shortcodes anywhere they are supported.
+3. Promote your eBay content on your site.
+4. A default eBay username saves time!
 
 == Changelog ==
+
+= 7.2.0 =
+
+- The Your eBay Profile and Your eBay Feedback tools are being retired. The ability to create new snippets for these tools has been removed and existing snippets will soon cease to function. More information can be found <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.
+- Removed Legacy Meta Box and Widget support, please use Shortcodes instead.
 
 = 7.1.5 =
 
