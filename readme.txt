@@ -14,6 +14,8 @@ Display your live eBay Listings with a Shortcode.
 
 Display your active eBay items on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>, an approved eBay Compatible Application.
 
+**The Your eBay Profile and Your eBay Feedback tools are being retired. The ability to create new snippets for these tools has been removed and existing snippets will soon cease to function. More information can be found <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.**
+
 Add the Auction Nudge Shortcode anywhere that Shortcodes are supported:
 
 `
