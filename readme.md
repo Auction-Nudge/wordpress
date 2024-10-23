@@ -1,6 +1,6 @@
 # Auction Nudge - Your eBay on Your Site #
 **Contributors:** [morehawes](https://profiles.wordpress.org/morehawes/)  
-**Tags:** ebay, item, listing, feed, embed, store, shop  
+**Tags:** ebay, item, listing, embed, store  
 **Requires at least:** 3.2  
 **Tested up to:** 6.6  
 **Requires PHP:** 5.2  
@@ -14,7 +14,11 @@ Display your live eBay Listings with a Shortcode.
 
 Display your active eBay items on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>, an approved eBay Compatible Application.
 
+---
+
 The **Your eBay Profile** and **Your eBay Feedback** tools are being retired, more information <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>. The Your eBay Listings tool will continue to be supported :)
+
+---
 
 Add the Auction Nudge Shortcode anywhere that Shortcodes are supported:
 
@@ -134,6 +138,16 @@ No. The [advertising disclosure](https://www.auctionnudge.com/about#disclosure) 
 This means that if you are not happy with the Advertising Disclosure, then Auction Nudge is not the **free tool** for you.
 
 Attempting to hide, obscure or modifying the disclosure puts the service at risk for all users. Therefore, Auction Nudge reserves the right to block any user who attempts to do so.
+
+### What happened to the Your eBay Profile and Your eBay Feedback tools? ###
+
+These tools are being retired as of October 2024. Unfortunately, eBay has scheduled the data source for these tools to be decommissioned in February 2025. With no alternative available, it will no longer be possible to provide these tools.
+
+The tools will continue to function as normal until the Shopping API is decommissioned, when the tools will cease to function and no content will be displayed on the page.
+
+The Your eBay Listings tool has already been migrated to the new Browse API and will continue to be supported :)
+
+More information can be found <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.
 
 ## Screenshots ##
 
