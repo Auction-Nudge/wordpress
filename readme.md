@@ -2,7 +2,7 @@
 **Contributors:** [morehawes](https://profiles.wordpress.org/morehawes/)  
 **Tags:** ebay, item, listing, embed, store  
 **Requires at least:** 3.2  
-**Tested up to:** 6.6  
+**Tested up to:** 6.7  
 **Requires PHP:** 5.2  
 **Stable tag:** 7.2.0  
 **License:** GPLv2 or later  
@@ -14,11 +14,7 @@ Display your live eBay Listings with a Shortcode.
 
 Display your active eBay items on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>, an approved eBay Compatible Application.
 
----
-
-The **Your eBay Profile** and **Your eBay Feedback** tools are being retired, more information <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>. The Your eBay Listings tool will continue to be supported :)
-
----
+**The Your eBay Profile and Your eBay Feedback tools are being retired, more information <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>. The Your eBay Listings tool will continue to be supported** :)
 
 Add the Auction Nudge Shortcode anywhere that Shortcodes are supported:
 
