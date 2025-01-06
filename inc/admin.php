@@ -36,7 +36,7 @@ add_action('admin_init', 'an_admin_init');
 function an_options_validate($input) {
 	$output = [];
 	foreach ($input as $o_key => $o_value) {
-		$output[$o_key] = trim($o_value);
+		$output[$o_key] = esc_html__(trim($o_value));
 	}
 	return $output;
 }

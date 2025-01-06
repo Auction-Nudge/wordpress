@@ -4,7 +4,7 @@ Tags: ebay, item, listing, embed, store
 Requires at least: 3.2
 Tested up to: 6.7
 Requires PHP: 5.2
-Stable tag: 7.2.0
+Stable tag: 7.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,10 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 4. A default eBay username saves time!
 
 == Changelog ==
+
+= 7.2.1 =
+
+Admin form Cross Site Scripting (XSS) vulnerability fix. Thanks to <a href="https://patchstack.com/database/researcher/e8b26d85-211b-4078-9d62-d56faa6d7f8a">b4orvn</a> for reporting this via <a href="https://patchstack.com">Patchstack</a>.
 
 = 7.2.0 =
 
