@@ -104,36 +104,16 @@ function an_alt_inputs() {
 	});
 }
 
-function an_create_tool_data(shortcode_data) {
-	var tool_data = {
-		item: {},
-		profile: {},
-		feedback: {},
-	};
+function an_create_item_data(shortcode_data = []) {
+	var item_data = [];
 
 	for (data_key in shortcode_data) {
-		switch (0) {
-			case data_key.indexOf("item_"):
-				tool_data["item"][data_key.replace("item_", "")] =
-					shortcode_data[data_key];
-
-				break;
-
-			case data_key.indexOf("profile_"):
-				tool_data["profile"][data_key.replace("profile_", "")] =
-					shortcode_data[data_key];
-
-				break;
-
-			case data_key.indexOf("feedback_"):
-				tool_data["feedback"][data_key.replace("feedback_", "")] =
-					shortcode_data[data_key];
-
-				break;
+		if (data_key.indexOf("item_") !== -1) {
+			item_data[data_key.replace("item_", "")] = shortcode_data[data_key];
 		}
 	}
 
-	return tool_data;
+	return item_data;
 }
 
 //Tooltips
@@ -162,30 +142,22 @@ function an_setup_tooltips() {
 	});
 }
 
-function an_build_shortcode(tool_key = "item", tool_data = {}) {
-	//Legacy
-	tool_key = tool_key == "item" ? "listings" : tool_key;
-
-	var out = '[auction-nudge tool="' + tool_key + '"';
-	for (attr_key in tool_data) {
-		out += " " + attr_key.toLowerCase() + '="' + tool_data[attr_key] + '"';
+function an_build_item_shortcode(item_data = []) {
+	var out = '[auction-nudge tool="listings"';
+	for (attr_key in item_data) {
+		out += " " + attr_key.toLowerCase() + '="' + item_data[attr_key] + '"';
 	}
 	out += "]";
 
 	return out;
 }
 
-function an_update_tool_snippets(tool_data = []) {
-	for (tool_key in tool_data) {
-		var shortcode = an_build_shortcode(tool_key, tool_data[tool_key]);
+function an_update_item_snippets(item_data = []) {
+	var shortcode = an_build_item_shortcode(item_data);
 
-		var shortcode_container = jQuery("#an-shortcode-" + tool_key);
+	var shortcode_container = jQuery("#an-shortcode-item");
 
-		shortcode_container.html(shortcode);
-
-		// 		var font_size = 120 / (shortcode.length / 4 );
-		// 		shortcode_container.css('fontSize', font_size + 'px');
-	}
+	shortcode_container.html(shortcode);
 }
 
 function an_shortcode_input_value(data_key, input) {
@@ -203,23 +175,11 @@ function an_setup_settings_ui() {
 		return;
 	}
 
-	//Legacy Tab
-	// 	var legacy_options = jQuery('#an-settings-legacy table', body);
-	// 	//Legacy tab, but no legacy options
-	// 	if(! legacy_options.length) {
-	// 		var document_location = document.location.toString();
-	//
-	// 		if(document_location.toString().indexOf('tab=legacy') !== -1) {
-	// 			document.location = document_location.replace('tab=legacy', 'tab=general');
-	// 		}
-	// 	}
-
 	//Shortcode form
 	var container = jQuery("#an-shortcode-form-container", body);
 	if (container.length) {
 		var default_data = [];
 		var shortcode_data = [];
-		var tool_data = {};
 
 		//Update Shortcode
 		var update_shortcode = function (input) {
@@ -244,8 +204,8 @@ function an_setup_settings_ui() {
 			}
 
 			//Update snippet
-			tool_data = an_create_tool_data(shortcode_data);
-			an_update_tool_snippets(tool_data);
+			var item_data = an_create_item_data(shortcode_data);
+			an_update_item_snippets(item_data);
 		};
 
 		//Username check
@@ -262,12 +222,8 @@ function an_setup_settings_ui() {
 				}
 			};
 
-			var check_form = function (tool_key, form) {
-				if (tool_key == "item") {
-					var input = jQuery('input[name="item_SellerID"]', form);
-				} else {
-					var input = jQuery('input[name="' + tool_key + '_UserID"]', form);
-				}
+			var check_form = function (form) {
+				var input = jQuery('input[name="item_SellerID"]', form);
 
 				var success = check_input(input);
 				var button = jQuery('input[type="submit"]', form);
@@ -284,20 +240,17 @@ function an_setup_settings_ui() {
 			var form = jQuery("#an-shortcode-form");
 
 			//Initial
-			check_form("item", form);
+			check_form(form);
 
 			//Form submit
 			form.on("submit", function () {
-				check_form("item", form);
+				check_form(form);
 			});
 
 			//Input change
-			var inputs = jQuery(
-				'input[name="item_SellerID"], input[name="profile_UserID"], input[name="feedback_UserID"]',
-				container,
-			);
-			inputs.on("keypress change", function () {
-				check_form("item", form);
+			var inputs = jQuery('input[name="item_SellerID"]', container);
+			inputs.on("change keyup", function () {
+				check_form(form);
 			});
 		};
 
@@ -307,12 +260,6 @@ function an_setup_settings_ui() {
 		//Each
 		inputs.each(function () {
 			var input = jQuery(this);
-
-			// 			switch(input.attr('id')) {
-			// 				case 'SellerID' :
-			//
-			// 					break;
-			// 			}
 
 			//On change
 			input.on("change", function () {

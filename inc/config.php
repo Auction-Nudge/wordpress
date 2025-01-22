@@ -8,7 +8,7 @@
 
 $an_plugin_config = [
 	'plugin_name' => 'Auction Nudge',
-	'plugin_version' => '7.2.1',
+	'plugin_version' => '7.3.0',
 	'custom_field_prefix' => 'an',
 	'shortcode' => 'auction-nudge',
 	'tool_keys' => ['item', 'ad', 'profile', 'feedback'],
@@ -284,6 +284,20 @@ $an_plugin_config = [
 			'default' => '120',
 			'input_processing' => [
 				'preg_replace("/[^0-9]/", "", $param_value);',
+			],
+		],
+		'item_user_profile' => [
+			'name' => 'item_user_profile',
+			'id' => 'item_user_profile',
+			'tip' => 'If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings.',
+
+			'type' => 'radio',
+			'group' => 'display',
+			'title' => 'Show User Profile?',
+			'default' => '0',
+			'options' => [
+				'1' => 'Yes',
+				'0' => 'No',
 			],
 		],
 		//Advanced

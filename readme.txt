@@ -4,7 +4,7 @@ Tags: ebay, item, listing, embed, store
 Requires at least: 3.2
 Tested up to: 6.7
 Requires PHP: 5.2
-Stable tag: 7.2.1
+Stable tag: 7.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,7 @@ Add the Auction Nudge Shortcode anywhere that Shortcodes are supported:
 * **Show Search Box?** - Allow your site visitors to search all of your active eBay items by keyword
 * **Open Links in New Tab?** - Decide if your visitors should be taken to eBay in a new tab or the current one
 * **Image Size** - Large item images can be displayed (up to 500px by 500px)
+* **User Profile** - Display your eBay username, positive feedback percentage, feedback score and feedback star (if applicable) at the top of the Your eBay Listings tool
 
 = Advanced Options =
 
@@ -153,6 +154,17 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 4. A default eBay username saves time!
 
 == Changelog ==
+
+= 7.3.0 =
+
+Added the option to display a user's eBay profile information at the top of the Your eBay Listings tool. This includes:
+
+* eBay Username
+* Positive feedback percentage
+* Feedback score
+* Feedback star (if applicable)
+
+This option is available in the Display Options section when creating your snippet, or through the `user_profile="1"` Shortcode parameter. 
 
 = 7.2.1 =
 

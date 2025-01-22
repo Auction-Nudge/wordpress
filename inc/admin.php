@@ -321,6 +321,10 @@ function an_options_page() {
 
 		$tab_url = 'options-general.php?page=an_options_page&tab=shortcodes';
 
+		// Override defaults
+		$override_defaults = [];
+		$override_defaults['item_user_profile'] = '1';
+
 		//Preview submitted?
 		$request_params = an_request_parameters_from_assoc_array($tool_key, $_POST);
 		if (sizeof($request_params)) {
@@ -336,9 +340,14 @@ function an_options_page() {
 		} elseif (isset($an_settings['an_ebay_user']) && ! empty($an_settings['an_ebay_user'])) {
 			echo '		<div id="an-shortcode-preview" class="an-tab-left an-tab-content">' . "\n";
 
-			echo an_build_shortcode($tool_key, an_request_parameters_defaults($tool_key, true));
+			// Default parameters
+			$request_params = an_request_parameters_defaults($tool_key, true);
 
-			echo an_build_snippet($tool_key, an_request_parameters_defaults($tool_key, true));
+			// Merge with any overrides
+			$request_params = array_merge($request_params, $override_defaults);
+
+			echo an_build_shortcode($tool_key, $request_params);
+			echo an_build_snippet($tool_key, $request_params);
 
 			echo '		</div>' . "\n";
 			//Nothing to Preview - Welcome screen
@@ -354,8 +363,17 @@ function an_options_page() {
 		echo '			<h2>Shortcode Generator</h2>' . "\n";
 		echo '			<p>Add Shortcodes anywhere they are supported.</p>' . "\n";
 
+		// Get POST data (if any)
+		$post_data = $_POST;
+
+		// If empty - i.e. not yet submitted
+		if(! sizeof($post_data)) {
+			// Merge with any overrides
+			$post_data = array_merge($post_data, $override_defaults);
+		}
+
 		//Display form, propogated with any user submitted values
-		echo an_create_shortcode_form($_POST, $tool_key);
+		echo an_create_shortcode_form($post_data, $tool_key);
 		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
 
 		echo '	</form>' . "\n";
