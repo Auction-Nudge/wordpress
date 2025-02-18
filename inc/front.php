@@ -159,7 +159,7 @@ function an_build_snippet($tool_key = 'item', $request_parameters = []) {
  * Output version #
  */
 function an_output_version() {
-	echo '<!-- AN v' . an_get_config('plugin_version') . ' -->' . "\n";
+	echo '<!-- AN v' . esc_html(an_get_config('plugin_version')) . ' -->' . "\n";
 }
 add_action('wp_head', 'an_output_version');
 

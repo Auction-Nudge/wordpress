@@ -8,7 +8,7 @@
 
 $an_plugin_config = [
 	'plugin_name' => 'Auction Nudge',
-	'plugin_version' => '7.3.0',
+	'plugin_version' => '7.3.1',
 	'custom_field_prefix' => 'an',
 	'shortcode' => 'auction-nudge',
 	'tool_keys' => ['item', 'ad', 'profile', 'feedback'],
@@ -75,7 +75,7 @@ $an_plugin_config = [
 			'group' => 'feed',
 			'title' => 'eBay Username',
 			'output_processing' => [
-				'an_username_encode($param_value)',
+				'username_encode',
 			],
 		],
 		'item_siteid' => [
@@ -112,7 +112,6 @@ $an_plugin_config = [
 			'options' => [
 				'responsive' => 'Responsive',
 				'columns' => 'Column View',
-				'carousel' => 'Carousel',
 				'simple_list' => 'Simple List',
 				'details' => 'Image and Details',
 				'images_only' => 'Images Only',
@@ -162,9 +161,6 @@ $an_plugin_config = [
 			'group' => 'display',
 			'title' => 'Items per Page',
 			'default' => '6',
-			'input_processing' => [
-				'preg_replace("/[^0-9]/", "", $param_value);',
-			],
 		],
 		'item_page' => [
 			'name' => 'item_page',
@@ -193,6 +189,7 @@ $an_plugin_config = [
 				'0' => 'No',
 			],
 		],
+		/* Legacy Carousel options */
 		'item_carousel_scroll' => [
 			'name' => 'item_carousel_scroll',
 			'id' => 'item_carousel_scroll',
@@ -200,9 +197,6 @@ $an_plugin_config = [
 			'group' => 'display',
 			'title' => 'Number of Items to Scroll',
 			'default' => '4',
-			'input_processing' => [
-				'preg_replace("/[^0-9]/", "", $param_value);',
-			],
 		],
 		'item_carousel_width' => [
 			'name' => 'item_carousel_width',
@@ -211,9 +205,6 @@ $an_plugin_config = [
 			'group' => 'display',
 			'title' => 'Item Width',
 			'default' => '140',
-			'input_processing' => [
-				'preg_replace("/[^0-9]/", "", $param_value);',
-			],
 		],
 		'item_carousel_auto' => [
 			'name' => 'item_carousel_auto',
@@ -222,9 +213,6 @@ $an_plugin_config = [
 			'group' => 'display',
 			'title' => 'Auto Scroll',
 			'default' => '0',
-			'input_processing' => [
-				'preg_replace("/[^0-9]/", "", $param_value);',
-			],
 		],
 		'item_grid_cols' => [
 			'name' => 'item_grid_cols',
@@ -233,9 +221,6 @@ $an_plugin_config = [
 			'group' => 'display',
 			'title' => 'Grid Columns',
 			'default' => '2',
-			'input_processing' => [
-				'preg_replace("/[^0-9]/", "", $param_value);',
-			],
 		],
 		'item_grid_width' => [
 			'name' => 'item_grid_width',
@@ -245,7 +230,7 @@ $an_plugin_config = [
 			'title' => 'Grid Width',
 			'default' => '100%',
 			'output_processing' => [
-				'str_replace("%", "%25", $param_value)',
+				'replace_percent',
 			],
 		],
 		'item_show_logo' => [
@@ -282,9 +267,6 @@ $an_plugin_config = [
 			'group' => 'display',
 			'title' => 'Image Size',
 			'default' => '120',
-			'input_processing' => [
-				'preg_replace("/[^0-9]/", "", $param_value);',
-			],
 		],
 		'item_user_profile' => [
 			'name' => 'item_user_profile',
@@ -337,7 +319,7 @@ $an_plugin_config = [
 			'group' => 'advanced',
 			'title' => 'Filter by Keyword',
 			'output_processing' => [
-				'an_keyword_encode($param_value)',
+				'keyword_encode',
 			],
 		],
 		'item_categoryId' => [
@@ -373,7 +355,7 @@ $an_plugin_config = [
 			'group' => 'feed',
 			'title' => 'eBay Username',
 			'output_processing' => [
-				'an_username_encode($param_value)',
+				'username_encode',
 			],
 		],
 		'ad_siteid' => [
@@ -442,9 +424,6 @@ $an_plugin_config = [
 			'group' => 'display',
 			'title' => 'Auto Scroll?',
 			'default' => '0',
-			'input_processing' => [
-				'preg_replace("/[^0-9]/", "", $param_value);',
-			],
 		],
 		'ad_blank_noitems' => [
 			'name' => 'ad_blank_noitems',
@@ -495,7 +474,7 @@ $an_plugin_config = [
 			'group' => 'advanced',
 			'title' => 'Filter by Keyword',
 			'output_processing' => [
-				'str_replace("+", "%20", urlencode($param_value))',
+				'ad_keyword_encode',
 			],
 		],
 		'ad_categoryId' => [
@@ -515,7 +494,7 @@ $an_plugin_config = [
 			'tip' => 'This is your eBay ID &ndash; the username you are known by on eBay and appears on your listings. This is not your store name.',
 			'title' => 'eBay Username',
 			'output_processing' => [
-				'an_username_encode($param_value)',
+				'username_encode',
 			],
 		],
 		'profile_siteid' => [
@@ -594,7 +573,7 @@ $an_plugin_config = [
 			'tip' => 'This is your eBay ID &ndash; the username you are known by on eBay and appears on your listings. This is not your store name.',
 			'title' => 'eBay Username',
 			'output_processing' => [
-				'an_username_encode($param_value)',
+				'username_encode',
 			],
 		],
 		'feedback_siteid' => [
@@ -655,9 +634,6 @@ $an_plugin_config = [
 			'tip' => 'This number determines how many feedback entries will be displayed.',
 			'title' => 'Entries to Show (1-5)',
 			'default' => '5',
-			'input_processing' => [
-				'preg_replace("/[^0-9]/", "", $param_value);',
-			],
 		],
 
 		'feedback_blank' => [

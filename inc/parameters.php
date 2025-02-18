@@ -68,10 +68,13 @@ function an_request_parameters_from_assoc_array($tool_key, $assoc_array, $do_out
 				$param_value = $assoc_array[$param_name];
 			}
 
+			// Sanitize the value
+			$param_value = sanitize_text_field($param_value);
+
 			//Are we processing it before output?
 			if ($do_output_processing && array_key_exists('output_processing', $param_defition)) {
 				foreach ($param_defition['output_processing'] as $process) {
-					eval("\$param_value = $process;");
+					$param_value = an_perform_parameter_processing($param_value, $process);
 				}
 			}
 
@@ -144,7 +147,7 @@ function an_request_parameters_defaults($tool_key, $process_output = false) {
 			//Process output?
 			if ($process_output && isset($param_defition['output_processing']) && is_array($param_defition['output_processing'])) {
 				foreach ($param_defition['output_processing'] as $process) {
-					eval("\$param_value = $process;");
+					$param_value = an_perform_parameter_processing($param_value, $process);
 				}
 			}
 
@@ -220,4 +223,29 @@ function an_shortcode_parameters_help_table($tool_keys = ['item', 'profile', 'fe
 	$out .= '</table>';
 
 	return $out;
+}
+
+function an_perform_parameter_processing($value = '', $process = '') {
+	switch ($process) {
+	case 'username_encode':
+		$value = an_username_encode($value);
+
+		break;
+
+	case 'keyword_encode':
+		$value = an_keyword_encode($value);
+
+		break;
+
+	case 'ad_keyword_encode':
+		$value = str_replace("+", "%20", urlencode($value));
+
+		break;
+	case 'replace_percent':
+		$value = str_replace("%", "%25", $value);
+
+		break;
+	}
+
+	return $value;
 }

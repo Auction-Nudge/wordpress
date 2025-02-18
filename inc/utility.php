@@ -96,7 +96,7 @@ function an_create_input($field, $set_value) {
 		$out .= '		<input data-default="' . $field['default'] . '" type="text" name="' . $field['name'] . '" id="' . $field['id'] . '"';
 		//Do we have a value for this post?
 		if ($value = htmlspecialchars($set_value)) {
-			$out .= ' value="' . $value . '"';
+			$out .= ' value="' . esc_attr($value) . '"';
 			//Use default
 		} else {
 			$out .= ' value="' . $field['default'] . '"';
@@ -190,7 +190,7 @@ function an_build_shortcode($tool_key = 'item', $tool_data = [], $wrap = true) {
 	$out .= '[' . an_get_config('shortcode') . ' tool="' . $tool_key . '"';
 
 	foreach ($tool_data as $key => $value) {
-		$out .= ' ' . strtolower($key) . '="' . $value . '"';
+		$out .= ' ' . esc_attr(strtolower($key)) . '="' . esc_attr($value) . '"';
 	}
 
 	$out .= ']';
@@ -200,4 +200,82 @@ function an_build_shortcode($tool_key = 'item', $tool_data = [], $wrap = true) {
 	}
 
 	return $out;
+}
+
+function an_allowable_tags() {
+	return [
+		'p' => [
+			'class' => [],
+		],
+		'b' => [],
+		'div' => [
+			'id' => [],
+			'class' => [],
+			'title' => [],
+		],
+		'fieldset' => [
+			'class' => [],
+		],
+		'legend' => [
+			'title' => [],
+		],
+		'link' => [
+			'rel' => [],
+			'href' => [],
+			'media' => [],
+			'id' => [],
+		],
+		'textarea' => [
+			'class' => [],
+			'name' => [],
+			'data-id' => [],
+			'rows' => [],
+			'cols' => [],
+			'id' => [],
+		],
+		'a' => [
+			'data-title' => [],
+			'href' => [],
+			'onclick' => [],
+			'class' => [],
+			'target' => [],
+		],
+		'label' => [
+			'for' => [],
+			'class' => [],
+		],
+		'input' => [
+			'type' => [],
+			'name' => [],
+			'data-id' => [],
+			'value' => [],
+			'class' => [],
+			'id' => [],
+			'data-default' => [],
+		],
+		'select' => [
+			'id' => [],
+			'multiple' => [],
+			'class' => [],
+			'name' => [],
+			'data-id' => [],
+			'data-multi-value' => [],
+			'data-default' => [],
+		],
+		'option' => [
+			'value' => [],
+			'selected' => [],
+		],
+		'button' => [
+			'type' => [],
+			'class' => [],
+			'data-id' => [],
+		],
+		'span' => [
+			'class' => [],
+		],
+		'small' => [
+			'class' => [],
+		],
+	];
 }
