@@ -4,7 +4,7 @@ Tags: ebay, item, listing, embed, store
 Requires at least: 3.2
 Tested up to: 6.7
 Requires PHP: 5.2
-Stable tag: 7.3.0
+Stable tag: 7.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,11 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 4. A default eBay username saves time!
 
 == Changelog ==
+
+= 7.3.1 =
+
+- Security improvements.
+- Retired Carousel theme from the Your eBay Listings tool. Existing usage will continue to work.
 
 = 7.3.0 =
 

@@ -36,7 +36,7 @@ add_action('admin_init', 'an_admin_init');
 function an_options_validate($input) {
 	$output = [];
 	foreach ($input as $o_key => $o_value) {
-		$output[$o_key] = esc_html__(trim($o_value));
+		$output[$o_key] = esc_html(trim($o_value));
 	}
 	return $output;
 }
@@ -60,7 +60,7 @@ function an_get_option($option_key) {
 function an_show_upgrade_notification($current_plugin_metadata, $new_plugin_metadata) {
 	//Check Upgrade Notice
 	if (isset($new_plugin_metadata->upgrade_notice) && strlen(trim($new_plugin_metadata->upgrade_notice)) > 0) {
-		echo '<br /><br /><strong style="color:#f56e28">Important Update!</strong><br />' . strip_tags($new_plugin_metadata->upgrade_notice);
+		echo '<br /><br /><strong style="color:#f56e28">Important Update!</strong><br />' . esc_html($new_plugin_metadata->upgrade_notice);
 	}
 }
 add_action('in_plugin_update_message-auction-nudge/auctionnudge.php', 'an_show_upgrade_notification', 10, 2);
@@ -112,7 +112,9 @@ function an_create_shortcode_form($tools_meta = [], $inital_tool = 'item', $show
 	$out .= '</div> <!-- END #an-shortcode-form-container -->' . "\n";
 	$out .= '<div id="adblock-test" class="auction-nudge"></div>' . "\n";
 
-	echo $out;
+	//echo $out;
+
+	echo wp_kses($out, an_allowable_tags());
 }
 
 /**
@@ -248,7 +250,7 @@ function an_options_page() {
 
 	echo '<div id="an-options-container">' . "\n";
 
-	echo '	<h1>' . an_get_config('plugin_name') . '</h1>' . "\n";
+	echo '	<h1>' . esc_html(an_get_config('plugin_name')) . '</h1>' . "\n";
 
 	//Determine default tab
 	$default_tab = 'general';
@@ -257,23 +259,24 @@ function an_options_page() {
 	}
 
 	//Tabs
-	$active_tab = (isset($_GET['tab'])) ? $_GET['tab'] : $default_tab;
+	$get_data = wp_unslash($_GET);
+	$active_tab = (isset($get_data['tab'])) ? $get_data['tab'] : $default_tab;
 	an_admin_tabs($active_tab);
 
 	echo '	<div id="an-settings-tabs">' . "\n";
 
 	echo '	<div style="margin:10px;">' . "\n";
-	echo an_admin_notice('October 2024 – The <b>Your eBay Profile</b> and <b>Your eBay Feedback</b> tools are being retired. Read more <a target="_blank" href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.', 'error');
+	echo wp_kses(an_admin_notice('October 2024 – The <b>Your eBay Profile</b> and <b>Your eBay Feedback</b> tools are being retired. Read more <a target="_blank" href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.', 'error'), an_allowable_tags());
 	echo '</div>' . "\n";
 
 	//Settings
 	if (in_array($active_tab, ['general'])) {
 		//Open form
-		echo '		<form class="an-tab-left an-tab-content" action="' . admin_url('options.php') . '" method="post">' . "\n";
+		echo '		<form class="an-tab-left an-tab-content" action="' . esc_url(admin_url('options.php')) . '" method="post">' . "\n";
 		settings_fields('an_options');
 
 		$style = ($active_tab != 'general') ? ' style="display:none"' : '';
-		echo '		<div id="an-settings-general"' . $style . '>' . "\n";
+		echo '		<div id="an-settings-general"' . esc_html($style) . '>' . "\n";
 		do_settings_sections('an_general');
 		echo '		</div>';
 
@@ -282,7 +285,7 @@ function an_options_page() {
 		echo '	</form>' . "\n";
 
 		echo '	<div class="an-tab-right an-tab-content" id="an-about">' . "\n";
-		echo '		<img width="120" height="120" alt="Joe\'s mug" src="https://www.morehawes.co.uk/assets/images/Joe1BW.jpg" />' . "\n";
+		echo '		<img width="120" height="120" alt="Joe\'s mug" src="https://www.morehawes.ca/assets/images/Joe1BW.jpg" />' . "\n";
 		echo '		<p class="an-lead"><b>Hi, I\'m Joe.</b>Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">reach out</a> if you have any issues.</p>' . "\n";
 
 		echo '<p style="margin-top: 30px">';
@@ -290,7 +293,7 @@ function an_options_page() {
 		if (! an_get_settings('an_ebay_user')) {
 			//Don't link if already on the defaults tab
 			if ($active_tab != 'general') {
-				echo '<a href="' . admin_url('options-general.php?page=an_options_page&tab=general') . '">Set a default eBay Username</a>,' . "\n";
+				echo '<a href="' . esc_url(admin_url('options-general.php?page=an_options_page&tab=general')) . '">Set a default eBay Username</a>,' . "\n";
 			} else {
 				echo 'Set a default eBay Username,' . "\n";
 			}
@@ -301,9 +304,9 @@ function an_options_page() {
 		}
 		echo '</p>';
 
-		echo an_build_shortcode('item');
+		echo wp_kses(an_build_shortcode('item'), an_allowable_tags());
 
-		echo '		<p>Use the <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcode Generator</a> to customise your content.</p>' . "\n";
+		echo '		<p>Use the <a href="' . esc_url(admin_url('options-general.php?page=an_options_page&tab=shortcodes')) . '">Shortcode Generator</a> to customise your content.</p>' . "\n";
 
 		echo '		<hr />' . "\n";
 
@@ -311,13 +314,15 @@ function an_options_page() {
 		echo '		<p>Please <a target="_blank" href="https://wordpress.org/support/plugin/auction-nudge/#new-post">report bugs and errors</a>, I will do my best to help.</p>' . "\n";
 
 		echo '		<p><b>Cheers!</b></p>' . "\n";
-		echo '		<footer>v' . an_get_config('plugin_version') . ' | Since 2008</footer>' . "\n";
+		echo '		<footer>v' . esc_html(an_get_config('plugin_version')) . ' | Since 2008</footer>' . "\n";
 		echo '	</div>' . "\n";
 
 		//Not Settings
 	} else {
+		$post_data = wp_unslash($_POST);
+
 		//Get tool key
-		$tool_key = (isset($_POST['tool_key'])) ? $_POST['tool_key'] : 'item';
+		$tool_key = (isset($post_data['tool_key'])) ? $post_data['tool_key'] : 'item';
 
 		$tab_url = 'options-general.php?page=an_options_page&tab=shortcodes';
 
@@ -326,13 +331,15 @@ function an_options_page() {
 		$override_defaults['item_user_profile'] = '1';
 
 		//Preview submitted?
-		$request_params = an_request_parameters_from_assoc_array($tool_key, $_POST);
+		$request_params = an_request_parameters_from_assoc_array($tool_key, $post_data);
 		if (sizeof($request_params)) {
 			echo '		<div id="an-shortcode-preview" class="an-tab-left an-tab-content">' . "\n";
 
-			echo an_build_shortcode($tool_key, $request_params);
+			// Shortcode
+			echo wp_kses(an_build_shortcode($tool_key, $request_params), an_allowable_tags());
 
-			echo an_build_snippet($tool_key, $request_params);
+			// Snippet
+			echo wp_kses(an_build_snippet($tool_key, $request_params), an_allowable_tags());
 
 			echo '		</div>' . "\n";
 
@@ -346,34 +353,32 @@ function an_options_page() {
 			// Merge with any overrides
 			$request_params = array_merge($request_params, $override_defaults);
 
-			echo an_build_shortcode($tool_key, $request_params);
-			echo an_build_snippet($tool_key, $request_params);
+			echo wp_kses(an_build_shortcode($tool_key, $request_params), an_allowable_tags());
+			echo wp_kses(an_build_snippet($tool_key, $request_params), an_allowable_tags());
 
 			echo '		</div>' . "\n";
 			//Nothing to Preview - Welcome screen
 		} else {
 			echo '		<div id="an-welcome" class="an-tab-left an-tab-content">' . "\n";
 			echo '			<p class="an-lead">Your eBay Username is required.</p>' . "\n";
-			echo '			<p>Save time by <a href="' . admin_url('options-general.php?page=an_options_page') . '">setting a default</a>!</p>';
+			echo '			<p>Save time by <a href="' . esc_url(admin_url('options-general.php?page=an_options_page')) . '">setting a default</a>!</p>';
 			echo '		</div>' . "\n";
 		}
 
 		//Start Preview Form
-		echo '		<form id="an-shortcode-form" class="an-tab-right an-tab-content" action="' . admin_url($tab_url) . '" method="post">' . "\n";
+		echo '		<form id="an-shortcode-form" class="an-tab-right an-tab-content" action="' . esc_url(admin_url($tab_url)) . '" method="post">' . "\n";
 		echo '			<h2>Shortcode Generator</h2>' . "\n";
 		echo '			<p>Add Shortcodes anywhere they are supported.</p>' . "\n";
 
-		// Get POST data (if any)
-		$post_data = $_POST;
-
 		// If empty - i.e. not yet submitted
-		if(! sizeof($post_data)) {
+		if (! sizeof($post_data)) {
 			// Merge with any overrides
 			$post_data = array_merge($post_data, $override_defaults);
 		}
 
 		//Display form, propogated with any user submitted values
-		echo an_create_shortcode_form($post_data, $tool_key);
+		// echo an_create_shortcode_form($post_data, $tool_key);
+		echo wp_kses((string) an_create_shortcode_form($post_data, $tool_key), an_allowable_tags());
 		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
 
 		echo '	</form>' . "\n";
@@ -391,27 +396,24 @@ function an_options_page() {
  * Settings page tabs
  */
 function an_admin_tabs($current = 'general') {
+	echo '<h2 class="nav-tab-wrapper">';
+
 	$tabs = [
 		'shortcodes' => 'Shortcodes',
 		'general' => 'Settings',
 	];
 
-	$links = [];
 	foreach ($tabs as $slug => $name) {
 		if ($slug == $current) {
-			$links[] = '<a class="nav-tab nav-tab-active nav-tab-' . $slug . '" href="?page=an_options_page&tab=' . $slug . '">' . $name . '</a>';
+			echo '<a class="nav-tab nav-tab-active nav-tab-' . esc_attr($slug) . '" href="?page=an_options_page&tab=' . esc_attr($slug) . '">' . esc_html($name) . '</a>';
 		} else {
-			$links[] = '<a class="nav-tab nav-tab-' . $slug . '" href="?page=an_options_page&tab=' . $slug . '">' . $name . '</a>';
+			echo '<a class="nav-tab nav-tab-' . esc_attr($slug) . '" href="?page=an_options_page&tab=' . esc_attr($slug) . '">' . esc_html($name) . '</a>';
 		}
 	}
 
 	//Add Help
-	$links[] = '<a class="nav-tab nav-tab-help" href="https://www.auctionnudge.com/wordpress-plugin/usage" target="_blank">Help <span class="wp-menu-image dashicons-before dashicons-external"></span></a>';
+	echo '<a class="nav-tab nav-tab-help" href="https://www.auctionnudge.com/wordpress-plugin/usage" target="_blank">Help <span class="wp-menu-image dashicons-before dashicons-external"></span></a>';
 
-	echo '<h2 class="nav-tab-wrapper">';
-	foreach ($links as $link) {
-		echo $link;
-	}
 	echo '</h2>';
 }
 
@@ -443,7 +445,7 @@ add_action('admin_init', 'an_admin_settings');
  * eBay defaults
  */
 function an_ebay_defaults_text() {
-	echo '<p class="an-lead">Save time when generating <a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcodes</a>!</p>' . "\n";
+	echo '<p class="an-lead">Save time when generating <a href="' . esc_url(admin_url('options-general.php?page=an_options_page&tab=shortcodes')) . '">Shortcodes</a>!</p>' . "\n";
 }
 
 /**
@@ -459,7 +461,7 @@ function an_ebay_user_setting() {
 		$ebay_user_setting = '';
 	}
 
-	echo '<input type="text" id="an_ebay_user" class="regular-text" name="an_options[an_ebay_user]" value="' . $ebay_user_setting . '" />' . "\n";
+	echo '<input type="text" id="an_ebay_user" class="regular-text" name="an_options[an_ebay_user]" value="' . esc_attr($ebay_user_setting) . '" />' . "\n";
 	echo '<a class="an-tooltip" data-title="This is your eBay ID &ndash; the username you are known by on eBay and appears on your listings. This is not your store name." href="#" onclick="return false;">?</a>' . "\n";
 }
 
@@ -495,7 +497,7 @@ function an_ebay_site_setting() {
 	echo '<select name="an_options[an_ebay_site]" id="an_ebay_site">' . "\n";
 	foreach ($siteids as $siteid => $description) {
 		$selected = ($ebay_site_setting == $siteid) ? ' selected="selected"' : '';
-		echo '	<option value="' . $siteid . '"' . $selected . '>' . $description . '</option>' . "\n";
+		echo '	<option value="' . esc_attr($siteid) . '"' . esc_attr($selected) . '>' . esc_html($description) . '</option>' . "\n";
 	}
 	echo '</select>' . "\n";
 	echo '<a class="an-tooltip" data-title="This is where your items are usually listed. The site you choose will determine where you link to and what currency is displayed." href="#" onclick="return false;">?</a>' . "\n";
@@ -518,9 +520,9 @@ function an_local_requests_setting() {
 
 	echo '<select id="an_local_requests" name="an_options[an_local_requests]">' . "\n";
 	$selected = ($an_local_requests == '1') ? ' selected="selected"' : '';
-	echo '	<option value="1"' . $selected . '>Enabled</option>' . "\n";
+	echo '	<option value="1"' . esc_attr($selected) . '>Enabled</option>' . "\n";
 	$selected = ($an_local_requests == '0') ? ' selected="selected"' : '';
-	echo '	<option value="0"' . $selected . '>Disabled</option>' . "\n";
+	echo '	<option value="0"' . esc_attr($selected) . '>Disabled</option>' . "\n";
 	echo '</select>' . "\n";
 
 	echo '<a class="an-tooltip" data-title="Try disabling if you are experiencing issues with Auction Nudge (like if nothing is displayed). Don\'t worry, other caching mechanisms are still in place." href="#" onclick="return false;">?</a>' . "\n";

@@ -37,10 +37,6 @@ function setup_parameter_groups() {
 }
 
 function an_show_theme_options(theme, context) {
-	//Carousel options
-	jQuery("#carousel_scroll-container", context).hide();
-	jQuery("#carousel_width-container", context).hide();
-	jQuery("#carousel_auto-container", context).hide();
 	//Grid options
 	jQuery("#grid_width-container", context).hide();
 	jQuery("#grid_cols-container", context).hide();
@@ -51,12 +47,6 @@ function an_show_theme_options(theme, context) {
 	jQuery("#img_size-container", context).hide();
 	jQuery("#show_logo-container", context).hide();
 	switch (theme) {
-		case "carousel":
-			jQuery("#carousel_scroll-container", context).show();
-			jQuery("#carousel_width-container", context).show();
-			jQuery("#carousel_auto-container", context).show();
-
-			break;
 		case "grid":
 			jQuery("#page-container", context).show();
 			jQuery("#grid_width-container", context).show();
@@ -162,7 +152,9 @@ function an_update_item_snippets(item_data = []) {
 
 function an_shortcode_input_value(data_key, input) {
 	var value = input.val();
-	var input_type = input.prop("tagName").toUpperCase();
+
+	// Sanitize
+	value = value.replace(/[^a-zA-Z0-9_\-\.\$\!\*\%]/g, "");
 
 	return value;
 }
