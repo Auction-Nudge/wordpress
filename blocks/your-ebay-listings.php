@@ -3,10 +3,87 @@
  * Plugin Name: Your eBay Listings Block
  * Description: A WordPress Block to display your active eBay items anywhere on the page.
  * Version: 1.0
- * Author: Your Name
+ * Author: Joe Hawes
  */
 
+$an_item_attributes = [
+	'sellerID' => [
+		'type' => 'string',
+		'default' => '',
+	],
+	'siteID' => [
+		'type' => 'string',
+		'default' => '0',
+	],
+	'theme' => [
+		'type' => 'string',
+		'default' => 'responsive',
+	],
+	'lang' => [
+		'type' => 'string',
+		'default' => 'english',
+	],
+	'cats_output' => [
+		'type' => 'string',
+		'default' => 'dropdown',
+	],
+	'MaxEntries' => [
+		'type' => 'string',
+		'default' => '6',
+	],
+	'page' => [
+		'type' => 'string',
+		'default' => 'init',
+	],
+	'search_box' => [
+		'type' => 'string',
+		'default' => '1',
+	],
+	'grid_cols' => [
+		'type' => 'string',
+		'default' => '2',
+	],
+	'grid_width' => [
+		'type' => 'string',
+		'default' => '100%',
+	],
+	'show_logo' => [
+		'type' => 'string',
+		'default' => '1',
+	],
+	'blank' => [
+		'type' => 'string',
+		'default' => '0',
+	],
+	'img_size' => [
+		'type' => 'string',
+		'default' => '120',
+	],
+	'user_profile' => [
+		'type' => 'string',
+		'default' => '0',
+	],
+	'sortOrder' => [
+		'type' => 'string',
+		'default' => '',
+	],
+	'listing_type' => [
+		'type' => 'string',
+		'default' => '',
+	],
+	'keyword' => [
+		'type' => 'string',
+		'default' => '',
+	],
+	'categoryId' => [
+		'type' => 'string',
+		'default' => '',
+	],
+];
+
 function your_ebay_listings_block_init() {
+	global $an_item_attributes;
+
 	// Automatically load dependencies and version
 	$asset_file = include plugin_dir_path(__FILE__) . 'build/index.asset.php';
 
@@ -28,42 +105,22 @@ function your_ebay_listings_block_init() {
 		'editor_script' => 'your-ebay-listings-block',
 		'editor_style' => 'your-ebay-listings-editor-style',
 		'render_callback' => 'your_ebay_listings_render_callback',
-		'attributes' => [
-			'sellerID' => [
-				'type' => 'string',
-				'default' => '',
-			],
-			'siteID' => [
-				'type' => 'string',
-				'default' => '0',
-			],
-			'theme' => [
-				'type' => 'string',
-				'default' => 'responsive',
-			],
-			'language' => [
-				'type' => 'string',
-				'default' => 'english',
-			],
-			'sortOrder' => [
-				'type' => 'string',
-				'default' => '',
-			],
-		],
+		'attributes' => $an_item_attributes,
 	]);
 }
 add_action('init', 'your_ebay_listings_block_init');
 
 function your_ebay_listings_render_callback($attributes) {
+
 	$base_url = "https://www.auctionnudge.com/feed/item/js";
 	$options = array_filter($attributes, function ($value, $key) {
-		$default_values = [
-			'sellerID' => '',
-			'siteID' => '0',
-			'theme' => 'responsive',
-			'language' => 'english',
-			'sortOrder' => '',
-		];
+		global $an_item_attributes;
+
+		$default_values = [];
+		foreach ($an_item_attributes as $key => $value) {
+			$default_values[$key] = $value['default'];
+		}
+
 		return isset($default_values[$key]) && $value !== $default_values[$key];
 	}, ARRAY_FILTER_USE_BOTH);
 
