@@ -6,83 +6,8 @@
  * Author: Joe Hawes
  */
 
-$an_item_attributes = [
-	'SellerID' => [
-		'type' => 'string',
-		'default' => '',
-	],
-	'siteid' => [
-		'type' => 'string',
-		'default' => '0',
-	],
-	'theme' => [
-		'type' => 'string',
-		'default' => 'responsive',
-	],
-	'lang' => [
-		'type' => 'string',
-		'default' => 'english',
-	],
-	'cats_output' => [
-		'type' => 'string',
-		'default' => 'dropdown',
-	],
-	'MaxEntries' => [
-		'type' => 'string',
-		'default' => '6',
-	],
-	'page' => [
-		'type' => 'string',
-		'default' => 'init',
-	],
-	'search_box' => [
-		'type' => 'string',
-		'default' => '1',
-	],
-	'grid_cols' => [
-		'type' => 'string',
-		'default' => '2',
-	],
-	'grid_width' => [
-		'type' => 'string',
-		'default' => '100%',
-	],
-	'show_logo' => [
-		'type' => 'string',
-		'default' => '1',
-	],
-	'blank' => [
-		'type' => 'string',
-		'default' => '0',
-	],
-	'img_size' => [
-		'type' => 'string',
-		'default' => '120',
-	],
-	'user_profile' => [
-		'type' => 'string',
-		'default' => '0',
-	],
-	'sortOrder' => [
-		'type' => 'string',
-		'default' => '',
-	],
-	'listing_type' => [
-		'type' => 'string',
-		'default' => '',
-	],
-	'keyword' => [
-		'type' => 'string',
-		'default' => '',
-	],
-	'categoryId' => [
-		'type' => 'string',
-		'default' => '',
-	],
-];
-
 function your_ebay_listings_block_init() {
-	global $an_item_attributes;
+	$item_parameters = an_get_block_parameters();
 
 	// Automatically load dependencies and version
 	$asset_file = include plugin_dir_path(__FILE__) . 'build/index.asset.php';
@@ -105,33 +30,37 @@ function your_ebay_listings_block_init() {
 		'editor_script' => 'your-ebay-listings-block',
 		'editor_style' => 'your-ebay-listings-editor-style',
 		'render_callback' => 'your_ebay_listings_render_callback',
-		'attributes' => $an_item_attributes,
+		'attributes' => $item_parameters,
 	]);
 }
 add_action('init', 'your_ebay_listings_block_init');
 
 function your_ebay_listings_render_callback($attributes) {
+	$item_parameters = an_get_block_parameters();
+
+	an_debug($attributes);
+
+	foreach ($item_parameters as $key => $value) {
+		// Blocks use unprefixed keys
+		$unprefixed_key = an_unprefix($key);
+
+		// If set
+		if (array_key_exists($unprefixed_key, $attributes)) {
+			// Process
+			$url_data[$unprefixed_key] = an_perform_parameter_processing_by_key($key, $attributes[$unprefixed_key]);
+			// Use default
+		} elseif (array_key_exists('default', $value)) {
+			$url_data[$unprefixed_key] = $value['default'];
+		} else {
+			$url_data[$unprefixed_key] = '';
+		}
+	}
 
 	$base_url = "https://www.auctionnudge.com/feed/item/js";
-	$options = array_filter($attributes, function ($value, $key) {
-		global $an_item_attributes;
 
-		$default_values = [];
-		foreach ($an_item_attributes as $key => $value) {
-			$default_values[$key] = $value['default'];
-		}
-
-		return isset($default_values[$key]) && $value !== $default_values[$key];
-	}, ARRAY_FILTER_USE_BOTH);
-
+	// Iterate over each attribute
 	$url_parts = [];
-	foreach ($options as $key => $value) {
-		switch ($key) {
-		case 'grid_width':
-			$value = an_perform_parameter_processing($value, 'replace_percent');
-			break;
-		}
-
+	foreach ($url_data as $key => $value) {
 		// If not empty string
 		if ($value !== '') {
 			$url_parts[] = "$key/$value";
@@ -140,6 +69,6 @@ function your_ebay_listings_render_callback($attributes) {
 
 	$href = $base_url . '/' . implode('/', $url_parts);
 
-	return '<div id="auction-nudge-items">' . json_encode($attributes) . '</div>' .
+	return '<div id="auction-nudge-items">' . json_encode($url_data) . '</div>' .
 	'<script src="' . esc_url($href) . '"></script>';
 }
