@@ -7,11 +7,11 @@
  */
 
 $an_item_attributes = [
-	'sellerID' => [
+	'SellerID' => [
 		'type' => 'string',
 		'default' => '',
 	],
-	'siteID' => [
+	'siteid' => [
 		'type' => 'string',
 		'default' => '0',
 	],
@@ -126,12 +126,20 @@ function your_ebay_listings_render_callback($attributes) {
 
 	$url_parts = [];
 	foreach ($options as $key => $value) {
-		$id = str_replace('item_', '', $key);
-		$url_parts[] = "$id/$value";
+		switch ($key) {
+		case 'grid_width':
+			$value = an_perform_parameter_processing($value, 'replace_percent');
+			break;
+		}
+
+		// If not empty string
+		if ($value !== '') {
+			$url_parts[] = "$key/$value";
+		}
 	}
 
 	$href = $base_url . '/' . implode('/', $url_parts);
 
-	return '<div id="auction-nudge-items"></div>' .
+	return '<div id="auction-nudge-items">' . json_encode($attributes) . '</div>' .
 	'<script src="' . esc_url($href) . '"></script>';
 }
