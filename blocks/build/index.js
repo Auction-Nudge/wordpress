@@ -529,91 +529,265 @@ $parameters = [
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
           title: "Display Options",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: "Theme",
-            value: theme,
-            options: [{
-              label: "Responsive",
-              value: "responsive"
-            }, {
-              label: "Column View",
-              value: "columns"
-            }, {
-              label: "Simple List",
-              value: "simple_list"
-            }, {
-              label: "Image and Details",
-              value: "details"
-            }, {
-              label: "Images Only",
-              value: "images_only"
-            }, {
-              label: "Grid View",
-              value: "grid"
-            }, {
-              label: "Unstyled (advanced)",
-              value: "unstyled"
-            }],
-            onChange: value => setAttributes({
-              theme: value
+          initialOpen: false,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "Your items will display differently on your site depending on which theme you choose. You can change how these themes displaying your listings using CSS rules.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+              label: "Theme",
+              value: theme,
+              options: [{
+                label: "Responsive",
+                value: "responsive"
+              }, {
+                label: "Column View",
+                value: "columns"
+              }, {
+                label: "Simple List",
+                value: "simple_list"
+              }, {
+                label: "Image and Details",
+                value: "details"
+              }, {
+                label: "Images Only",
+                value: "images_only"
+              }, {
+                label: "Grid View",
+                value: "grid"
+              }, {
+                label: "Unstyled (advanced)",
+                value: "unstyled"
+              }],
+              onChange: value => setAttributes({
+                theme: value
+              })
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: "Language",
-            value: lang,
-            options: [{
-              label: "English",
-              value: "english"
-            }, {
-              label: "French",
-              value: "french"
-            }, {
-              label: "German",
-              value: "german"
-            }, {
-              label: "Italian",
-              value: "italian"
-            }, {
-              label: "Spanish",
-              value: "spanish"
-            }],
-            onChange: value => setAttributes({
-              lang: value
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "The language option allows you to specify which language Auction Nudge tools display on your site. This option will not modify eBay item titles, which will remain unchanged.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+              label: "Language",
+              value: lang,
+              options: [{
+                label: "English",
+                value: "english"
+              }, {
+                label: "French",
+                value: "french"
+              }, {
+                label: "German",
+                value: "german"
+              }, {
+                label: "Italian",
+                value: "italian"
+              }, {
+                label: "Spanish",
+                value: "spanish"
+              }],
+              onChange: value => setAttributes({
+                lang: value
+              })
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: "Category List",
-            value: cats_output,
-            options: [{
-              label: "Dropdown",
-              value: "dropdown"
-            }, {
-              label: "Unstyled (advanced)",
-              value: "unstyled"
-            }, {
-              label: "None",
-              value: ""
-            }],
-            onChange: value => setAttributes({
-              cats_output: value
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "Once enabled, a list of categories for your items (if you have items for sale in more than one category) will be displayed above your items. This allows users to filter your items by category. The categories shown are eBay categories and not custom/store categories which can not be displayed. Use the Category ID option (Advanced Options) to specify a starting category.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+              label: "Category List",
+              value: cats_output,
+              options: [{
+                label: "Dropdown",
+                value: "dropdown"
+              }, {
+                label: "Unstyled (advanced)",
+                value: "unstyled"
+              }, {
+                label: "None",
+                value: ""
+              }],
+              onChange: value => setAttributes({
+                cats_output: value
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the 'show multiple pages' option below. Note: The 'Carousel' theme can load a maximum of 100 items in total, as it does not support the 'show multiple pages' option.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Items per Page",
+              value: MaxEntries,
+              onChange: value => setAttributes({
+                MaxEntries: value
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "If you enable this option and have more items listed than the value for the 'Items per Page' option above, users can paginate between multiple pages of items.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+              label: "Show Multiple Pages?",
+              value: page,
+              options: [{
+                label: "Yes",
+                value: "init"
+              }, {
+                label: "No",
+                value: ""
+              }],
+              onChange: value => setAttributes({
+                page: value
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "If enabled, a search box will appear above the items which will allow users to search all of your active eBay items. Note: Only item titles are searched, not descriptions.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+              label: "Show Search Box?",
+              value: search_box,
+              options: [{
+                label: "Yes",
+                value: "1"
+              }, {
+                label: "No",
+                value: "0"
+              }],
+              onChange: value => setAttributes({
+                search_box: value
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "Use this option to specify how many columns to display in grid view.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Grid Columns",
+              value: grid_cols,
+              onChange: value => setAttributes({
+                grid_cols: value
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "Use this option to specify how wide the grid should be. This can be specified in either pixels (px) or as a percentage (%)",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Grid Width",
+              value: grid_width,
+              onChange: value => setAttributes({
+                grid_width: value
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "This option specifies if you want to display the eBay logo alongside your listings.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+              label: "Show eBay Logo?",
+              value: show_logo,
+              options: [{
+                label: "Yes",
+                value: "1"
+              }, {
+                label: "No",
+                value: "0"
+              }],
+              onChange: value => setAttributes({
+                show_logo: value
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "Enabling this option will open item links in a new browser tab.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+              label: "Open Links in New Tab?",
+              value: blank,
+              options: [{
+                label: "Yes",
+                value: "1"
+              }, {
+                label: "No",
+                value: "0"
+              }],
+              onChange: value => setAttributes({
+                blank: value
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "Specify in pixels the maximum image size. Depending on the image ratio, the image width or height will not exceed this size. At larger sizes, higher quality images (and therefore a larger file size) are used.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Image Size",
+              value: img_size,
+              onChange: value => setAttributes({
+                img_size: value
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+              label: "Show User Profile?",
+              value: user_profile,
+              options: [{
+                label: "Yes",
+                value: "1"
+              }, {
+                label: "No",
+                value: "0"
+              }],
+              onChange: value => setAttributes({
+                user_profile: value
+              })
             })
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
           title: "Advanced Options",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: "Sort Order",
-            value: sortOrder,
-            options: [{
-              label: "Items Ending First",
-              value: ""
-            }, {
-              label: "Newly-Listed First",
-              value: "StartTimeNewest"
-            }
-            // Add more sort orders as needed
-            ],
-            onChange: value => setAttributes({
-              sortOrder: value
+          initialOpen: false,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "This option adjusts the order in which items are shown.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+              label: "Sort Order",
+              value: sortOrder,
+              options: [{
+                label: "Items Ending First",
+                value: ""
+              }, {
+                label: "Newly-Listed First",
+                value: "StartTimeNewest"
+              }, {
+                label: "Price + Shipping: Lowest First",
+                value: "PricePlusShippingLowest"
+              }, {
+                label: "Price + Shipping: Highest First",
+                value: "PricePlusShippingHighest"
+              }, {
+                label: "Best Match",
+                value: "BestMatch"
+              }],
+              onChange: value => setAttributes({
+                sortOrder: value
+              })
             })
-          })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "Filtering by listing type allows you to choose to only display items listed as either Auction or Buy It Now. Auction listings that have the Buy It Now option available will be displayed both when filtering by Auction and Buy It Now.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+              label: "Listing Type",
+              value: listing_type,
+              options: [{
+                label: "All Listings",
+                value: ""
+              }, {
+                label: "Buy It Now Only",
+                value: "bin_only"
+              }, {
+                label: "Auction Only",
+                value: "auction_only"
+              }],
+              onChange: value => setAttributes({
+                listing_type: value
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "By specifying a keyword, only items which contain that keyword in their title will be displayed. The keyword query can contain search operators, allowing for powerful searches to include/exclude certain keywords. Note: it is not possible to just use the minus sign (NOT) operator alone, another operator must be used to include items.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Filter by Keyword",
+              value: keyword,
+              onChange: value => setAttributes({
+                keyword: value
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+            text: "By specifying an eBay category ID, only items which are listed in this category will be displayed. You can specify up to 3 different category IDs by separating with a colon (:) for example 123:456:789.",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+              label: "Filter by Category ID",
+              value: categoryId,
+              onChange: value => setAttributes({
+                categoryId: value
+              })
+            })
+          })]
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "auction-nudge-placeholder",
