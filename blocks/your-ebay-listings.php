@@ -55,6 +55,9 @@ function your_ebay_listings_render_callback($attributes) {
 		}
 	}
 
+	// Add target
+	$url_data['target'] = an_target_hash($url_data);
+
 	// Get endpoint
 	$request_endpoint = an_get_config('item_request')['endpoint'];
 
@@ -69,6 +72,8 @@ function your_ebay_listings_render_callback($attributes) {
 
 	$href = 'https:' . $request_endpoint . '/' . implode('/', $url_parts);
 
-	return '<div id="auction-nudge-items">' . json_encode($url_data) . '</div>' .
-	'<script src="' . esc_url($href) . '"></script>';
+	$html = '<div id="auction-nudge-' . $url_data['target'] . '">' . json_encode($url_data) . '</div>' . "\n";
+	$html .= '<script src="' . esc_url($href) . '"></script>' . "\n";
+
+	return $html;
 }

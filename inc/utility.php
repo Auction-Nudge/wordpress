@@ -279,3 +279,7 @@ function an_allowable_tags() {
 		],
 	];
 }
+
+function an_target_hash($attrs = []) {
+	return substr(md5(json_encode($attrs)), 0, 9);
+}

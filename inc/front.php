@@ -46,7 +46,7 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name) {
 	switch ($tool_key) {
 	case 'item':
 		//Create target from Shortcode attributes
-		$request_parameters['item_target'] = substr(md5(json_encode($shortcode_attrs)), 0, 9);
+		$request_parameters['item_target'] = an_target_hash($shortcode_attrs);
 
 		break;
 	}
