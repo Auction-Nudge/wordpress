@@ -7,8 +7,6 @@
  */
 
 function your_ebay_listings_block_init() {
-	$item_parameters = an_get_block_parameters();
-
 	// Automatically load dependencies and version
 	$asset_file = include plugin_dir_path(__FILE__) . 'build/index.asset.php';
 
@@ -26,6 +24,12 @@ function your_ebay_listings_block_init() {
 		filemtime(plugin_dir_path(__FILE__) . 'src/editor.css')
 	);
 
+	// Use unprefixed parameters
+	$item_parameters = [];
+	foreach (an_get_block_parameters() as $key => $value) {
+		$item_parameters[an_unprefix($key)] = $value;
+	}
+
 	register_block_type('your-ebay-listings/block', [
 		'editor_script' => 'your-ebay-listings-block',
 		'editor_style' => 'your-ebay-listings-editor-style',
@@ -36,18 +40,13 @@ function your_ebay_listings_block_init() {
 add_action('init', 'your_ebay_listings_block_init');
 
 function your_ebay_listings_render_callback($attributes) {
-	$item_parameters = an_get_block_parameters();
-
-	an_debug($attributes);
-
-	foreach ($item_parameters as $key => $value) {
-		// Blocks use unprefixed keys
-		$unprefixed_key = an_unprefix($key);
+	foreach (an_get_block_parameters() as $prefixed_key => $value) {
+		$unprefixed_key = an_unprefix($prefixed_key);
 
 		// If set
 		if (array_key_exists($unprefixed_key, $attributes)) {
 			// Process
-			$url_data[$unprefixed_key] = an_perform_parameter_processing_by_key($key, $attributes[$unprefixed_key]);
+			$url_data[$unprefixed_key] = an_perform_parameter_processing_by_key($prefixed_key, $attributes[$unprefixed_key]);
 			// Use default
 		} elseif (array_key_exists('default', $value)) {
 			$url_data[$unprefixed_key] = $value['default'];
@@ -56,7 +55,8 @@ function your_ebay_listings_render_callback($attributes) {
 		}
 	}
 
-	$base_url = "https://www.auctionnudge.com/feed/item/js";
+	// Get endpoint
+	$request_endpoint = an_get_config('item_request')['endpoint'];
 
 	// Iterate over each attribute
 	$url_parts = [];
@@ -67,7 +67,7 @@ function your_ebay_listings_render_callback($attributes) {
 		}
 	}
 
-	$href = $base_url . '/' . implode('/', $url_parts);
+	$href = 'https:' . $request_endpoint . '/' . implode('/', $url_parts);
 
 	return '<div id="auction-nudge-items">' . json_encode($url_data) . '</div>' .
 	'<script src="' . esc_url($href) . '"></script>';

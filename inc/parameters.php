@@ -251,6 +251,8 @@ function an_perform_parameter_processing($value = '', $process = '') {
 }
 
 function an_perform_parameter_processing_by_key($key, $value) {
+	// an_debug($key . ' => ' . $value);
+
 	$item_parameters = an_get_config('item_parameters');
 
 	$param_defition = $item_parameters[$key];
