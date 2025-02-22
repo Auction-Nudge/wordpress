@@ -362,6 +362,10 @@ $parameters = [
 
 
 
+// Set defaults
+
+const default_siteid = typeof an_block_js.default_siteid !== "undefined" ? an_block_js.default_siteid : "0";
+const default_SellerID = typeof an_block_js.default_SellerID !== "undefined" ? an_block_js.default_SellerID : "";
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)("your-ebay-listings/block", {
   title: "Your eBay Listings",
   icon: "cart",
@@ -369,11 +373,11 @@ $parameters = [
   attributes: {
     SellerID: {
       type: "string",
-      default: ""
+      default: default_SellerID
     },
     siteid: {
       type: "string",
-      default: "0"
+      default: default_siteid
     },
     theme: {
       type: "string",

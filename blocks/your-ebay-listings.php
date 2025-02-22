@@ -17,6 +17,16 @@ function your_ebay_listings_block_init() {
 		$asset_file['version']
 	);
 
+	// Get Settings
+	$an_settings = an_get_settings();
+
+	// Localize script
+	wp_localize_script('your-ebay-listings-block', 'an_block_js', [
+		//AJAX
+		'default_siteid' => $an_settings['an_ebay_site'],
+		'default_SellerID' => $an_settings['an_ebay_user'],
+	]);
+
 	wp_register_style(
 		'your-ebay-listings-editor-style',
 		plugins_url('src/editor.css', __FILE__),

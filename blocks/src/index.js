@@ -240,13 +240,23 @@ import {
   Tooltip,
 } from "@wordpress/components";
 
+// Set defaults
+const default_siteid =
+  typeof an_block_js.default_siteid !== "undefined"
+    ? an_block_js.default_siteid
+    : "0";
+const default_SellerID =
+  typeof an_block_js.default_SellerID !== "undefined"
+    ? an_block_js.default_SellerID
+    : "";
+
 registerBlockType("your-ebay-listings/block", {
   title: "Your eBay Listings",
   icon: "cart",
   category: "widgets",
   attributes: {
-    SellerID: { type: "string", default: "" },
-    siteid: { type: "string", default: "0" },
+    SellerID: { type: "string", default: default_SellerID },
+    siteid: { type: "string", default: default_siteid },
     theme: { type: "string", default: "responsive" },
     lang: { type: "string", default: "english" },
     cats_output: { type: "string", default: "dropdown" },
