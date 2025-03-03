@@ -27,7 +27,7 @@ Add Auction Nudge to your site either as a Block (called "Your eBay Listings") o
 	* Filter by eBay category
 	* Search of all of your active items by keyword
 
-**In order to remain free, Auction Nudge is supported by referral commissions from eBay and includes an [Advertising Disclosure](https://www.auctionnudge.com/about#disclosure).**
+**In order to remain free, Auction Nudge is supported by referral commissions from eBay and includes an [Advertising Disclosure](https://www.auctionnudge.com/disclosure).**
 
 = Feed Options =
 
@@ -130,7 +130,7 @@ The following links should help with most questions and issues:
 
 = Can I Remove The Advertising Disclosure? =
 
-No. The [advertising disclosure](https://www.auctionnudge.com/about#disclosure) is a requirement of the [eBay Partner Network](https://partnernetwork.ebay.com/page/network-agreement#guidelines) and is a condition of use for Auction Nudge.
+No. The [advertising disclosure](https://www.auctionnudge.com/disclosure) is a requirement of the [eBay Partner Network](https://partnernetwork.ebay.com/page/network-agreement#guidelines) and is a condition of use for Auction Nudge.
 
 This means that if you are not happy with the Advertising Disclosure, then Auction Nudge is not the **free tool** for you.
 
@@ -191,7 +191,7 @@ Request endpoint fix. Thanks	to <a href="https://wordpress.org/support/users/hyp
 
 = 7.1.4 =
 
-Added extra information about the [Advertising Disclosure](https://www.auctionnudge.com/about#disclosure).
+Added extra information about the [Advertising Disclosure](https://www.auctionnudge.com/disclosure).
 
 = 7.1.3 =
 
