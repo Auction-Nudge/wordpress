@@ -157,8 +157,8 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 = 8.0.0 =
 
-- * **Block Support** - Added "Your eBay Listings" Block for the WordPress Block Editor (Gutenberg). Preview and customize your eBay content using Block options.
-- Bug fixes.
+* **Block Support** - Added "Your eBay Listings" Block for the WordPress Block Editor (Gutenberg). Preview and customize your eBay content using Block options.
+* Bug fixes.
 
 = 7.3.1 =
 
