@@ -249,3 +249,39 @@ function an_perform_parameter_processing($value = '', $process = '') {
 
 	return $value;
 }
+
+function an_perform_parameter_processing_by_key($key, $value) {
+	// an_debug($key . ' => ' . $value);
+
+	$item_parameters = an_get_config('item_parameters');
+
+	$param_defition = $item_parameters[$key];
+
+	if (isset($param_defition['output_processing'])) {
+		foreach ($param_defition['output_processing'] as $process) {
+			$value = an_perform_parameter_processing($value, $process);
+		}
+	}
+
+	return $value;
+}
+
+function an_get_block_parameters() {
+	an_update_parameter_defaults();
+
+	$parameters = [];
+
+	foreach (an_get_config('item_parameters') as $param_key => $param_defition) {
+		$parameters[$param_key] = [
+			'type' => 'string',
+			'default' => '',
+		];
+
+		// Set default if we have one
+		if (isset($param_defition['default'])) {
+			$parameters[$param_key]['default'] = $param_defition['default'];
+		}
+	}
+
+	return $parameters;
+}

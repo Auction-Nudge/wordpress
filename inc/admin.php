@@ -110,7 +110,6 @@ function an_create_shortcode_form($tools_meta = [], $inital_tool = 'item', $show
 	$out .= '</div>' . "\n";
 
 	$out .= '</div> <!-- END #an-shortcode-form-container -->' . "\n";
-	$out .= '<div id="adblock-test" class="auction-nudge"></div>' . "\n";
 
 	//echo $out;
 
@@ -297,10 +296,10 @@ function an_options_page() {
 			} else {
 				echo 'Set a default eBay Username,' . "\n";
 			}
-			echo 'then display Your eBay Listings with this Shortcode:' . "\n";
+			echo 'then display Your eBay Listings using the Block, or with this Shortcode:' . "\n";
 			//Username set
 		} else {
-			echo 'Display Your eBay Listings with this Shortcode:' . "\n";
+			echo 'Display Your eBay Listings using the Block, or with this Shortcode:' . "\n";
 		}
 		echo '</p>';
 
@@ -330,6 +329,8 @@ function an_options_page() {
 		$override_defaults = [];
 		$override_defaults['item_user_profile'] = '1';
 
+		$load_error_text = 'Your items could not be displayed, possibly due to adblocking software. <a href="https://www.auctionnudge.com/wordpress-plugin/help#help">Help</a>.';
+
 		//Preview submitted?
 		$request_params = an_request_parameters_from_assoc_array($tool_key, $post_data);
 		if (sizeof($request_params)) {
@@ -339,7 +340,8 @@ function an_options_page() {
 			echo wp_kses(an_build_shortcode($tool_key, $request_params), an_allowable_tags());
 
 			// Snippet
-			echo wp_kses(an_build_snippet($tool_key, $request_params), an_allowable_tags());
+			$snippet_html = an_build_snippet($tool_key, $request_params, true, an_admin_notice($load_error_text, 'warning'));
+			echo wp_kses($snippet_html, an_allowable_tags());
 
 			echo '		</div>' . "\n";
 
@@ -353,8 +355,12 @@ function an_options_page() {
 			// Merge with any overrides
 			$request_params = array_merge($request_params, $override_defaults);
 
+			// Shortcode
 			echo wp_kses(an_build_shortcode($tool_key, $request_params), an_allowable_tags());
-			echo wp_kses(an_build_snippet($tool_key, $request_params), an_allowable_tags());
+
+			// Snippet
+			$snippet_html = an_build_snippet($tool_key, $request_params, true, an_admin_notice($load_error_text, 'warning'));
+			echo wp_kses($snippet_html, an_allowable_tags());
 
 			echo '		</div>' . "\n";
 			//Nothing to Preview - Welcome screen
@@ -381,6 +387,8 @@ function an_options_page() {
 		echo wp_kses((string) an_create_shortcode_form($post_data, $tool_key), an_allowable_tags());
 		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
 
+		echo an_admin_notice('An <a target="_blank" href="https://www.auctionnudge.com/disclosure">Advertising Disclosure</a> is displayed above the items, in accordance with eBay requirements.<br /><br /><b>Users found hiding the disclosure will be blocked</b>.', 'info');
+
 		echo '	</form>' . "\n";
 	}
 
@@ -388,8 +396,6 @@ function an_options_page() {
 
 	echo '	</div>' . "\n";
 	echo '</div>' . "\n";
-
-	echo '<div id="adblock-test" class="auction-nudge"></div>';
 }
 
 /**

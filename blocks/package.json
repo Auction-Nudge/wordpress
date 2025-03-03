@@ -1,0 +1,35 @@
+{
+  "name": "your-ebay-listings-block",
+  "version": "1.0.0",
+  "description": "A WordPress block for displaying your active eBay listings. Once added, the block will update automatically to display your current listings.",
+  "main": "index.js",
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build",
+    "lint:js": "wp-scripts lint-js",
+    "format": "wp-scripts format"
+  },
+  "keywords": [
+    "ebay",
+    "auction nudge",
+    "item",
+    "store",
+    "listings",
+    "embed"
+  ],
+  "author": "Joseph hawes",
+  "license": "GPL-2.0-or-later",
+  "dependencies": {
+    "@wordpress/block-editor": "^14.11.0",
+    "@wordpress/blocks": "^14.5.0",
+    "@wordpress/components": "^29.2.0",
+    "@wordpress/compose": "^7.16.0",
+    "@wordpress/data": "^10.16.0",
+    "@wordpress/element": "^6.16.0",
+    "@wordpress/i18n": "^5.16.0",
+    "@wordpress/server-side-render": "^5.18.0"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.9.0"
+  }
+}

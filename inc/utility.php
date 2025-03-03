@@ -279,3 +279,31 @@ function an_allowable_tags() {
 		],
 	];
 }
+
+function an_target_hash($attrs = []) {
+	return substr(md5(json_encode($attrs)), 0, 9);
+}
+
+function an_iframe_wrap($html = '', $title = '') {
+	return '<!DOCTYPE html>
+		<html>
+		<head>
+			<meta charset="utf-8">
+			<title>' . $title . '</title>
+			<style>
+				body {
+					margin: 0;
+					padding: 5px;
+					font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+					background: #fff;
+				}
+				iframe {
+					width: 100%;
+					height: 100%;
+					border: none;
+				}
+			</style>
+		</head>
+		<body>' . $html . '</body>
+		</html>';
+}

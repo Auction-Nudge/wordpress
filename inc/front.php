@@ -46,7 +46,7 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name) {
 	switch ($tool_key) {
 	case 'item':
 		//Create target from Shortcode attributes
-		$request_parameters['item_target'] = substr(md5(json_encode($shortcode_attrs)), 0, 9);
+		$request_parameters['item_target'] = an_target_hash($shortcode_attrs);
 
 		break;
 	}
@@ -63,19 +63,12 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name) {
 /**
  * Build the snippet
  */
-function an_build_snippet($tool_key = 'item', $request_parameters = []) {
-	//We'll want to check that this loaded correctly
-	wp_enqueue_script('an_check_js');
-	add_action('wp_footer', 'an_output_load_check');
-
+function an_build_snippet($tool_key = 'item', $request_parameters = [], $enqueue = true, $inner_html = '&nbsp;') {
 	//Build unique hash for this request
-	$request_hash = substr(md5(json_encode($request_parameters)), 0, 9);
+	$request_hash = an_target_hash($request_parameters);
 
 	//Profile JS or iframe?
 	$profile_is_framed = array_key_exists('profile_theme', $request_parameters) && $request_parameters['profile_theme'] == 'overview';
-
-	//Request endpoint
-	$request_endpoint = home_url('/');
 
 	//Request string
 	$request_string = an_request_parameters_to_request_string($request_parameters);
@@ -85,6 +78,9 @@ function an_build_snippet($tool_key = 'item', $request_parameters = []) {
 
 	//Local requests
 	if (! array_key_exists('an_local_requests', $an_settings) || $an_settings['an_local_requests'] == '1') {
+		//Request endpoint
+		$request_endpoint = home_url('/');
+
 		//We encode this, wp_enqueue_script encodes the others
 		if ($tool_key == 'ad' || ($tool_key == 'profile' && $profile_is_framed)) {
 			$request_string = urlencode($request_string);
@@ -115,17 +111,21 @@ function an_build_snippet($tool_key = 'item', $request_parameters = []) {
 			//JS
 		} else {
 			//Enqueue
-			wp_enqueue_script($request_hash, $request_url, [], an_get_config('plugin_version'), true);
+			if ($enqueue) {
+				wp_enqueue_script($request_hash, $request_url, [], an_get_config('plugin_version'), true);
+			}
 
-			return '<div id="auction-nudge-profile">&nbsp;</div>';
+			return '<div id="auction-nudge-profile">' . $inner_html . '</div>';
 		}
 
 		break;
 	case 'feedback':
 		//Enqueue
-		wp_enqueue_script($request_hash, $request_url, [], an_get_config('plugin_version'), true);
+		if ($enqueue) {
+			wp_enqueue_script($request_hash, $request_url, [], an_get_config('plugin_version'), true);
+		}
 
-		return '<div id="auction-nudge-feedback">&nbsp;</div>';
+		return '<div id="auction-nudge-feedback">' . $inner_html . '</div>';
 
 		break;
 	case 'ad':
@@ -142,14 +142,22 @@ function an_build_snippet($tool_key = 'item', $request_parameters = []) {
 		break;
 	case 'item':
 	default:
+		$html = '';
+
 		//Enqueue
-		wp_enqueue_script($request_hash, $request_url, [], an_get_config('plugin_version'), true);
+		if ($enqueue) {
+			wp_enqueue_script($request_hash, $request_url, [], an_get_config('plugin_version'), true);
+		} else {
+			$html .= '<script src="' . esc_url($request_url) . '"></script>';
+		}
 
 		if (isset($request_parameters['item_target']) && is_string($request_parameters['item_target'])) {
-			return '<div id="auction-nudge-' . $request_parameters['item_target'] . '">&nbsp;</div>';
+			return '<div id="auction-nudge-' . $request_parameters['item_target'] . '">' . $inner_html . '</div>';
 		} else {
-			return '<div id="auction-nudge-items">&nbsp;</div>';
+			$html .= '<div id="auction-nudge-items">' . $inner_html . '</div>';
 		}
+
+		return $html;
 
 		break;
 	}
@@ -162,21 +170,6 @@ function an_output_version() {
 	echo '<!-- AN v' . esc_html(an_get_config('plugin_version')) . ' -->' . "\n";
 }
 add_action('wp_head', 'an_output_version');
-
-/**
- * Load check HTML
- */
-function an_output_load_check() {
-	echo '<span id="an-load-check" class="auction-nudge"></span>' . "\n";
-}
-
-/**
- * Load check JS
- */
-function an_output_load_check_js() {
-	wp_register_script('an_check_js', plugins_url('assets/js/check.js', dirname(__FILE__)), [], an_get_config('plugin_version'), true);
-}
-add_action('wp_head', 'an_output_load_check_js');
 
 /**
  * =================== LOCAL REQUESTS =====================
@@ -205,6 +198,14 @@ function an_trigger_check() {
 	if ($tool_key && in_array($tool_key, ['item', 'ad', 'profile', 'feedback'])) {
 		an_perform_local_request($tool_key, $request_string);
 		//Valid tool key not present
+	} elseif ($tool_key == 'block_preview') {
+		//Get request parameters
+		$request_parameters = an_request_parameters_from_request_string($request_string);
+
+		echo an_iframe_wrap(an_build_snippet('item', $request_parameters, false), 'Block Preview');
+
+		die;
+
 	} else {
 		//WP loads normally
 	}

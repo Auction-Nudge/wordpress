@@ -4,11 +4,11 @@ Tags: ebay, item, listing, embed, store
 Requires at least: 3.2
 Tested up to: 6.7
 Requires PHP: 5.2
-Stable tag: 7.3.1
+Stable tag: 8.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Display your live eBay Listings with a Shortcode.
+Display your live eBay Listings with a simple Block or Shortcode.
 
 == Description ==
 
@@ -16,7 +16,7 @@ Display your active eBay items on your WordPress site using <a href="https://www
 
 **The Your eBay Profile and Your eBay Feedback tools are being retired, more information <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>. The Your eBay Listings tool will continue to be supported** :)
 
-Add the Auction Nudge Shortcode anywhere that Shortcodes are supported:
+Add Auction Nudge to your site either as a Block (called "Your eBay Listings") or Shortcode anywhere they are supported:
 
 `
 [auction-nudge tool="listings" sellerid="ebay_username"]
@@ -79,7 +79,7 @@ Add the Auction Nudge Shortcode anywhere that Shortcodes are supported:
 
 Once the plugin has been activated, go to Settings > Auction Nudge to set your default eBay username and eBay site. These aren't required, but this will save you time.
 
-Now you can add the appropriate Auction Nudge Shortcode to your WordPress site anywhere Shortcodes are supported:
+Now you can add the "Your eBay Listings" Block to your page and customize using the Block options. Shortcodes are also supported and can be customized using the Shortcode Generator (Settings > Auction Nudge).
 
 `<!-- To display Your eBay Listings -->
 [auction-nudge tool="listings"]
@@ -148,12 +148,17 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 == Screenshots ==
 
-1. Preview and customize your Shortcode.
-2. Add Shortcodes anywhere they are supported.
-3. Promote your eBay content on your site.
+1. Promote your eBay items on your site.
+2. Customize using Block options and preview from admin.
+3. Create and preview Shortcodes using the Shortcode Generator.
 4. A default eBay username saves time!
 
 == Changelog ==
+
+= 8.0.0 =
+
+- * **Block Support** - Added "Your eBay Listings" Block for the WordPress Block Editor (Gutenberg). Preview and customize your eBay content using Block options.
+- Bug fixes.
 
 = 7.3.1 =
 

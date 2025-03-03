@@ -91,7 +91,7 @@ function an_modify_request_config($request_config, $tool_key, $request_parameter
  */
 function an_build_request_url($request_config, $request_string) {
 	//Protocol
-	$protocol = is_ssl() ? 'https' : 'http';
+	$protocol = 'https';
 
 	//Remote endpoint
 	$endpoint = $protocol . ':' . $request_config['endpoint'];
@@ -134,7 +134,7 @@ function an_perform_remote_request($request_url, $request_config) {
 	//We can make remote file requests?
 	if (ini_get('allow_url_fopen')) {
 		//Protocol
-		$protocol = is_ssl() ? 'https' : 'http';
+		$protocol = 'https';
 
 		//Build cache ID
 		$cache_id = 'an_' . md5($request_url . $protocol);
@@ -145,7 +145,7 @@ function an_perform_remote_request($request_url, $request_config) {
 			$response = file_get_contents($request_url);
 
 			//Request failure
-			if ($response == false || strpos($response, 'Auction Nudge') === false) {
+			if ($response == false || strpos($response, 'auctionnudge.com') === false) {
 				return false;
 			}
 

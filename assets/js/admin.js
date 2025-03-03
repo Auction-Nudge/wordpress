@@ -37,6 +37,10 @@ function setup_parameter_groups() {
 }
 
 function an_show_theme_options(theme, context) {
+	//Carousel options
+	jQuery("#carousel_scroll-container", context).hide();
+	jQuery("#carousel_width-container", context).hide();
+	jQuery("#carousel_auto-container", context).hide();
 	//Grid options
 	jQuery("#grid_width-container", context).hide();
 	jQuery("#grid_cols-container", context).hide();
@@ -47,6 +51,12 @@ function an_show_theme_options(theme, context) {
 	jQuery("#img_size-container", context).hide();
 	jQuery("#show_logo-container", context).hide();
 	switch (theme) {
+		case "carousel":
+			jQuery("#carousel_scroll-container", context).show();
+			jQuery("#carousel_width-container", context).show();
+			jQuery("#carousel_auto-container", context).show();
+
+			break;
 		case "grid":
 			jQuery("#page-container", context).show();
 			jQuery("#grid_width-container", context).show();
@@ -64,21 +74,6 @@ function an_show_theme_options(theme, context) {
 			jQuery("#search_box-container", context).show();
 
 			break;
-	}
-}
-
-function adblock_check() {
-	if (jQuery("#adblock-test").is(":hidden")) {
-		var message =
-			'<div id="an-adblock-detected" class="error settings-error notice"><p><b>Ad Blocker Detected!</b> It looks like you are using an plugin to block content from the page, this may prevent <b>Auction Nudge</b> from loading (<a href="https://www.auctionnudge.com/help/troubleshooting#not-loading" target="_blank">more info</a>)</p></div>';
-
-		//Settings page
-		if (jQuery("body").hasClass("settings_page_an_options_page")) {
-			jQuery("#an-options-container").before(message);
-			//Edit post page
-		} else {
-			jQuery("#an-custom-fields").before(message);
-		}
 	}
 }
 
@@ -290,8 +285,11 @@ jQuery(document).ready(function () {
 		return false;
 	});
 
-	//Adblock check
-	window.setTimeout(adblock_check, 500);
+	//Adblock warning
+	jQuery("#auction-nudge-items .an-notice").hide();
+	window.setTimeout(function () {
+		jQuery("#auction-nudge-items .an-notice").show();
+	}, 1000);
 });
 
 //Touch device?
