@@ -8,7 +8,7 @@
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
-An approved eBay Compatible Application to display your live eBay Listings with a simple Block or Shortcode. Once added to your site, your active eBay items will be updated automatically.
+An approved eBay Compatible Application to display your live eBay Listings. Once added, your active eBay items will be updated automatically.
 
 ## Description ##
 
