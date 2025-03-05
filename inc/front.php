@@ -67,9 +67,6 @@ function an_build_snippet($tool_key = 'item', $request_parameters = [], $enqueue
 	//Build unique hash for this request
 	$request_hash = an_target_hash($request_parameters);
 
-	//Profile JS or iframe?
-	$profile_is_framed = array_key_exists('profile_theme', $request_parameters) && $request_parameters['profile_theme'] == 'overview';
-
 	//Request string
 	$request_string = an_request_parameters_to_request_string($request_parameters);
 
@@ -82,7 +79,7 @@ function an_build_snippet($tool_key = 'item', $request_parameters = [], $enqueue
 		$request_endpoint = home_url('/');
 
 		//We encode this, wp_enqueue_script encodes the others
-		if ($tool_key == 'ad' || ($tool_key == 'profile' && $profile_is_framed)) {
+		if ($tool_key == 'ad') {
 			$request_string = urlencode($request_string);
 		}
 
@@ -104,28 +101,11 @@ function an_build_snippet($tool_key = 'item', $request_parameters = [], $enqueue
 	//Build snippet
 	switch ($tool_key) {
 	case 'profile':
-		//Iframe
-		if ($profile_is_framed) {
-			//Output right away
-			return '<iframe width="250px" height="288px" style="border:none" frameborder="0" src="' . $request_url . '"></iframe>';
-			//JS
-		} else {
-			//Enqueue
-			if ($enqueue) {
-				wp_enqueue_script($request_hash, $request_url, [], an_get_config('plugin_version'), true);
-			}
-
-			return '<div id="auction-nudge-profile">' . $inner_html . '</div>';
-		}
+		return '<script>console.log("[Auction Nudge] The Your eBay Profile tool has been retired. More information: https://www.auctionnudge.com/changes#v2024.4.0");</script>';
 
 		break;
 	case 'feedback':
-		//Enqueue
-		if ($enqueue) {
-			wp_enqueue_script($request_hash, $request_url, [], an_get_config('plugin_version'), true);
-		}
-
-		return '<div id="auction-nudge-feedback">' . $inner_html . '</div>';
+		return '<script>console.log("[Auction Nudge] The Your eBay Feedback tool has been retired. More information: https://www.auctionnudge.com/changes#v2024.4.0");</script>';
 
 		break;
 	case 'ad':
@@ -197,7 +177,7 @@ function an_trigger_check() {
 	//Do we have a valid tool key
 	if ($tool_key && in_array($tool_key, ['item', 'ad', 'profile', 'feedback'])) {
 		an_perform_local_request($tool_key, $request_string);
-		//Valid tool key not present
+		//Block Preview
 	} elseif ($tool_key == 'block_preview') {
 		//Get request parameters
 		$request_parameters = an_request_parameters_from_request_string($request_string);

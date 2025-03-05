@@ -4,7 +4,7 @@
 **Requires at least:** 3.2  
 **Tested up to:** 6.7  
 **Requires PHP:** 5.2  
-**Stable tag:** 8.0.0  
+**Stable tag:** 8.1.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -14,7 +14,7 @@ An approved eBay Compatible Application to display your live eBay Listings. Once
 
 Display your active eBay items on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>, an approved eBay Compatible Application.
 
-**The Your eBay Profile and Your eBay Feedback tools are being retired, more information <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>. The Your eBay Listings tool will continue to be supported** :)
+**The Your eBay Profile and Your eBay Feedback tools have been retired, more information <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>. The Your eBay Listings tool will continue to be supported** :)
 
 Add Auction Nudge to your site either as a Block (called "Your eBay Listings") or Shortcode anywhere they are supported:
 
@@ -138,7 +138,7 @@ Attempting to hide, obscure or modifying the disclosure puts the service at risk
 
 ### What happened to the Your eBay Profile and Your eBay Feedback tools? ###
 
-These tools are being retired as of October 2024. Unfortunately, eBay has scheduled the data source for these tools to be decommissioned in February 2025. With no alternative available, it will no longer be possible to provide these tools.
+These tools have been retired as of October 2024. Unfortunately, eBay has scheduled the data source for these tools to be decommissioned in February 2025. With no alternative available, it will no longer be possible to provide these tools.
 
 The tools will continue to function as normal until the Shopping API is decommissioned, when the tools will cease to function and no content will be displayed on the page.
 
@@ -162,6 +162,10 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 
 ## Changelog ##
+
+### 8.1.0 ###
+
+* The Your eBay Profile and Your eBay Feedback tools have been retired. These tools no longer display any content and output a message in the browser console. More information can be found <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.
 
 ### 8.0.0 ###
 

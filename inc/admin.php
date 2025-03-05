@@ -265,7 +265,7 @@ function an_options_page() {
 	echo '	<div id="an-settings-tabs">' . "\n";
 
 	echo '	<div style="margin:10px;">' . "\n";
-	echo wp_kses(an_admin_notice('October 2024 – The <b>Your eBay Profile</b> and <b>Your eBay Feedback</b> tools are being retired. Read more <a target="_blank" href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.', 'error'), an_allowable_tags());
+	echo wp_kses(an_admin_notice('October 2024 – The <b>Your eBay Profile</b> and <b>Your eBay Feedback</b> tools have been retired. Read more <a target="_blank" href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.', 'error'), an_allowable_tags());
 	echo '</div>' . "\n";
 
 	//Settings
