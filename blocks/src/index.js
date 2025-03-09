@@ -9,13 +9,13 @@ import {
 import ServerSideRender from "@wordpress/server-side-render";
 
 // Set defaults
-const default_siteid =
-  typeof an_block_js.default_siteid !== "undefined"
-    ? an_block_js.default_siteid
+const an_ebay_site =
+  typeof an_block_js.an_ebay_site !== "undefined"
+    ? an_block_js.an_ebay_site
     : "0";
-const default_SellerID =
-  typeof an_block_js.default_SellerID !== "undefined"
-    ? an_block_js.default_SellerID
+const an_ebay_user =
+  typeof an_block_js.an_ebay_user !== "undefined"
+    ? an_block_js.an_ebay_user
     : "";
 
 registerBlockType("your-ebay-listings/block", {
@@ -23,8 +23,8 @@ registerBlockType("your-ebay-listings/block", {
   icon: "cart",
   category: "widgets",
   attributes: {
-    SellerID: { type: "string", default: default_SellerID },
-    siteid: { type: "string", default: default_siteid },
+    SellerID: { type: "string", default: an_ebay_user },
+    siteid: { type: "string", default: an_ebay_site },
     theme: { type: "string", default: "responsive" },
     lang: { type: "string", default: "english" },
     cats_output: { type: "string", default: "dropdown" },

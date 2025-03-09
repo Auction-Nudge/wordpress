@@ -25,7 +25,7 @@ a.an-tooltip {
   text-align: center;
   background: #f7f7f7;
   font-family: monospace;
-  border: 1px solid #8c8f94;
+  border: 1px solid #ccc;
 }
 .an-lead {
   font-size: 135%;
@@ -151,6 +151,15 @@ a.an-tooltip {
 #an-options-container #an-settings-tabs input[type="submit"][disabled] {
   cursor: not-allowed;
 }
+#an-options-container #an-settings-tabs p.lead {
+  margin: 15px 0 30px 0;
+  padding-bottom: 15px;
+  font-size: 18px;
+  border-bottom: 1px solid #ccc;
+}
+#an-options-container #an-settings-tabs code {
+  border: 1px solid #ccc;
+}
 #an-options-container #an-settings-tabs .an-tab-content {
   float: left;
 }
@@ -175,6 +184,10 @@ a.an-tooltip {
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form > p {
   margin: 15px;
   margin-bottom: 0;
+}
+#an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form .lead {
+  font-size: 18px;
+  margin-top: 0;
 }
 #an-options-container #an-settings-tabs .an-tab-content#an-shortcode-form #an-shortcode-form-container {
   background: transparent;

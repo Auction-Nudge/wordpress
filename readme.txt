@@ -155,6 +155,11 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 == Changelog ==
 
+= 8.1.1 =
+
+* Improved plugin setup flow.
+* Minor bug fix.
+
 = 8.1.0 =
 
 * The Your eBay Profile and Your eBay Feedback tools have been retired. These tools no longer display any content and output a message in the browser console. More information can be found <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.

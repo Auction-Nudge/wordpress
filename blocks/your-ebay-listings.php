@@ -17,14 +17,27 @@ function your_ebay_listings_block_init() {
 		$asset_file['version']
 	);
 
+	// Defaults
+	$defaults = [
+		'an_ebay_site' => '0',
+		'an_ebay_user' => '',
+	];
+
 	// Get Settings
-	$an_settings = an_get_settings();
+	$an_settings = array_merge($defaults, an_get_settings());
+
+	// Site
+	if (isset($an_settings['an_ebay_site'])) {
+		$defaults['an_ebay_site'] = $an_settings['an_ebay_site'];
+	}
+
+	// Username
+	if (isset($an_settings['an_ebay_user'])) {
+		$defaults['an_ebay_user'] = $an_settings['an_ebay_user'];
+	}
 
 	// Localize script
-	wp_localize_script('your-ebay-listings-block', 'an_block_js', [
-		'default_siteid' => $an_settings['an_ebay_site'],
-		'default_SellerID' => $an_settings['an_ebay_user'],
-	]);
+	wp_localize_script('your-ebay-listings-block', 'an_block_js', $defaults);
 
 	// Use unprefixed parameters
 	$item_parameters = [];
@@ -39,8 +52,8 @@ function your_ebay_listings_block_init() {
 		'attributes' => $item_parameters,
 		'example' => [
 			'attributes' => [
-				'SellerID' => $an_settings['an_ebay_user'] ? $an_settings['an_ebay_user'] : 'soundswholesale',
-				'siteid' => $an_settings['an_ebay_site'] ? $an_settings['an_ebay_site'] : '3',
+				'SellerID' => $defaults['an_ebay_user'] ? $defaults['an_ebay_user'] : 'soundswholesale',
+				'siteid' => $defaults['an_ebay_site'] ? $defaults['an_ebay_site'] : '3',
 			],
 		],
 

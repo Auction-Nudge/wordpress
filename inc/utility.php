@@ -157,6 +157,19 @@ function an_get_settings($key = false, $default_value = null) {
 	return $settings;
 }
 
+function an_update_settings($values = []) {
+	//Get options
+	$settings = an_get_settings();
+
+	//Update
+	foreach ($values as $key => $value) {
+		$settings[$key] = esc_html($value);
+	}
+
+	//Save
+	update_option('an_options', $settings);
+}
+
 function an_validate_tool_key($tool_key) {
 	if (! is_string($tool_key)) {
 		return false;

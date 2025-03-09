@@ -236,7 +236,7 @@ function an_setup_settings_ui() {
 
 			//Input change
 			var inputs = jQuery('input[name="item_SellerID"]', container);
-			inputs.on("change keyup", function () {
+			inputs.on("change keyup input", function () {
 				check_form(form);
 			});
 		};

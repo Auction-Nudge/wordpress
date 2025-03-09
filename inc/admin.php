@@ -72,7 +72,7 @@ function an_add_action_links($links) {
 	$links_before = [];
 	$links_after = [
 		'<a href="' . admin_url('options-general.php?page=an_options_page') . '">Settings</a>',
-		'<a href="' . admin_url('options-general.php?page=an_options_page&tab=shortcodes') . '">Shortcode Generator</a>',
+		'<a href="' . admin_url('options-general.php?page=an_options_page&tab=embed') . '">Shortcode Generator</a>',
 	];
 
 	return array_merge($links_before, $links, $links_after);
@@ -254,7 +254,7 @@ function an_options_page() {
 	//Determine default tab
 	$default_tab = 'general';
 	if (isset($an_settings['an_ebay_user']) && ! empty($an_settings['an_ebay_user'])) {
-		$default_tab = 'shortcodes';
+		$default_tab = 'embed';
 	}
 
 	//Tabs
@@ -264,12 +264,8 @@ function an_options_page() {
 
 	echo '	<div id="an-settings-tabs">' . "\n";
 
-	echo '	<div style="margin:10px;">' . "\n";
-	echo wp_kses(an_admin_notice('October 2024 – The <b>Your eBay Profile</b> and <b>Your eBay Feedback</b> tools have been retired. Read more <a target="_blank" href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.', 'error'), an_allowable_tags());
-	echo '</div>' . "\n";
-
-	//Settings
-	if (in_array($active_tab, ['general'])) {
+	//Settings Tab
+	if ($active_tab == 'general') {
 		//Open form
 		echo '		<form class="an-tab-left an-tab-content" action="' . esc_url(admin_url('options.php')) . '" method="post">' . "\n";
 		settings_fields('an_options');
@@ -296,16 +292,16 @@ function an_options_page() {
 			} else {
 				echo 'Set a default eBay Username,' . "\n";
 			}
-			echo 'then display Your eBay Listings using the Block, or with this Shortcode:' . "\n";
+			echo 'then display Your eBay Listings using the Block (type <code>/ebay</code> to get started), or with this Shortcode:' . "\n";
 			//Username set
 		} else {
-			echo 'Display Your eBay Listings using the Block, or with this Shortcode:' . "\n";
+			echo 'Display Your eBay Listings using the Block (type <code>/ebay</code> to get started), or with this Shortcode:' . "\n";
 		}
 		echo '</p>';
 
 		echo wp_kses(an_build_shortcode('item'), an_allowable_tags());
 
-		echo '		<p>Use the <a href="' . esc_url(admin_url('options-general.php?page=an_options_page&tab=shortcodes')) . '">Shortcode Generator</a> to customise your content.</p>' . "\n";
+		echo '		<p>Use the <a href="' . esc_url(admin_url('options-general.php?page=an_options_page&tab=embed')) . '">Shortcode Generator</a> to customise your content.</p>' . "\n";
 
 		echo '		<hr />' . "\n";
 
@@ -316,14 +312,14 @@ function an_options_page() {
 		echo '		<footer>v' . esc_html(an_get_config('plugin_version')) . ' | Since 2008</footer>' . "\n";
 		echo '	</div>' . "\n";
 
-		//Not Settings
+		//All others - Embed Tab
 	} else {
 		$post_data = wp_unslash($_POST);
 
 		//Get tool key
 		$tool_key = (isset($post_data['tool_key'])) ? $post_data['tool_key'] : 'item';
 
-		$tab_url = 'options-general.php?page=an_options_page&tab=shortcodes';
+		$tab_url = 'options-general.php?page=an_options_page&tab=embed';
 
 		// Override defaults
 		$override_defaults = [];
@@ -331,10 +327,35 @@ function an_options_page() {
 
 		$load_error_text = 'Your items could not be displayed, possibly due to adblocking software. <a href="https://www.auctionnudge.com/wordpress-plugin/help#help">Help</a>.';
 
+		// Start Embed content
+
+		// Notice content
+		$notice_content = an_admin_notice('An <a target="_blank" href="https://www.auctionnudge.com/disclosure">Advertising Disclosure</a> is displayed above the items, in accordance with eBay requirements.<br /><br /><b>Users found hiding the disclosure will be blocked</b>.', 'info');
+
+		$notice_content .= '<br />';
+
+		$notice_content .= an_admin_notice('October 2024 – The <b>Your eBay Profile</b> and <b>Your eBay Feedback</b> tools have been retired. Read more <a target="_blank" href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.', 'error');
+
+		// Intro Text
+		$intro_text = '<p class="lead">The <b>Your eBay Listings</b> Block is available anywhere Blocks are supported. Type <code>/ebay</code> to get started.</p>' . "\n";
+		$intro_text .= '<p>Or add Shortcodes anywhere they are supported.</p>' . "\n";
+
 		//Preview submitted?
 		$request_params = an_request_parameters_from_assoc_array($tool_key, $post_data);
 		if (sizeof($request_params)) {
+			// Set default eBay ID if not already set
+			if (isset($request_params['item_SellerID']) && (! isset($an_settings['an_ebay_user']) || empty($an_settings['an_ebay_user']))) {
+				an_update_settings(['an_ebay_user' => $request_params['item_SellerID']]);
+			}
+
+			// Set default eBay Site if not already set
+			if (isset($request_params['item_siteid']) && (! isset($an_settings['an_ebay_site']) || $an_settings['an_ebay_site'] == '')) {
+				an_update_settings(['an_ebay_site' => $request_params['item_siteid']]);
+			}
+
 			echo '		<div id="an-shortcode-preview" class="an-tab-left an-tab-content">' . "\n";
+
+			echo $intro_text;
 
 			// Shortcode
 			echo wp_kses(an_build_shortcode($tool_key, $request_params), an_allowable_tags());
@@ -348,6 +369,8 @@ function an_options_page() {
 			//Can we do the default preview?
 		} elseif (isset($an_settings['an_ebay_user']) && ! empty($an_settings['an_ebay_user'])) {
 			echo '		<div id="an-shortcode-preview" class="an-tab-left an-tab-content">' . "\n";
+
+			echo $intro_text;
 
 			// Default parameters
 			$request_params = an_request_parameters_defaults($tool_key, true);
@@ -367,14 +390,15 @@ function an_options_page() {
 		} else {
 			echo '		<div id="an-welcome" class="an-tab-left an-tab-content">' . "\n";
 			echo '			<p class="an-lead">Your eBay Username is required.</p>' . "\n";
-			echo '			<p>Save time by <a href="' . esc_url(admin_url('options-general.php?page=an_options_page')) . '">setting a default</a>!</p>';
 			echo '		</div>' . "\n";
+
+			$notice_content = '';
+
 		}
 
 		//Start Preview Form
 		echo '		<form id="an-shortcode-form" class="an-tab-right an-tab-content" action="' . esc_url(admin_url($tab_url)) . '" method="post">' . "\n";
 		echo '			<h2>Shortcode Generator</h2>' . "\n";
-		echo '			<p>Add Shortcodes anywhere they are supported.</p>' . "\n";
 
 		// If empty - i.e. not yet submitted
 		if (! sizeof($post_data)) {
@@ -387,7 +411,8 @@ function an_options_page() {
 		echo wp_kses((string) an_create_shortcode_form($post_data, $tool_key), an_allowable_tags());
 		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
 
-		echo an_admin_notice('An <a target="_blank" href="https://www.auctionnudge.com/disclosure">Advertising Disclosure</a> is displayed above the items, in accordance with eBay requirements.<br /><br /><b>Users found hiding the disclosure will be blocked</b>.', 'info');
+		// Display notice
+		echo $notice_content;
 
 		echo '	</form>' . "\n";
 	}
@@ -405,7 +430,7 @@ function an_admin_tabs($current = 'general') {
 	echo '<h2 class="nav-tab-wrapper">';
 
 	$tabs = [
-		'shortcodes' => 'Shortcodes',
+		'embed' => 'Embed',
 		'general' => 'Settings',
 	];
 
@@ -451,7 +476,7 @@ add_action('admin_init', 'an_admin_settings');
  * eBay defaults
  */
 function an_ebay_defaults_text() {
-	echo '<p class="an-lead">Save time when generating <a href="' . esc_url(admin_url('options-general.php?page=an_options_page&tab=shortcodes')) . '">Shortcodes</a>!</p>' . "\n";
+	echo '<p class="an-lead">Save time when generating <a href="' . esc_url(admin_url('options-general.php?page=an_options_page&tab=embed')) . '">Shortcodes</a>!</p>' . "\n";
 }
 
 /**

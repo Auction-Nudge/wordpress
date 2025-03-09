@@ -28,7 +28,7 @@ a.an-tooltip {
 	text-align: center;
 	background: #f7f7f7;
 	font-family: monospace;
-	border: 1px solid #8c8f94;
+	border: 1px solid #ccc;
 }
 
 .an-lead {
@@ -202,6 +202,17 @@ a.an-tooltip {
 			}
 		}
 
+		p.lead {
+			margin: 15px 0 30px 0;
+			padding-bottom: 15px;
+			font-size: 18px;
+			border-bottom: 1px solid #ccc;
+		}
+
+		code {
+			border: 1px solid #ccc;
+		}
+
 		//Tab	content
 		.an-tab-content {
 			float: left;
@@ -211,6 +222,7 @@ a.an-tooltip {
 				width: 63%;
 				padding: 2%;
 			}
+
 			//Right
 			&.an-tab-right {
 				padding: 2%;
@@ -231,6 +243,11 @@ a.an-tooltip {
 					margin: 15px;
 					margin-bottom: 0;
 				}
+				.lead {
+					font-size: 18px;
+					margin-top: 0;
+				}
+
 				#an-shortcode-form-container {
 					background: transparent;
 					legend {
@@ -255,7 +272,7 @@ a.an-tooltip {
 				}
 			}
 
-			//Shortcode Preview
+			//Embed Content / Shortcode Preview
 			&#an-shortcode-preview {
 				width: 65%;
 				padding: 1%;
