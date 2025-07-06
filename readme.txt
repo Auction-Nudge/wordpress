@@ -79,16 +79,20 @@ Once the plugin has been activated, go to Settings > Auction Nudge to set your d
 
 Now you can add the "Your eBay Listings" Block to your page and customize using the Block options. Shortcodes are also supported and can be customized using the Shortcode Generator (Settings > Auction Nudge).
 
-`<!-- To display Your eBay Listings -->
+`
+<!-- To display Your eBay Listings -->
 [auction-nudge tool="listings"]
+`
 
 Use the Shortcode Generator (Settings > Auction Nudge) to customise your content, or pass your options to the Shortcode like this:
 
-`<!-- Showing items for the eBay username "ebay_username" -->
+`
+<!-- Showing items for the eBay username "ebay_username" -->
 [auction-nudge tool="listings" sellerid="ebay_username"]
 
 <!-- Show 100 items, in French and disable search -->
-[auction-nudge tool="listings" lang="french" maxentries="100" search_box="0"]`
+[auction-nudge tool="listings" lang="french" maxentries="100" search_box="0"]
+`
 
 = Nothing Displaying? =
 
