@@ -1,20 +1,18 @@
 === Auction Nudge - Your eBay on Your Site ===
 Contributors: morehawes
-Tags: ebay, item, listing, embed, store
+Tags: ebay, feed, listings, embed, store
 Requires at least: 3.2
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 5.2
 Stable tag: 8.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-An approved eBay Compatible Application to display your live eBay Listings. Once added, your active eBay items will be updated automatically.
+Display your active eBay items on your WordPress site using Auction Nudge, an approved eBay Compatible Application. Once added, your active eBay items will be updated automatically.
 
 == Description ==
 
 Display your active eBay items on your WordPress site using <a href="https://www.auctionnudge.com/">Auction Nudge</a>, an approved eBay Compatible Application.
-
-**The Your eBay Profile and Your eBay Feedback tools have been retired, more information <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>. The Your eBay Listings tool will continue to be supported** :)
 
 Add Auction Nudge to your site either as a Block (called "Your eBay Listings") or Shortcode anywhere they are supported:
 
