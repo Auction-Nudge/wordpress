@@ -310,7 +310,7 @@ function an_iframe_wrap($html = '', $title = '') {
 					font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 					background: #fff;
 				}
-				iframe {
+				body > iframe {
 					width: 100%;
 					height: 100%;
 					border: none;

@@ -282,6 +282,19 @@ $an_plugin_config = [
 				'0' => 'No',
 			],
 		],
+		'item_add_details' => [
+			'name' => 'item_add_details',
+			'id' => 'item_add_details',
+			'tip' => 'When Show Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a "View on Bay" button. The Advertising Disclosure is displayed above the details.',
+			'type' => 'radio',
+			'group' => 'display',
+			'title' => 'Add Item Details?',
+			'default' => '0',
+			'options' => [
+				'1' => 'Yes',
+				'0' => 'No',
+			],
+		],
 		//Advanced
 		'item_sortOrder' => [
 			'name' => 'item_sortOrder',

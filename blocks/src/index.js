@@ -37,6 +37,7 @@ registerBlockType("your-ebay-listings/block", {
     blank: { type: "string", default: "0" },
     img_size: { type: "number", default: 120 },
     user_profile: { type: "string", default: "0" },
+    add_details: { type: "string", default: "0" },
     sortOrder: { type: "string", default: "" },
     listing_type: { type: "string", default: "" },
     keyword: { type: "string", default: "" },
@@ -58,6 +59,7 @@ registerBlockType("your-ebay-listings/block", {
       blank,
       img_size,
       user_profile,
+      add_details,
       sortOrder,
       listing_type,
       keyword,
@@ -122,7 +124,6 @@ registerBlockType("your-ebay-listings/block", {
                 onChange={(value) => setAttributes({ theme: value })}
               />
             </Tooltip>
-
             {/* lang */}
             <Tooltip text="The language option allows you to specify which language Auction Nudge tools display on your site. This option will not modify eBay item titles, which will remain unchanged.">
               <SelectControl
@@ -138,7 +139,6 @@ registerBlockType("your-ebay-listings/block", {
                 onChange={(value) => setAttributes({ lang: value })}
               />
             </Tooltip>
-
             {/* cats_output */}
             <Tooltip text="Once enabled, a list of categories for your items (if you have items for sale in more than one category) will be displayed above your items. This allows users to filter your items by category. The categories shown are eBay categories and not custom/store categories which can not be displayed. Use the Category ID option (Advanced Options) to specify a starting category.">
               <SelectControl
@@ -152,7 +152,6 @@ registerBlockType("your-ebay-listings/block", {
                 onChange={(value) => setAttributes({ cats_output: value })}
               />
             </Tooltip>
-
             {/* MaxEntries */}
             <Tooltip text="This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the 'show multiple pages' option below. Note: The 'Carousel' theme can load a maximum of 100 items in total, as it does not support the 'show multiple pages' option.">
               <TextControl
@@ -161,7 +160,6 @@ registerBlockType("your-ebay-listings/block", {
                 onChange={(value) => setAttributes({ MaxEntries: value })}
               />
             </Tooltip>
-
             {/* page */}
             <Tooltip text="If you enable this option and have more items listed than the value for the 'Items per Page' option above, users can paginate between multiple pages of items.">
               <SelectControl
@@ -174,7 +172,6 @@ registerBlockType("your-ebay-listings/block", {
                 onChange={(value) => setAttributes({ page: value })}
               />
             </Tooltip>
-
             {/* search_box */}
             <Tooltip text="If enabled, a search box will appear above the items which will allow users to search all of your active eBay items. Note: Only item titles are searched, not descriptions.">
               <SelectControl
@@ -187,7 +184,6 @@ registerBlockType("your-ebay-listings/block", {
                 onChange={(value) => setAttributes({ search_box: value })}
               />
             </Tooltip>
-
             {/* grid_cols */}
             {theme === "grid" && (
               <Tooltip text="Use this option to specify how many columns to display in grid view.">
@@ -198,7 +194,6 @@ registerBlockType("your-ebay-listings/block", {
                 />
               </Tooltip>
             )}
-
             {/* grid_width */}
             {theme === "grid" && (
               <Tooltip text="Use this option to specify how wide the grid should be. This can be specified in either pixels (px) or as a percentage (%)">
@@ -209,7 +204,6 @@ registerBlockType("your-ebay-listings/block", {
                 />
               </Tooltip>
             )}
-
             {/* show_logo */}
             <Tooltip text="This option specifies if you want to display the eBay logo alongside your listings.">
               <SelectControl
@@ -222,7 +216,6 @@ registerBlockType("your-ebay-listings/block", {
                 onChange={(value) => setAttributes({ show_logo: value })}
               />
             </Tooltip>
-
             {/* blank */}
             <Tooltip text="Enabling this option will open item links in a new browser tab.">
               <SelectControl
@@ -235,7 +228,6 @@ registerBlockType("your-ebay-listings/block", {
                 onChange={(value) => setAttributes({ blank: value })}
               />
             </Tooltip>
-
             {/* img_size */}
             <Tooltip text="Specify in pixels the maximum image size. Depending on the image ratio, the image width or height will not exceed this size. At larger sizes, higher quality images (and therefore a larger file size) are used.">
               <TextControl
@@ -244,7 +236,6 @@ registerBlockType("your-ebay-listings/block", {
                 onChange={(value) => setAttributes({ img_size: value })}
               />
             </Tooltip>
-
             {/* user_profile */}
             <Tooltip text="If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings.">
               <SelectControl
@@ -255,6 +246,18 @@ registerBlockType("your-ebay-listings/block", {
                   { label: "No", value: "0" },
                 ]}
                 onChange={(value) => setAttributes({ user_profile: value })}
+              />
+            </Tooltip>
+            {/* add_details */}
+            <Tooltip text="When Show Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a 'View on eBay' button. The Advertising Disclosure is displayed above the details.">
+              <SelectControl
+                label="Show Additional Item Details?"
+                value={add_details}
+                options={[
+                  { label: "Yes", value: "1" },
+                  { label: "No", value: "0" },
+                ]}
+                onChange={(value) => setAttributes({ add_details: value })}
               />
             </Tooltip>
           </PanelBody>

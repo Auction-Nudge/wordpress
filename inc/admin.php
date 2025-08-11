@@ -322,8 +322,10 @@ function an_options_page() {
 		$tab_url = 'options-general.php?page=an_options_page&tab=embed';
 
 		// Override defaults
+		// TODO: improve
 		$override_defaults = [];
 		$override_defaults['item_user_profile'] = '1';
+		$override_defaults['item_add_details'] = '1';
 
 		$load_error_text = 'Your items could not be displayed, possibly due to adblocking software. <a href="https://www.auctionnudge.com/wordpress-plugin/help#help">Help</a>.';
 
