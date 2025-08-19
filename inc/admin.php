@@ -100,7 +100,7 @@ function an_create_shortcode_form($tools_meta = [], $inital_tool = 'item', $show
 
 	//Get stored post meta values
 	$tool_parameters = an_request_parameters_from_assoc_array($tools_meta, false);
-	$out .= an_create_tool_custom_fields('item', $tool_parameters);
+	$out .= an_create_tool_custom_fields($tool_parameters);
 
 	//Output Shortcode
 	if ($show_shortcode) {
@@ -119,17 +119,17 @@ function an_create_shortcode_form($tools_meta = [], $inital_tool = 'item', $show
 /**
  * Create fields for tool
  */
-function an_create_tool_custom_fields($tool_key, $tool_params, $field_name_format = '%s') {
+function an_create_tool_custom_fields($tool_params, $field_name_format = '%s') {
 	$out = '';
 
 	$current_group = false;
 
 	//Iterate over each field
 	$count = 0;
-	foreach (an_get_config($tool_key . '_parameters') as $field) {
+	foreach (an_get_config('item_parameters') as $field) {
 		//Does this tool have groups?
-		if ($tool_has_groups = (an_get_config($tool_key . '_parameter_groups') !== false)) {
-			$parameter_groups = an_get_config($tool_key . '_parameter_groups');
+		if ($tool_has_groups = (an_get_config('item_parameter_groups') !== false)) {
+			$parameter_groups = an_get_config('item_parameter_groups');
 			$group = $parameter_groups[$field['group']];
 
 			//Output group?
