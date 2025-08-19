@@ -82,7 +82,7 @@ add_filter('plugin_action_links_auction-nudge/auctionnudge.php', 'an_add_action_
 /**
  * Create the custom field form
  */
-function an_create_shortcode_form($tools_meta = [], $inital_tool = 'item', $show_shortcode = false) {
+function an_create_shortcode_form($tools_meta = [], $show_shortcode = false) {
 	global $post;
 
 	//Do we have?
@@ -93,10 +93,7 @@ function an_create_shortcode_form($tools_meta = [], $inital_tool = 'item', $show
 
 	$out = '<div id="an-shortcode-form-container">' . "\n";
 
-	// == Item tool ==
-
-	$style = ($inital_tool == 'item') ? '' : ' style="display:none"';
-	$out .= '<div' . $style . ' id="listings-tab" class="an-custom-field-tab">' . "\n";
+	$out .= '<div id="listings-tab" class="an-custom-field-tab">' . "\n";
 
 	//Get stored post meta values
 	$tool_parameters = an_request_parameters_from_assoc_array($tools_meta, false);
@@ -400,8 +397,8 @@ function an_options_page() {
 		}
 
 		//Display form, propogated with any user submitted values
-		// echo an_create_shortcode_form($post_data, $tool_key);
-		echo wp_kses((string) an_create_shortcode_form($post_data, $tool_key), an_allowable_tags());
+		// echo an_create_shortcode_form($post_data);
+		echo wp_kses((string) an_create_shortcode_form($post_data), an_allowable_tags());
 		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
 
 		// Display notice
