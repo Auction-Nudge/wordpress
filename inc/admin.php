@@ -99,12 +99,12 @@ function an_create_shortcode_form($tools_meta = [], $inital_tool = 'item', $show
 	$out .= '<div' . $style . ' id="listings-tab" class="an-custom-field-tab">' . "\n";
 
 	//Get stored post meta values
-	$tool_parameters = an_request_parameters_from_assoc_array('item', $tools_meta, false);
+	$tool_parameters = an_request_parameters_from_assoc_array($tools_meta, false);
 	$out .= an_create_tool_custom_fields('item', $tool_parameters);
 
 	//Output Shortcode
 	if ($show_shortcode) {
-		$out .= an_build_shortcode('item');
+		$out .= an_build_shortcode();
 	}
 
 	$out .= '</div>' . "\n";
@@ -299,7 +299,7 @@ function an_options_page() {
 		}
 		echo '</p>';
 
-		echo wp_kses(an_build_shortcode('item'), an_allowable_tags());
+		echo wp_kses(an_build_shortcode(), an_allowable_tags());
 
 		echo '		<p>Use the <a href="' . esc_url(admin_url('options-general.php?page=an_options_page&tab=embed')) . '">Shortcode Generator</a> to customise your content.</p>' . "\n";
 
@@ -337,7 +337,7 @@ function an_options_page() {
 		$intro_text .= '<p>Or add Shortcodes anywhere they are supported.</p>' . "\n";
 
 		//Preview submitted?
-		$request_params = an_request_parameters_from_assoc_array($tool_key, $post_data);
+		$request_params = an_request_parameters_from_assoc_array($post_data);
 		if (sizeof($request_params)) {
 			// Set default eBay ID if not already set
 			if (isset($request_params['item_SellerID']) && (! isset($an_settings['an_ebay_user']) || empty($an_settings['an_ebay_user']))) {
@@ -354,7 +354,7 @@ function an_options_page() {
 			echo $intro_text;
 
 			// Shortcode
-			echo wp_kses(an_build_shortcode($tool_key, $request_params), an_allowable_tags());
+			echo wp_kses(an_build_shortcode($request_params), an_allowable_tags());
 
 			// Snippet
 			$snippet_html = an_build_snippet($tool_key, $request_params, true, an_admin_notice($load_error_text, 'warning'));
@@ -375,7 +375,7 @@ function an_options_page() {
 			$request_params = array_merge($request_params, $override_defaults);
 
 			// Shortcode
-			echo wp_kses(an_build_shortcode($tool_key, $request_params), an_allowable_tags());
+			echo wp_kses(an_build_shortcode($request_params), an_allowable_tags());
 
 			// Snippet
 			$snippet_html = an_build_snippet($tool_key, $request_params, true, an_admin_notice($load_error_text, 'warning'));

@@ -35,7 +35,7 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name) {
 	// 2 - Meta Box (if not disabled)
 	if (! an_get_settings('an_meta_disable', true)) {
 		$meta_parameters = an_get_post_meta($post->ID);
-		$meta_parameters = an_request_parameters_from_assoc_array($tool_key, $meta_parameters);
+		$meta_parameters = an_request_parameters_from_assoc_array($meta_parameters);
 		$request_parameters = array_merge($request_parameters, $meta_parameters);
 	}
 
@@ -90,7 +90,7 @@ function an_build_snippet($tool_key = 'item', $request_parameters = [], $enqueue
 		$request_config = an_get_config($tool_key . '_request');
 
 		//Process request parameters
-		$request_parameters = an_request_parameters_from_assoc_array($tool_key, $request_parameters, true, true, ['item_target']);
+		$request_parameters = an_request_parameters_from_assoc_array($request_parameters, true, true, ['item_target']);
 
 		//Modify request config
 		$request_config = an_modify_request_config($request_config, $tool_key, $request_parameters);

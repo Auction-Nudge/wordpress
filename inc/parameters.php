@@ -38,7 +38,7 @@ function an_update_parameter_defaults() {
 /**
  * Build request parameters array from post meta
  */
-function an_request_parameters_from_assoc_array($tool_key, $assoc_array, $do_output_processing = true, $is_prefixed = true, $extra_allow = []) {
+function an_request_parameters_from_assoc_array($assoc_array, $do_output_processing = true, $is_prefixed = true, $extra_allow = []) {
 	$request_parameters = [];
 
 	//Allow some extra parameters
@@ -51,12 +51,12 @@ function an_request_parameters_from_assoc_array($tool_key, $assoc_array, $do_out
 	}
 
 	//Iterate over each parameter for the tool
-	foreach (an_get_config($tool_key . '_parameters') as $param_defition) {
+	foreach (an_get_config('item_parameters') as $param_defition) {
 		//Param name (is the name prefixed?)
 		if ($is_prefixed) {
 			$param_name = $param_defition['name'];
 		} else {
-			$param_name = str_replace($tool_key . '_', '', $param_defition['name']);
+			$param_name = str_replace('item_', '', $param_defition['name']);
 		}
 
 		//If we have a value for this parameter
