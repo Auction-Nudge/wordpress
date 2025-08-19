@@ -22,13 +22,6 @@ add_action('init', 'an_init');
 function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name) {
 	global $post;
 
-	//Get tool key
-	if (! isset($shortcode_attrs['tool']) || ! in_array($shortcode_attrs['tool'], ['listings', 'ads', 'profile', 'feedback'])) {
-		return false;
-	}
-	$tool_key = str_replace(['listings', 'ads'], ['item', 'ad'], $shortcode_attrs['tool']);
-	unset($shortcode_attrs['tool']);
-
 	// 1 - Defaults from Config / Settings
 	$request_parameters = an_request_parameters_defaults(true);
 
