@@ -332,10 +332,6 @@ function an_options_page() {
 		// Notice content
 		$notice_content = an_admin_notice('An <a target="_blank" href="https://www.auctionnudge.com/disclosure">Advertising Disclosure</a> is displayed above the items, in accordance with eBay requirements.<br /><br /><b>Users found hiding the disclosure will be blocked</b>.', 'info');
 
-		$notice_content .= '<br />';
-
-		$notice_content .= an_admin_notice('October 2024 – The <b>Your eBay Profile</b> and <b>Your eBay Feedback</b> tools have been retired. Read more <a target="_blank" href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.', 'error');
-
 		// Intro Text
 		$intro_text = '<p class="lead">The <b>Your eBay Listings</b> Block is available anywhere Blocks are supported. Type <code>/ebay</code> to get started.</p>' . "\n";
 		$intro_text .= '<p>Or add Shortcodes anywhere they are supported.</p>' . "\n";
