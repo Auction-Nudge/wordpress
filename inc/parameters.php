@@ -193,7 +193,7 @@ function an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_par
 	return $request_parameters;
 }
 
-function an_shortcode_parameters_help_table($tool_keys = ['item', 'profile', 'feedback']) {
+function an_shortcode_parameters_help_table() {
 	$out = '<table>';
 
 	$out .= '	<tr>
@@ -203,21 +203,19 @@ function an_shortcode_parameters_help_table($tool_keys = ['item', 'profile', 'fe
 		<th>Default</th>
 	</td>';
 
-	foreach ($tool_keys as $tool_key) {
-		foreach (an_get_config($tool_key . '_parameters') as $param_key => $param_defition) {
+	foreach (an_get_config('item_parameters') as $param_key => $param_defition) {
 
-			$options_out = '';
-			if (isset($param_defition['options']) && is_array($param_defition['options'])) {
-				$options_out = implode(',<br />', $param_defition['options']);
-			}
+		$options_out = '';
+		if (isset($param_defition['options']) && is_array($param_defition['options'])) {
+			$options_out = implode(',<br />', $param_defition['options']);
+		}
 
-			$out .= '	<tr>
+		$out .= '	<tr>
 				<th>' . strtolower(an_unprefix($param_key)) . '</th>
 				<td>' . $options_out . '</td>
 				<td>' . $param_defition['tip'] . '</th>
 				<td>' . $param_defition['default'] . '</td>
 			</td>';
-		}
 	}
 
 	$out .= '</table>';

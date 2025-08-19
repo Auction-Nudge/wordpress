@@ -170,18 +170,6 @@ function an_update_settings($values = []) {
 	update_option('an_options', $settings);
 }
 
-function an_validate_tool_key($tool_key) {
-	if (! is_string($tool_key)) {
-		return false;
-	}
-
-	if (! in_array($tool_key, an_get_config('tool_keys'))) {
-		return false;
-	}
-
-	return $tool_key;
-}
-
 function an_build_shortcode($tool_data = [], $wrap = true) {
 	if ($wrap) {
 		$out = '<div class="an-shortcode-container" id="an-shortcode-item">' . "\n";

@@ -11,7 +11,6 @@ $an_plugin_config = [
 	'plugin_version' => '8.2.0',
 	'custom_field_prefix' => 'an',
 	'shortcode' => 'auction-nudge',
-	'tool_keys' => ['item', 'ad', 'profile', 'feedback'],
 	'username_bad' => ['.', "\$", '!', '*'],
 	'username_good' => ['__dot__', '__dollar__', '__bang__', '__star__'],
 	'keyword_chars_decoded' => [
