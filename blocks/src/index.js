@@ -210,41 +210,6 @@ registerBlockType("your-ebay-listings/block", {
               </Tooltip>
             )}
 
-            {/* show_logo */}
-            <Tooltip text="This option specifies if you want to display the eBay logo alongside your listings.">
-              <SelectControl
-                label="Show eBay Logo?"
-                value={show_logo}
-                options={[
-                  { label: "Yes", value: "1" },
-                  { label: "No", value: "0" },
-                ]}
-                onChange={(value) => setAttributes({ show_logo: value })}
-              />
-            </Tooltip>
-
-            {/* blank */}
-            <Tooltip text="Enabling this option will open item links in a new browser tab.">
-              <SelectControl
-                label="Open Links in New Tab?"
-                value={blank}
-                options={[
-                  { label: "Yes", value: "1" },
-                  { label: "No", value: "0" },
-                ]}
-                onChange={(value) => setAttributes({ blank: value })}
-              />
-            </Tooltip>
-
-            {/* img_size */}
-            <Tooltip text="Specify in pixels the maximum image size. Depending on the image ratio, the image width or height will not exceed this size. At larger sizes, higher quality images (and therefore a larger file size) are used.">
-              <TextControl
-                label="Image Size"
-                value={img_size}
-                onChange={(value) => setAttributes({ img_size: value })}
-              />
-            </Tooltip>
-
             {/* user_profile */}
             <Tooltip text="If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings.">
               <SelectControl
@@ -278,6 +243,41 @@ registerBlockType("your-ebay-listings/block", {
                   { label: "Best Match", value: "BestMatch" },
                 ]}
                 onChange={(value) => setAttributes({ sortOrder: value })}
+              />
+            </Tooltip>
+
+            {/* show_logo */}
+            <Tooltip text="This option specifies if you want to display the eBay logo alongside your listings.">
+              <SelectControl
+                label="Show eBay Logo?"
+                value={show_logo}
+                options={[
+                  { label: "Yes", value: "1" },
+                  { label: "No", value: "0" },
+                ]}
+                onChange={(value) => setAttributes({ show_logo: value })}
+              />
+            </Tooltip>
+
+            {/* blank */}
+            <Tooltip text="Enabling this option will open item links in a new browser tab.">
+              <SelectControl
+                label="Open Links in New Tab?"
+                value={blank}
+                options={[
+                  { label: "Yes", value: "1" },
+                  { label: "No", value: "0" },
+                ]}
+                onChange={(value) => setAttributes({ blank: value })}
+              />
+            </Tooltip>
+
+            {/* img_size */}
+            <Tooltip text="Specify in pixels the maximum image size. Depending on the image ratio, the image width or height will not exceed this size. At larger sizes, higher quality images (and therefore a larger file size) are used.">
+              <TextControl
+                label="Image Size"
+                value={img_size}
+                onChange={(value) => setAttributes({ img_size: value })}
               />
             </Tooltip>
 
