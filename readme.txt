@@ -157,6 +157,10 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 == Changelog ==
 
+= 8.2.0 =
+
+* Block selection bug fix.
+
 = 8.1.1 =
 
 * Improved plugin setup flow.
