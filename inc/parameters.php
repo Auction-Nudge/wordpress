@@ -176,10 +176,10 @@ function an_request_parameters_defaults($process_output = false) {
 	return $parameters_defaults;
 }
 
-function an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_parameters = []) {
+function an_shortcode_parameters_to_request_parameters($shortcode_parameters = []) {
 	$request_parameters = [];
 
-	foreach (an_get_config($tool_key . '_parameters') as $param_key => $param_defition) {
+	foreach (an_get_config('item_parameters') as $param_key => $param_defition) {
 		$param_name = $param_defition['name'];
 
 		$shortcode_name = an_unprefix(strtolower($param_name));

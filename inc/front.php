@@ -30,7 +30,7 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name) {
 	unset($shortcode_attrs['tool']);
 
 	// 1 - Defaults from Config / Settings
-	$request_parameters = an_request_parameters_defaults($tool_key, true);
+	$request_parameters = an_request_parameters_defaults(true);
 
 	// 2 - Meta Box (if not disabled)
 	if (! an_get_settings('an_meta_disable', true)) {
@@ -40,20 +40,10 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name) {
 	}
 
 	// 3 - Shortcode attribtues
-	$request_parameters = array_merge($request_parameters, an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_attrs, true));
+	$request_parameters = array_merge($request_parameters, an_shortcode_parameters_to_request_parameters($shortcode_attrs, true));
 
-	//By tool
-	switch ($tool_key) {
-	case 'item':
-		//Create target from Shortcode attributes
-		$request_parameters['item_target'] = an_target_hash($shortcode_attrs);
-
-		break;
-	}
-
-// 	echo '<pre>';
-// 	print_r($request_parameters);
-// 	echo '</pre>';
+	//Create target from Shortcode attributes
+	$request_parameters['item_target'] = an_target_hash($shortcode_attrs);
 
 	$out = an_build_snippet($request_parameters);
 
