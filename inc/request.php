@@ -9,17 +9,17 @@
 /**
  * Perform a local request
  */
-function an_perform_local_request($tool_key, $request_string) {
+function an_perform_local_request($request_string) {
 	//Get request parameters
 	$request_parameters = an_request_parameters_from_request_string($request_string);
 
 	//Do we have valid parameters?
 	if (sizeof($request_parameters) > 1) {
 		//Modify request string
-		$request_string = an_modify_request_string($request_string, $tool_key, $request_parameters);
+		$request_string = an_modify_request_string($request_string, $request_parameters);
 
 		//Get request config
-		$request_config = an_get_config($tool_key . '_request');
+		$request_config = an_get_config('item_request');
 
 		//Build request URL
 		$request_url = an_build_request_url($request_config, $request_string);
@@ -36,7 +36,7 @@ function an_perform_local_request($tool_key, $request_string) {
 		}
 
 		//Modify response
-		$response = an_modify_response($response, $tool_key, $request_config);
+		$response = an_modify_response($response, $request_config);
 
 		//Output response
 		an_output_response($response, $request_config);
@@ -48,18 +48,17 @@ function an_perform_local_request($tool_key, $request_string) {
 /**
  * Modify the request
  */
-function an_modify_request_string($request_string, $tool_key, $request_parameters) {
+function an_modify_request_string($request_string, $request_parameters) {
 	//Re-encode some parameters, because it automatically gets decoded in the $_GET superglobal
-	if ($tool_key == 'item') {
-		//Keyword string
-		if (array_key_exists('keyword', $request_parameters)) {
-			$request_string = str_replace($request_parameters['keyword'], an_keyword_encode($request_parameters['keyword']), $request_string);
-		}
 
-		//Grid width
-		if (array_key_exists('grid_width', $request_parameters)) {
-			$request_string = str_replace($request_parameters['grid_width'], str_replace("%", "%25", $request_parameters['grid_width']), $request_string);
-		}
+	//Keyword string
+	if (array_key_exists('keyword', $request_parameters)) {
+		$request_string = str_replace($request_parameters['keyword'], an_keyword_encode($request_parameters['keyword']), $request_string);
+	}
+
+	//Grid width
+	if (array_key_exists('grid_width', $request_parameters)) {
+		$request_string = str_replace($request_parameters['grid_width'], str_replace("%", "%25", $request_parameters['grid_width']), $request_string);
 	}
 
 	return $request_string;
@@ -82,24 +81,19 @@ function an_build_request_url($request_config, $request_string) {
 /**
  * Modify the response
  */
-function an_modify_response($response, $tool_key, $request_config) {
+function an_modify_response($response, $request_config) {
 
-	switch ($tool_key) {
-	case 'item':
-		//Protocol
-		$protocol = 'https';
+	//Protocol
+	$protocol = 'https';
 
-		//Remote endpoint
-		$remote_endpoint = $protocol . ':' . $request_config['endpoint'];
+	//Remote endpoint
+	$remote_endpoint = $protocol . ':' . $request_config['endpoint'];
 
-		//Local endpoint
-		$local_endpoint = trim(add_query_arg(['an_tool_key' => 'item', 'an_request' => '/'], home_url('/')), '/');
+	//Local endpoint
+	$local_endpoint = trim(add_query_arg(['an_tool_key' => 'item', 'an_request' => '/'], home_url('/')), '/');
 
-		//Replace
-		$response = str_replace($remote_endpoint, $local_endpoint, $response);
-
-		break;
-	}
+	//Replace
+	$response = str_replace($remote_endpoint, $local_endpoint, $response);
 
 	return $response;
 }

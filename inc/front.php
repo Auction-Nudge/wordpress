@@ -131,8 +131,8 @@ function an_trigger_check() {
 	$request_string = get_query_var('an_request');
 
 	//Do we have a valid tool key
-	if ($tool_key && in_array($tool_key, ['item', 'ad', 'profile', 'feedback'])) {
-		an_perform_local_request($tool_key, $request_string);
+	if ($tool_key == 'item') {
+		an_perform_local_request($request_string);
 		//Block Preview
 	} elseif ($tool_key == 'block_preview') {
 		//Get request parameters
