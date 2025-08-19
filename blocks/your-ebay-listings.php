@@ -93,7 +93,7 @@ function your_ebay_listings_render_callback($attributes) {
 		// Build hash
 		$request_parameters['item_target'] = an_target_hash($request_parameters);
 
-		$html = an_build_snippet('item', $request_parameters);
+		$html = an_build_snippet($request_parameters);
 	}
 
 	return $html;

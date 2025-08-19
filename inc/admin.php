@@ -316,9 +316,6 @@ function an_options_page() {
 	} else {
 		$post_data = wp_unslash($_POST);
 
-		//Get tool key
-		$tool_key = (isset($post_data['tool_key'])) ? $post_data['tool_key'] : 'item';
-
 		$tab_url = 'options-general.php?page=an_options_page&tab=embed';
 
 		// Override defaults
@@ -357,7 +354,7 @@ function an_options_page() {
 			echo wp_kses(an_build_shortcode($request_params), an_allowable_tags());
 
 			// Snippet
-			$snippet_html = an_build_snippet($tool_key, $request_params, true, an_admin_notice($load_error_text, 'warning'));
+			$snippet_html = an_build_snippet($request_params, true, an_admin_notice($load_error_text, 'warning'));
 			echo wp_kses($snippet_html, an_allowable_tags());
 
 			echo '		</div>' . "\n";
@@ -369,7 +366,7 @@ function an_options_page() {
 			echo $intro_text;
 
 			// Default parameters
-			$request_params = an_request_parameters_defaults($tool_key, true);
+			$request_params = an_request_parameters_defaults(true);
 
 			// Merge with any overrides
 			$request_params = array_merge($request_params, $override_defaults);
@@ -378,7 +375,7 @@ function an_options_page() {
 			echo wp_kses(an_build_shortcode($request_params), an_allowable_tags());
 
 			// Snippet
-			$snippet_html = an_build_snippet($tool_key, $request_params, true, an_admin_notice($load_error_text, 'warning'));
+			$snippet_html = an_build_snippet($request_params, true, an_admin_notice($load_error_text, 'warning'));
 			echo wp_kses($snippet_html, an_allowable_tags());
 
 			echo '		</div>' . "\n";

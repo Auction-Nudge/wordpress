@@ -21,9 +21,6 @@ function an_perform_local_request($tool_key, $request_string) {
 		//Get request config
 		$request_config = an_get_config($tool_key . '_request');
 
-		//Modify request config
-		$request_config = an_modify_request_config($request_config, $tool_key, $request_parameters);
-
 		//Build request URL
 		$request_url = an_build_request_url($request_config, $request_string);
 
@@ -66,24 +63,6 @@ function an_modify_request_string($request_string, $tool_key, $request_parameter
 	}
 
 	return $request_string;
-}
-
-/**
- * Modify the tool request config
- */
-function an_modify_request_config($request_config, $tool_key, $request_parameters) {
-	switch ($tool_key) {
-	case 'profile':
-		//Iframe
-		if (array_key_exists('theme', $request_parameters) && $request_parameters['theme'] == 'overview' || array_key_exists('profile_theme', $request_parameters) && $request_parameters['profile_theme'] == 'overview') {
-			$request_config['content_type'] = 'text/html';
-			$request_config['endpoint'] = str_replace('profile/js', 'profile/iframe', $request_config['endpoint']);
-		}
-
-		break;
-	}
-
-	return $request_config;
 }
 
 /**

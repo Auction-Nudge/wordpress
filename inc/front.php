@@ -55,7 +55,7 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name) {
 // 	print_r($request_parameters);
 // 	echo '</pre>';
 
-	$out = an_build_snippet($tool_key, $request_parameters);
+	$out = an_build_snippet($request_parameters);
 
 	return $out;
 }
@@ -63,7 +63,7 @@ function an_shortcode($shortcode_attrs, $shortcode_content, $shortcode_name) {
 /**
  * Build the snippet
  */
-function an_build_snippet($tool_key = 'item', $request_parameters = [], $enqueue = true, $inner_html = '&nbsp;') {
+function an_build_snippet($request_parameters = [], $enqueue = true, $inner_html = '&nbsp;') {
 	//Build unique hash for this request
 	$request_hash = an_target_hash($request_parameters);
 
@@ -78,69 +78,35 @@ function an_build_snippet($tool_key = 'item', $request_parameters = [], $enqueue
 		//Request endpoint
 		$request_endpoint = home_url('/');
 
-		//We encode this, wp_enqueue_script encodes the others
-		if ($tool_key == 'ad') {
-			$request_string = urlencode($request_string);
-		}
-
-		$request_url = add_query_arg(['an_tool_key' => $tool_key, 'an_request' => $request_string], $request_endpoint);
+		$request_url = add_query_arg(['an_tool_key' => 'item', 'an_request' => $request_string], $request_endpoint);
 		//Remote requests
 	} else {
 		//Get request config
-		$request_config = an_get_config($tool_key . '_request');
+		$request_config = an_get_config('item_request');
 
 		//Process request parameters
 		$request_parameters = an_request_parameters_from_assoc_array($request_parameters, true, true, ['item_target']);
-
-		//Modify request config
-		$request_config = an_modify_request_config($request_config, $tool_key, $request_parameters);
 
 		$request_url = an_build_request_url($request_config, $request_string);
 	}
 
 	//Build snippet
-	switch ($tool_key) {
-	case 'profile':
-		return '<script>console.log("[Auction Nudge] The Your eBay Profile tool has been retired. More information: https://www.auctionnudge.com/changes#v2024.4.0");</script>';
+	$html = '';
 
-		break;
-	case 'feedback':
-		return '<script>console.log("[Auction Nudge] The Your eBay Feedback tool has been retired. More information: https://www.auctionnudge.com/changes#v2024.4.0");</script>';
-
-		break;
-	case 'ad':
-		if (an_get_option('an_ads_disable') == true) {
-			return '';
-
-			break;
-		}
-
-		//Output right away
-		$format_dimensions = explode('x', $request_parameters['ad_format']);
-		return '<iframe width="' . $format_dimensions[0] . '" height="' . $format_dimensions[1] . '" style="border:none" frameborder="0" src="' . $request_url . '" class="auction-nudge"></iframe>';
-
-		break;
-	case 'item':
-	default:
-		$html = '';
-
-		//Enqueue
-		if ($enqueue) {
-			wp_enqueue_script($request_hash, $request_url, [], an_get_config('plugin_version'), true);
-		} else {
-			$html .= '<script src="' . esc_url($request_url) . '"></script>';
-		}
-
-		if (isset($request_parameters['item_target']) && is_string($request_parameters['item_target'])) {
-			return '<div id="auction-nudge-' . $request_parameters['item_target'] . '">' . $inner_html . '</div>';
-		} else {
-			$html .= '<div id="auction-nudge-items">' . $inner_html . '</div>';
-		}
-
-		return $html;
-
-		break;
+	//Enqueue
+	if ($enqueue) {
+		wp_enqueue_script($request_hash, $request_url, [], an_get_config('plugin_version'), true);
+	} else {
+		$html .= '<script src="' . esc_url($request_url) . '"></script>';
 	}
+
+	if (isset($request_parameters['item_target']) && is_string($request_parameters['item_target'])) {
+		return '<div id="auction-nudge-' . $request_parameters['item_target'] . '">' . $inner_html . '</div>';
+	} else {
+		$html .= '<div id="auction-nudge-items">' . $inner_html . '</div>';
+	}
+
+	return $html;
 }
 
 /**
@@ -182,7 +148,7 @@ function an_trigger_check() {
 		//Get request parameters
 		$request_parameters = an_request_parameters_from_request_string($request_string);
 
-		echo an_iframe_wrap(an_build_snippet('item', $request_parameters, false), 'Block Preview');
+		echo an_iframe_wrap(an_build_snippet($request_parameters, false), 'Block Preview');
 
 		die;
 

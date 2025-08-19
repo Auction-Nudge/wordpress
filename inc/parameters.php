@@ -128,14 +128,14 @@ function an_request_parameters_from_request_string($request_string) {
 /**
  * Build array of default shortcode parameters
  */
-function an_request_parameters_defaults($tool_key, $process_output = false) {
+function an_request_parameters_defaults($process_output = false) {
 	$parameters_defaults = [];
 	$an_settings = an_get_settings();
 
 	//Config
 
 	//Iterate over each parameter for the tool
-	foreach (an_get_config($tool_key . '_parameters') as $param_defition) {
+	foreach (an_get_config('item_parameters') as $param_defition) {
 		$param_name = $param_defition['name'];
 
 		//Is there a default?
