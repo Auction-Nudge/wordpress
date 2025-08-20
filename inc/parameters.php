@@ -229,10 +229,6 @@ function an_perform_parameter_processing($value = '', $process = '') {
 
 		break;
 
-	case 'ad_keyword_encode':
-		$value = str_replace("+", "%20", urlencode($value));
-
-		break;
 	case 'replace_percent':
 		$value = str_replace("%", "%25", $value);
 
