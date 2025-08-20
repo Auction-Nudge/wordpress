@@ -68,11 +68,8 @@ function an_modify_request_string($request_string, $request_parameters) {
  * Build the request URL
  */
 function an_build_request_url($request_config, $request_string) {
-	//Protocol
-	$protocol = 'https';
-
 	//Remote endpoint
-	$endpoint = $protocol . ':' . $request_config['endpoint'];
+	$endpoint = 'https:' . $request_config['endpoint'];
 
 	//Put it together
 	return $endpoint . '/' . $request_string;
@@ -82,18 +79,21 @@ function an_build_request_url($request_config, $request_string) {
  * Modify the response
  */
 function an_modify_response($response, $request_config) {
-
-	//Protocol
-	$protocol = 'https';
-
 	//Remote endpoint
-	$remote_endpoint = $protocol . ':' . $request_config['endpoint'];
+	$remote_endpoint = 'https:' . $request_config['endpoint'];
 
 	//Local endpoint
 	$local_endpoint = trim(add_query_arg(['an_action' => 'item_request', 'an_request' => '/'], home_url('/')), '/');
 
-	//Replace
+	//Replace Endpoint
 	$response = str_replace($remote_endpoint, $local_endpoint, $response);
+
+	// Replace View Details iframe URL
+	$response = str_replace(
+		'auctionnudge.com/feed/details/iframe',
+		'auctionnudge.app/feed/details/iframe',
+		$response
+	);
 
 	return $response;
 }
@@ -106,11 +106,8 @@ function an_perform_remote_request($request_url, $request_config) {
 
 	//We can make remote file requests?
 	if (ini_get('allow_url_fopen')) {
-		//Protocol
-		$protocol = 'https';
-
 		//Build cache ID
-		$cache_id = 'an_' . md5($request_url . $protocol);
+		$cache_id = 'an_' . md5($request_url . 'https');
 
 		//Do we have a copy in the cache?
 		if (false === ($response = get_transient($cache_id))) {
