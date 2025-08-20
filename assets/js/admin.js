@@ -128,7 +128,7 @@ function an_setup_tooltips() {
 }
 
 function an_build_item_shortcode(item_data = []) {
-	var out = '[auction-nudge tool="listings"';
+	var out = "[auction-nudge";
 	for (attr_key in item_data) {
 		out += " " + attr_key.toLowerCase() + '="' + item_data[attr_key] + '"';
 	}

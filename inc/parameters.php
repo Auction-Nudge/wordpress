@@ -20,17 +20,11 @@ function an_update_parameter_defaults() {
 		//Check for default eBay Username
 		if (array_key_exists('an_ebay_user', $an_settings) && ! empty($an_settings['an_ebay_user'])) {
 			$an_plugin_config['item_parameters']['item_SellerID']['default'] = $an_settings['an_ebay_user'];
-			$an_plugin_config['ad_parameters']['ad_SellerID']['default'] = $an_settings['an_ebay_user'];
-			$an_plugin_config['profile_parameters']['profile_UserID']['default'] = $an_settings['an_ebay_user'];
-			$an_plugin_config['feedback_parameters']['feedback_UserID']['default'] = $an_settings['an_ebay_user'];
 		}
 
 		//Check for default eBay site
 		if (array_key_exists('an_ebay_site', $an_settings) && ! empty($an_settings['an_ebay_site'])) {
 			$an_plugin_config['item_parameters']['item_siteid']['default'] = $an_settings['an_ebay_site'];
-			$an_plugin_config['ad_parameters']['ad_siteid']['default'] = $an_settings['an_ebay_site'];
-			$an_plugin_config['profile_parameters']['profile_siteid']['default'] = $an_settings['an_ebay_site'];
-			$an_plugin_config['feedback_parameters']['feedback_siteid']['default'] = $an_settings['an_ebay_site'];
 		}
 	}
 }
@@ -38,7 +32,7 @@ function an_update_parameter_defaults() {
 /**
  * Build request parameters array from post meta
  */
-function an_request_parameters_from_assoc_array($tool_key, $assoc_array, $do_output_processing = true, $is_prefixed = true, $extra_allow = []) {
+function an_request_parameters_from_assoc_array($assoc_array, $do_output_processing = true, $is_prefixed = true, $extra_allow = []) {
 	$request_parameters = [];
 
 	//Allow some extra parameters
@@ -51,12 +45,12 @@ function an_request_parameters_from_assoc_array($tool_key, $assoc_array, $do_out
 	}
 
 	//Iterate over each parameter for the tool
-	foreach (an_get_config($tool_key . '_parameters') as $param_defition) {
+	foreach (an_get_config('item_parameters') as $param_defition) {
 		//Param name (is the name prefixed?)
 		if ($is_prefixed) {
 			$param_name = $param_defition['name'];
 		} else {
-			$param_name = str_replace($tool_key . '_', '', $param_defition['name']);
+			$param_name = str_replace('item_', '', $param_defition['name']);
 		}
 
 		//If we have a value for this parameter
@@ -128,14 +122,14 @@ function an_request_parameters_from_request_string($request_string) {
 /**
  * Build array of default shortcode parameters
  */
-function an_request_parameters_defaults($tool_key, $process_output = false) {
+function an_request_parameters_defaults($process_output = false) {
 	$parameters_defaults = [];
 	$an_settings = an_get_settings();
 
 	//Config
 
 	//Iterate over each parameter for the tool
-	foreach (an_get_config($tool_key . '_parameters') as $param_defition) {
+	foreach (an_get_config('item_parameters') as $param_defition) {
 		$param_name = $param_defition['name'];
 
 		//Is there a default?
@@ -176,10 +170,10 @@ function an_request_parameters_defaults($tool_key, $process_output = false) {
 	return $parameters_defaults;
 }
 
-function an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_parameters = []) {
+function an_shortcode_parameters_to_request_parameters($shortcode_parameters = []) {
 	$request_parameters = [];
 
-	foreach (an_get_config($tool_key . '_parameters') as $param_key => $param_defition) {
+	foreach (an_get_config('item_parameters') as $param_key => $param_defition) {
 		$param_name = $param_defition['name'];
 
 		$shortcode_name = an_unprefix(strtolower($param_name));
@@ -191,38 +185,6 @@ function an_shortcode_parameters_to_request_parameters($tool_key, $shortcode_par
 	}
 
 	return $request_parameters;
-}
-
-function an_shortcode_parameters_help_table($tool_keys = ['item', 'profile', 'feedback']) {
-	$out = '<table>';
-
-	$out .= '	<tr>
-		<th>Attribute</th>
-		<th>Options</th>
-		<th>Tip</th>
-		<th>Default</th>
-	</td>';
-
-	foreach ($tool_keys as $tool_key) {
-		foreach (an_get_config($tool_key . '_parameters') as $param_key => $param_defition) {
-
-			$options_out = '';
-			if (isset($param_defition['options']) && is_array($param_defition['options'])) {
-				$options_out = implode(',<br />', $param_defition['options']);
-			}
-
-			$out .= '	<tr>
-				<th>' . strtolower(an_unprefix($param_key)) . '</th>
-				<td>' . $options_out . '</td>
-				<td>' . $param_defition['tip'] . '</th>
-				<td>' . $param_defition['default'] . '</td>
-			</td>';
-		}
-	}
-
-	$out .= '</table>';
-
-	return $out;
 }
 
 function an_perform_parameter_processing($value = '', $process = '') {
@@ -237,10 +199,6 @@ function an_perform_parameter_processing($value = '', $process = '') {
 
 		break;
 
-	case 'ad_keyword_encode':
-		$value = str_replace("+", "%20", urlencode($value));
-
-		break;
 	case 'replace_percent':
 		$value = str_replace("%", "%25", $value);
 

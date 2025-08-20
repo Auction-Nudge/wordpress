@@ -82,7 +82,7 @@ add_filter('plugin_action_links_auction-nudge/auctionnudge.php', 'an_add_action_
 /**
  * Create the custom field form
  */
-function an_create_shortcode_form($tools_meta = [], $inital_tool = 'item', $show_shortcode = false) {
+function an_create_shortcode_form($tools_meta = [], $show_shortcode = false) {
 	global $post;
 
 	//Do we have?
@@ -93,18 +93,15 @@ function an_create_shortcode_form($tools_meta = [], $inital_tool = 'item', $show
 
 	$out = '<div id="an-shortcode-form-container">' . "\n";
 
-	// == Item tool ==
-
-	$style = ($inital_tool == 'item') ? '' : ' style="display:none"';
-	$out .= '<div' . $style . ' id="listings-tab" class="an-custom-field-tab">' . "\n";
+	$out .= '<div id="listings-tab" class="an-custom-field-tab">' . "\n";
 
 	//Get stored post meta values
-	$tool_parameters = an_request_parameters_from_assoc_array('item', $tools_meta, false);
-	$out .= an_create_tool_custom_fields('item', $tool_parameters);
+	$tool_parameters = an_request_parameters_from_assoc_array($tools_meta, false);
+	$out .= an_create_tool_custom_fields($tool_parameters);
 
 	//Output Shortcode
 	if ($show_shortcode) {
-		$out .= an_build_shortcode('item');
+		$out .= an_build_shortcode();
 	}
 
 	$out .= '</div>' . "\n";
@@ -119,17 +116,17 @@ function an_create_shortcode_form($tools_meta = [], $inital_tool = 'item', $show
 /**
  * Create fields for tool
  */
-function an_create_tool_custom_fields($tool_key, $tool_params, $field_name_format = '%s') {
+function an_create_tool_custom_fields($tool_params, $field_name_format = '%s') {
 	$out = '';
 
 	$current_group = false;
 
 	//Iterate over each field
 	$count = 0;
-	foreach (an_get_config($tool_key . '_parameters') as $field) {
+	foreach (an_get_config('item_parameters') as $field) {
 		//Does this tool have groups?
-		if ($tool_has_groups = (an_get_config($tool_key . '_parameter_groups') !== false)) {
-			$parameter_groups = an_get_config($tool_key . '_parameter_groups');
+		if ($tool_has_groups = (an_get_config('item_parameter_groups') !== false)) {
+			$parameter_groups = an_get_config('item_parameter_groups');
 			$group = $parameter_groups[$field['group']];
 
 			//Output group?
@@ -299,7 +296,7 @@ function an_options_page() {
 		}
 		echo '</p>';
 
-		echo wp_kses(an_build_shortcode('item'), an_allowable_tags());
+		echo wp_kses(an_build_shortcode(), an_allowable_tags());
 
 		echo '		<p>Use the <a href="' . esc_url(admin_url('options-general.php?page=an_options_page&tab=embed')) . '">Shortcode Generator</a> to customise your content.</p>' . "\n";
 
@@ -316,9 +313,6 @@ function an_options_page() {
 	} else {
 		$post_data = wp_unslash($_POST);
 
-		//Get tool key
-		$tool_key = (isset($post_data['tool_key'])) ? $post_data['tool_key'] : 'item';
-
 		$tab_url = 'options-general.php?page=an_options_page&tab=embed';
 
 		// Override defaults
@@ -334,16 +328,12 @@ function an_options_page() {
 		// Notice content
 		$notice_content = an_admin_notice('An <a target="_blank" href="https://www.auctionnudge.com/disclosure">Advertising Disclosure</a> is displayed above the items, in accordance with eBay requirements.<br /><br /><b>Users found hiding the disclosure will be blocked</b>.', 'info');
 
-		$notice_content .= '<br />';
-
-		$notice_content .= an_admin_notice('October 2024 – The <b>Your eBay Profile</b> and <b>Your eBay Feedback</b> tools have been retired. Read more <a target="_blank" href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.', 'error');
-
 		// Intro Text
 		$intro_text = '<p class="lead">The <b>Your eBay Listings</b> Block is available anywhere Blocks are supported. Type <code>/ebay</code> to get started.</p>' . "\n";
 		$intro_text .= '<p>Or add Shortcodes anywhere they are supported.</p>' . "\n";
 
 		//Preview submitted?
-		$request_params = an_request_parameters_from_assoc_array($tool_key, $post_data);
+		$request_params = an_request_parameters_from_assoc_array($post_data);
 		if (sizeof($request_params)) {
 			// Set default eBay ID if not already set
 			if (isset($request_params['item_SellerID']) && (! isset($an_settings['an_ebay_user']) || empty($an_settings['an_ebay_user']))) {
@@ -360,10 +350,10 @@ function an_options_page() {
 			echo $intro_text;
 
 			// Shortcode
-			echo wp_kses(an_build_shortcode($tool_key, $request_params), an_allowable_tags());
+			echo wp_kses(an_build_shortcode($request_params), an_allowable_tags());
 
 			// Snippet
-			$snippet_html = an_build_snippet($tool_key, $request_params, true, an_admin_notice($load_error_text, 'warning'));
+			$snippet_html = an_build_snippet($request_params, true, an_admin_notice($load_error_text, 'warning'));
 			echo wp_kses($snippet_html, an_allowable_tags());
 
 			echo '		</div>' . "\n";
@@ -375,16 +365,16 @@ function an_options_page() {
 			echo $intro_text;
 
 			// Default parameters
-			$request_params = an_request_parameters_defaults($tool_key, true);
+			$request_params = an_request_parameters_defaults(true);
 
 			// Merge with any overrides
 			$request_params = array_merge($request_params, $override_defaults);
 
 			// Shortcode
-			echo wp_kses(an_build_shortcode($tool_key, $request_params), an_allowable_tags());
+			echo wp_kses(an_build_shortcode($request_params), an_allowable_tags());
 
 			// Snippet
-			$snippet_html = an_build_snippet($tool_key, $request_params, true, an_admin_notice($load_error_text, 'warning'));
+			$snippet_html = an_build_snippet($request_params, true, an_admin_notice($load_error_text, 'warning'));
 			echo wp_kses($snippet_html, an_allowable_tags());
 
 			echo '		</div>' . "\n";
@@ -409,8 +399,8 @@ function an_options_page() {
 		}
 
 		//Display form, propogated with any user submitted values
-		// echo an_create_shortcode_form($post_data, $tool_key);
-		echo wp_kses((string) an_create_shortcode_form($post_data, $tool_key), an_allowable_tags());
+		// echo an_create_shortcode_form($post_data);
+		echo wp_kses((string) an_create_shortcode_form($post_data), an_allowable_tags());
 		echo '		<input class="button button-primary" name="preview_tools" type="submit" value="Preview" />' . "\n";
 
 		// Display notice
