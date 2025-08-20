@@ -20,17 +20,11 @@ function an_update_parameter_defaults() {
 		//Check for default eBay Username
 		if (array_key_exists('an_ebay_user', $an_settings) && ! empty($an_settings['an_ebay_user'])) {
 			$an_plugin_config['item_parameters']['item_SellerID']['default'] = $an_settings['an_ebay_user'];
-			$an_plugin_config['ad_parameters']['ad_SellerID']['default'] = $an_settings['an_ebay_user'];
-			$an_plugin_config['profile_parameters']['profile_UserID']['default'] = $an_settings['an_ebay_user'];
-			$an_plugin_config['feedback_parameters']['feedback_UserID']['default'] = $an_settings['an_ebay_user'];
 		}
 
 		//Check for default eBay site
 		if (array_key_exists('an_ebay_site', $an_settings) && ! empty($an_settings['an_ebay_site'])) {
 			$an_plugin_config['item_parameters']['item_siteid']['default'] = $an_settings['an_ebay_site'];
-			$an_plugin_config['ad_parameters']['ad_siteid']['default'] = $an_settings['an_ebay_site'];
-			$an_plugin_config['profile_parameters']['profile_siteid']['default'] = $an_settings['an_ebay_site'];
-			$an_plugin_config['feedback_parameters']['feedback_siteid']['default'] = $an_settings['an_ebay_site'];
 		}
 	}
 }

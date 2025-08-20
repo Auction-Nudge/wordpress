@@ -10,8 +10,8 @@
  * Remove the prefix from a parameter name
  */
 function an_unprefix($key) {
-	$search = ['item_', 'ad_', 'profile_', 'feedback_'];
-	$replace = ['', '', '', ''];
+	$search = ['item_'];
+	$replace = [''];
 
 	return str_replace($search, $replace, $key);
 }
