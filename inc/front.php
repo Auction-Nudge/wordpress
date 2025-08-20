@@ -61,7 +61,7 @@ function an_build_snippet($request_parameters = [], $enqueue = true, $inner_html
 		//Request endpoint
 		$request_endpoint = home_url('/');
 
-		$request_url = add_query_arg(['an_tool_key' => 'item', 'an_request' => $request_string], $request_endpoint);
+		$request_url = add_query_arg(['an_action' => 'item_request', 'an_request' => $request_string], $request_endpoint);
 		//Remote requests
 	} else {
 		//Get request config
@@ -108,7 +108,7 @@ add_action('wp_head', 'an_output_version');
  * Register the triggers with WP
  */
 function an_trigger_add($vars) {
-	$vars[] = 'an_tool_key';
+	$vars[] = 'an_action';
 	$vars[] = 'an_request';
 
 	return $vars;
@@ -119,24 +119,28 @@ add_filter('query_vars', 'an_trigger_add');
  * Check for the triggers
  */
 function an_trigger_check() {
-	//Get URL data
-	$tool_key = get_query_var('an_tool_key');
+
 	$request_string = get_query_var('an_request');
 
-	//Do we have a valid tool key
-	if ($tool_key == 'item') {
+	switch (get_query_var('an_action')) {
+	case 'item_request':
+		//Perform the local request
 		an_perform_local_request($request_string);
+
+		die;
+
+	case 'block_preview':
 		//Block Preview
-	} elseif ($tool_key == 'block_preview') {
 		//Get request parameters
-		$request_parameters = an_request_parameters_from_request_string($request_string);
+		$request_parameters = an_request_parameters_from_request_string(get_query_var('an_request'));
 
 		echo an_iframe_wrap(an_build_snippet($request_parameters, false), 'Block Preview');
 
 		die;
 
-	} else {
+	default:
 		//WP loads normally
+		break;
 	}
 }
 add_action('template_redirect', 'an_trigger_check');

@@ -87,7 +87,7 @@ function your_ebay_listings_render_callback($attributes) {
 		// Height based on number of items
 		$iframe_height = ($request_parameters['MaxEntries'] / 2) * 250 + 200;
 
-		$html = '<iframe src="' . home_url('/') . '/?an_tool_key=block_preview&an_request=' . urlencode(an_request_parameters_to_request_string($request_parameters)) . '" width="100%" height="' . $iframe_height . 'px" frameborder="0"></iframe>';
+		$html = '<iframe src="' . home_url('/') . '?an_action=block_preview&an_request=' . urlencode(an_request_parameters_to_request_string($request_parameters)) . '" width="100%" height="' . $iframe_height . 'px" frameborder="0"></iframe>';
 		// Frontend
 	} else {
 		// Build hash

@@ -90,7 +90,7 @@ function an_modify_response($response, $request_config) {
 	$remote_endpoint = $protocol . ':' . $request_config['endpoint'];
 
 	//Local endpoint
-	$local_endpoint = trim(add_query_arg(['an_tool_key' => 'item', 'an_request' => '/'], home_url('/')), '/');
+	$local_endpoint = trim(add_query_arg(['an_action' => 'item_request', 'an_request' => '/'], home_url('/')), '/');
 
 	//Replace
 	$response = str_replace($remote_endpoint, $local_endpoint, $response);
