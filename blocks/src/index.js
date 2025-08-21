@@ -237,22 +237,7 @@ registerBlockType("your-ebay-listings/block", {
               ]}
               onChange={(value) => setAttributes({ theme: value })}
             />
-            {/* lang */}
-            <SelectControl
-              label={helpLabel(
-                "Language",
-                "The language option allows you to specify which language Auction Nudge tools display on your site. This option will not modify eBay item titles, which will remain unchanged.",
-              )}
-              value={lang}
-              options={[
-                { label: "English", value: "english" },
-                { label: "French", value: "french" },
-                { label: "German", value: "german" },
-                { label: "Italian", value: "italian" },
-                { label: "Spanish", value: "spanish" },
-              ]}
-              onChange={(value) => setAttributes({ lang: value })}
-            />
+
             {/* MaxEntries */}
             <TextControl
               label={helpLabel(
@@ -261,6 +246,18 @@ registerBlockType("your-ebay-listings/block", {
               )}
               value={MaxEntries}
               onChange={(value) => setAttributes({ MaxEntries: value })}
+            />
+
+            {/* show_logo toggle */}
+            <ToggleControl
+              label={helpLabel(
+                "Show eBay Logo?",
+                "This option specifies if you want to display the eBay logo alongside your listings.",
+              )}
+              checked={show_logo === "1"}
+              onChange={(isChecked) =>
+                setAttributes({ show_logo: isChecked ? "1" : "0" })
+              }
             />
 
             {/* grid_cols */}
@@ -287,6 +284,22 @@ registerBlockType("your-ebay-listings/block", {
             )}
           </PanelBody>
           <PanelBody title="Advanced Options" initialOpen={false}>
+            {/* lang */}
+            <SelectControl
+              label={helpLabel(
+                "Language",
+                "The language option allows you to specify which language Auction Nudge tools display on your site. This option will not modify eBay item titles, which will remain unchanged.",
+              )}
+              value={lang}
+              options={[
+                { label: "English", value: "english" },
+                { label: "French", value: "french" },
+                { label: "German", value: "german" },
+                { label: "Italian", value: "italian" },
+                { label: "Spanish", value: "spanish" },
+              ]}
+              onChange={(value) => setAttributes({ lang: value })}
+            />
             {/* sortOrder */}
             <SelectControl
               label={helpLabel(
@@ -308,18 +321,6 @@ registerBlockType("your-ebay-listings/block", {
                 { label: "Best Match", value: "BestMatch" },
               ]}
               onChange={(value) => setAttributes({ sortOrder: value })}
-            />
-
-            {/* show_logo toggle */}
-            <ToggleControl
-              label={helpLabel(
-                "Show eBay Logo?",
-                "This option specifies if you want to display the eBay logo alongside your listings.",
-              )}
-              checked={show_logo === "1"}
-              onChange={(isChecked) =>
-                setAttributes({ show_logo: isChecked ? "1" : "0" })
-              }
             />
 
             {/* blank toggle */}

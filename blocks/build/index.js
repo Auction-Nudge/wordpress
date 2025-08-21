@@ -427,7 +427,35 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             onChange: value => setAttributes({
               theme: value
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: helpLabel("Items per Page", "This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the 'show multiple pages' option below. Note: The 'Carousel' theme can load a maximum of 100 items in total, as it does not support the 'show multiple pages' option."),
+            value: MaxEntries,
+            onChange: value => setAttributes({
+              MaxEntries: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+            label: helpLabel("Show eBay Logo?", "This option specifies if you want to display the eBay logo alongside your listings."),
+            checked: show_logo === "1",
+            onChange: isChecked => setAttributes({
+              show_logo: isChecked ? "1" : "0"
+            })
+          }), theme === "grid" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: helpLabel("Grid Columns", "Use this option to specify how many columns to display in grid view."),
+            value: grid_cols,
+            onChange: value => setAttributes({
+              grid_cols: value
+            })
+          }), theme === "grid" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: helpLabel("Grid Width", "Use this option to specify how wide the grid should be. This can be specified in either pixels (px) or as a percentage (%)"),
+            value: grid_width,
+            onChange: value => setAttributes({
+              grid_width: value
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+          title: "Advanced Options",
+          initialOpen: false,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
             label: helpLabel("Language", "The language option allows you to specify which language Auction Nudge tools display on your site. This option will not modify eBay item titles, which will remain unchanged."),
             value: lang,
             options: [{
@@ -449,29 +477,7 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             onChange: value => setAttributes({
               lang: value
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-            label: helpLabel("Items per Page", "This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the 'show multiple pages' option below. Note: The 'Carousel' theme can load a maximum of 100 items in total, as it does not support the 'show multiple pages' option."),
-            value: MaxEntries,
-            onChange: value => setAttributes({
-              MaxEntries: value
-            })
-          }), theme === "grid" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-            label: helpLabel("Grid Columns", "Use this option to specify how many columns to display in grid view."),
-            value: grid_cols,
-            onChange: value => setAttributes({
-              grid_cols: value
-            })
-          }), theme === "grid" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-            label: helpLabel("Grid Width", "Use this option to specify how wide the grid should be. This can be specified in either pixels (px) or as a percentage (%)"),
-            value: grid_width,
-            onChange: value => setAttributes({
-              grid_width: value
-            })
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-          title: "Advanced Options",
-          initialOpen: false,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
             label: helpLabel("Sort Order", "This option adjusts the order in which items are shown."),
             value: sortOrder,
             options: [{
@@ -492,12 +498,6 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             }],
             onChange: value => setAttributes({
               sortOrder: value
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: helpLabel("Show eBay Logo?", "This option specifies if you want to display the eBay logo alongside your listings."),
-            checked: show_logo === "1",
-            onChange: isChecked => setAttributes({
-              show_logo: isChecked ? "1" : "0"
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
             label: helpLabel("Open Links in New Tab?", "Enabling this option will open item links in a new browser tab."),
