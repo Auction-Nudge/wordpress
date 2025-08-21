@@ -1,11 +1,6 @@
 import { registerBlockType } from "@wordpress/blocks";
 import { InspectorControls } from "@wordpress/block-editor";
-import {
-  PanelBody,
-  TextControl,
-  SelectControl,
-  Tooltip,
-} from "@wordpress/components";
+import { PanelBody, TextControl, SelectControl, Tooltip, ToggleControl } from "@wordpress/components";
 import ServerSideRender from "@wordpress/server-side-render";
 
 // Set defaults
@@ -158,57 +153,49 @@ registerBlockType("your-ebay-listings/block", {
 
           {/* Step Two */}
           <PanelBody title="Display Options" initialOpen={false}>
-            {/* page */}
-            <SelectControl
+            {/* page toggle */}
+            <ToggleControl
               label={helpLabel(
                 "Pagination",
                 "If you enable this option and have more items listed than the value for the 'Items per Page' option above, users can paginate between multiple pages of items.",
               )}
-              value={page}
-              options={[
-                { label: "Yes", value: "init" },
-                { label: "No", value: "" },
-              ]}
-              onChange={(value) => setAttributes({ page: value })}
+              checked={page === "init"}
+              onChange={(isChecked) =>
+                setAttributes({ page: isChecked ? "init" : "" })
+              }
             />
-            {/* search_box */}
-            <SelectControl
+            {/* search_box toggle */}
+            <ToggleControl
               label={helpLabel(
                 "Search",
                 "If enabled, a search box will appear above the items which will allow users to search all of your active eBay items. Note: Only item titles are searched, not descriptions.",
               )}
-              value={search_box}
-              options={[
-                { label: "Yes", value: "1" },
-                { label: "No", value: "0" },
-              ]}
-              onChange={(value) => setAttributes({ search_box: value })}
+              checked={search_box === "1"}
+              onChange={(isChecked) =>
+                setAttributes({ search_box: isChecked ? "1" : "0" })
+              }
             />
-            {/* user_profile */}
-            <SelectControl
+            {/* user_profile toggle */}
+            <ToggleControl
               label={helpLabel(
                 "User Profile",
                 "If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings.",
               )}
-              value={user_profile}
-              options={[
-                { label: "Yes", value: "1" },
-                { label: "No", value: "0" },
-              ]}
-              onChange={(value) => setAttributes({ user_profile: value })}
+              checked={user_profile === "1"}
+              onChange={(isChecked) =>
+                setAttributes({ user_profile: isChecked ? "1" : "0" })
+              }
             />
-            {/* add_details */}
-            <SelectControl
+            {/* add_details toggle */}
+            <ToggleControl
               label={helpLabel(
                 "View Details",
                 "When View Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a 'View on eBay' button. The Advertising Disclosure is displayed above the details.",
               )}
-              value={add_details}
-              options={[
-                { label: "Yes", value: "1" },
-                { label: "No", value: "0" },
-              ]}
-              onChange={(value) => setAttributes({ add_details: value })}
+              checked={add_details === "1"}
+              onChange={(isChecked) =>
+                setAttributes({ add_details: isChecked ? "1" : "0" })
+              }
             />
 
             <hr />
@@ -318,32 +305,28 @@ registerBlockType("your-ebay-listings/block", {
               onChange={(value) => setAttributes({ sortOrder: value })}
             />
 
-            {/* show_logo */}
-            <SelectControl
+            {/* show_logo toggle */}
+            <ToggleControl
               label={helpLabel(
                 "Show eBay Logo?",
                 "This option specifies if you want to display the eBay logo alongside your listings.",
               )}
-              value={show_logo}
-              options={[
-                { label: "Yes", value: "1" },
-                { label: "No", value: "0" },
-              ]}
-              onChange={(value) => setAttributes({ show_logo: value })}
+              checked={show_logo === "1"}
+              onChange={(isChecked) =>
+                setAttributes({ show_logo: isChecked ? "1" : "0" })
+              }
             />
 
-            {/* blank */}
-            <SelectControl
+            {/* blank toggle */}
+            <ToggleControl
               label={helpLabel(
                 "Open Links in New Tab?",
                 "Enabling this option will open item links in a new browser tab.",
               )}
-              value={blank}
-              options={[
-                { label: "Yes", value: "1" },
-                { label: "No", value: "0" },
-              ]}
-              onChange={(value) => setAttributes({ blank: value })}
+              checked={blank === "1"}
+              onChange={(isChecked) =>
+                setAttributes({ blank: isChecked ? "1" : "0" })
+              }
             />
 
             {/* img_size */}
