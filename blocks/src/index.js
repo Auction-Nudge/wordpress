@@ -1,6 +1,12 @@
 import { registerBlockType } from "@wordpress/blocks";
 import { InspectorControls } from "@wordpress/block-editor";
-import { PanelBody, TextControl, SelectControl, Tooltip, ToggleControl } from "@wordpress/components";
+import {
+  PanelBody,
+  TextControl,
+  SelectControl,
+  Tooltip,
+  ToggleControl,
+} from "@wordpress/components";
 import ServerSideRender from "@wordpress/server-side-render";
 
 // Set defaults
@@ -198,7 +204,20 @@ registerBlockType("your-ebay-listings/block", {
               }
             />
 
-            <hr />
+            {/* cats_output */}
+            <SelectControl
+              label={helpLabel(
+                "Category List",
+                "Once enabled, a list of categories for your items (if you have items for sale in more than one category) will be displayed above your items. This allows users to filter your items by category. The categories shown are eBay categories and not custom/store categories which can not be displayed. Use the Category ID option (Advanced Options) to specify a starting category.",
+              )}
+              value={cats_output}
+              options={[
+                { label: "Dropdown", value: "dropdown" },
+                { label: "Unstyled (advanced)", value: "unstyled" },
+                { label: "None", value: "" },
+              ]}
+              onChange={(value) => setAttributes({ cats_output: value })}
+            />
 
             {/* theme */}
             <SelectControl
@@ -209,11 +228,11 @@ registerBlockType("your-ebay-listings/block", {
               value={theme}
               options={[
                 { label: "Responsive", value: "responsive" },
+                { label: "Grid View", value: "grid" },
                 { label: "Column View", value: "columns" },
                 { label: "Simple List", value: "simple_list" },
                 { label: "Image and Details", value: "details" },
                 { label: "Images Only", value: "images_only" },
-                { label: "Grid View", value: "grid" },
                 { label: "Unstyled (advanced)", value: "unstyled" },
               ]}
               onChange={(value) => setAttributes({ theme: value })}
@@ -233,20 +252,6 @@ registerBlockType("your-ebay-listings/block", {
                 { label: "Spanish", value: "spanish" },
               ]}
               onChange={(value) => setAttributes({ lang: value })}
-            />
-            {/* cats_output */}
-            <SelectControl
-              label={helpLabel(
-                "Category List",
-                "Once enabled, a list of categories for your items (if you have items for sale in more than one category) will be displayed above your items. This allows users to filter your items by category. The categories shown are eBay categories and not custom/store categories which can not be displayed. Use the Category ID option (Advanced Options) to specify a starting category.",
-              )}
-              value={cats_output}
-              options={[
-                { label: "Dropdown", value: "dropdown" },
-                { label: "Unstyled (advanced)", value: "unstyled" },
-                { label: "None", value: "" },
-              ]}
-              onChange={(value) => setAttributes({ cats_output: value })}
             />
             {/* MaxEntries */}
             <TextControl

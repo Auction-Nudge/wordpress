@@ -383,12 +383,31 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             onChange: isChecked => setAttributes({
               add_details: isChecked ? "1" : "0"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+            label: helpLabel("Category List", "Once enabled, a list of categories for your items (if you have items for sale in more than one category) will be displayed above your items. This allows users to filter your items by category. The categories shown are eBay categories and not custom/store categories which can not be displayed. Use the Category ID option (Advanced Options) to specify a starting category."),
+            value: cats_output,
+            options: [{
+              label: "Dropdown",
+              value: "dropdown"
+            }, {
+              label: "Unstyled (advanced)",
+              value: "unstyled"
+            }, {
+              label: "None",
+              value: ""
+            }],
+            onChange: value => setAttributes({
+              cats_output: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
             label: helpLabel("Theme", "Your items will display differently on your site depending on which theme you choose. You can change how these themes displaying your listings using CSS rules."),
             value: theme,
             options: [{
               label: "Responsive",
               value: "responsive"
+            }, {
+              label: "Grid View",
+              value: "grid"
             }, {
               label: "Column View",
               value: "columns"
@@ -401,9 +420,6 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             }, {
               label: "Images Only",
               value: "images_only"
-            }, {
-              label: "Grid View",
-              value: "grid"
             }, {
               label: "Unstyled (advanced)",
               value: "unstyled"
@@ -432,22 +448,6 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             }],
             onChange: value => setAttributes({
               lang: value
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: helpLabel("Category List", "Once enabled, a list of categories for your items (if you have items for sale in more than one category) will be displayed above your items. This allows users to filter your items by category. The categories shown are eBay categories and not custom/store categories which can not be displayed. Use the Category ID option (Advanced Options) to specify a starting category."),
-            value: cats_output,
-            options: [{
-              label: "Dropdown",
-              value: "dropdown"
-            }, {
-              label: "Unstyled (advanced)",
-              value: "unstyled"
-            }, {
-              label: "None",
-              value: ""
-            }],
-            onChange: value => setAttributes({
-              cats_output: value
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
             label: helpLabel("Items per Page", "This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the 'show multiple pages' option below. Note: The 'Carousel' theme can load a maximum of 100 items in total, as it does not support the 'show multiple pages' option."),
