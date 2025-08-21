@@ -167,17 +167,20 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 ## Screenshots ##
 
-### 1. Promote your eBay items on your site. ###
-![Promote your eBay items on your site.](https://ps.w.org/auction-nudge/assets/screenshot-1.jpg)
+### 1. Displaying additional item information. ###
+![Displaying additional item information.](https://ps.w.org/auction-nudge/assets/screenshot-1.jpg)
 
-### 2. Customize using Block options and preview from admin. ###
-![Customize using Block options and preview from admin.](https://ps.w.org/auction-nudge/assets/screenshot-2.jpg)
+### 2. Promote your eBay items on your site. ###
+![Promote your eBay items on your site.](https://ps.w.org/auction-nudge/assets/screenshot-2.jpg)
 
 ### 3. Create and preview Shortcodes using the Shortcode Generator. ###
 ![Create and preview Shortcodes using the Shortcode Generator.](https://ps.w.org/auction-nudge/assets/screenshot-3.jpg)
 
-### 4. A default eBay username saves time! ###
-![A default eBay username saves time!](https://ps.w.org/auction-nudge/assets/screenshot-4.jpg)
+### 4. Live preview your Block from admin. ###
+![Live preview your Block from admin.](https://ps.w.org/auction-nudge/assets/screenshot-4.jpg)
+
+### 5. A default eBay username saves time! ###
+![A default eBay username saves time!](https://ps.w.org/auction-nudge/assets/screenshot-5.jpg)
 
 
 ## Changelog ##

@@ -167,10 +167,11 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 == Screenshots ==
 
-1. Promote your eBay items on your site.
-2. Customize using Block options and preview from admin.
+1. Displaying additional item information.
+2. Promote your eBay items on your site.
 3. Create and preview Shortcodes using the Shortcode Generator.
-4. A default eBay username saves time!
+4. Live preview your Block from admin.
+5. A default eBay username saves time!
 
 == Changelog ==
 
