@@ -1,4 +1,4 @@
-# Auction Nudge - Your eBay on Your Site #
+# Auction Nudge - Your eBay Listings #
 **Contributors:** [morehawes](https://profiles.wordpress.org/morehawes/)  
 **Tags:** ebay, feed, listings, embed, store  
 **Requires at least:** 3.2  
@@ -17,13 +17,29 @@ Display your active eBay items on your WordPress site using <a href="https://www
 Add Auction Nudge to your site either as a Block (called "Your eBay Listings") or Shortcode anywhere they are supported:
 
 
-	[auction-nudge tool="listings" sellerid="ebay_username"]
+	[auction-nudge sellerid="ebay_username"]
 
 
-* **Your eBay Listings** - displays your active items, with lots of options and filters to choose from. You visitors can:
-	* Browse multiple pages of items
-	* Filter by eBay category
-	* Search of all of your active items by keyword
+Once added, your active eBay items will be updated automatically.
+
+### Features ###
+
+From your site, your visitors can:
+
+* Browse multiple pages of items
+* Filter by eBay category
+* Search your active items
+* View additional item details:
+	* Additional images
+	* Your User Profile (feedback score & % positive)
+	* Item title
+	* Item price (and bids)
+	* Item description (a shortened version, not the full <abbr title="HyperText Markup Language">HTML</abbr> description)
+	* Time remaining (if applicable)
+	* Item condition
+	* Listing type
+	* Pickup available (if applicable)
+	* Item location (if applicable)	
 
 **In order to remain free, Auction Nudge is supported by referral commissions from eBay and includes an [Advertising Disclosure](https://www.auctionnudge.com/disclosure).**
 
@@ -47,37 +63,24 @@ Add Auction Nudge to your site either as a Block (called "Your eBay Listings") o
 
 ### Display Options ###
 
-* **View Details** - Once enabled, the following item details are displayed when an item is clicked:
-	* Additional images
-	* Your User Profile (feedback score & % positive)
-	* Item title
-	* Item price (and bids)
-	* Item description (a shortened version, not the full <abbr title="HyperText Markup Language">HTML</abbr> description)
-	* Time remaining (if applicable)
-	* Item condition
-	* Listing type
-	* Pickup available (if applicable)
-	* Item location (if applicable)
-
+* **View Details** - Once enabled, instead of linking directly to the item on eBay, additional details about the item will be displayed.
 * **User Profile** - Display your eBay username, positive feedback percentage, feedback score and feedback star (if applicable) at the top of the Your eBay Listings tool
 * **Pagination** - Multiple pages can show all of your items for sale
 * **Search Box** - Allow your site visitors to search all of your active eBay items by keyword
-
+* **Category List** - Allow visitors to your site to filter your items by category
 * **Theme** - There are a number of themes and options to choose from, including a responsive design theme
+* **Items per Page** - How many items you wish to show per page
+* **Open Links in New Tab?** - Decide if your visitors should be taken to eBay in a new tab or the current one
+* **Image Size** - Large item images can be displayed (up to 500px by 500px)
+
+### Advanced Options ###
+
 * **Language** - All tools support the following languages: 
 	* English
 	* French
 	* German
 	* Spanish
 	* Italian
-* **Category List** - Allow visitors to your site to filter your items by category
-* **Items per Page** - How many items you wish to show per page
-* **Open Links in New Tab?** - Decide if your visitors should be taken to eBay in a new tab or the current one
-* **Image Size** - Large item images can be displayed (up to 500px by 500px)
-
-
-### Advanced Options ###
-
 * **Sort Order** - Choose in which order your items are displayed (items ending first, newly-listed first, price + shipping: lowest first, price + shipping: highest first or best match)
 * **Listing Type** - Choose to only display items listed as either Auction or Buy It Now.
 * **Filter by Keyword** - Specify to only show items which match a certain keyword query
@@ -95,17 +98,17 @@ Now you can add the "Your eBay Listings" Block to your page and customize using 
 
 
 	<!-- To display Your eBay Listings -->
-	[auction-nudge tool="listings"]
+	[auction-nudge]
 
 
 Use the Shortcode Generator (Settings > Auction Nudge) to customise your content, or pass your options to the Shortcode like this:
 
 
 	<!-- Showing items for the eBay username "ebay_username" -->
-	[auction-nudge tool="listings" sellerid="ebay_username"]
+	[auction-nudge sellerid="ebay_username"]
 	
 	<!-- Show 100 items, in French and disable search -->
-	[auction-nudge tool="listings" lang="french" maxentries="100" search_box="0"]
+	[auction-nudge lang="french" maxentries="100" search_box="0"]
 
 
 ### Nothing Displaying? ###
@@ -269,7 +272,7 @@ I have attempted to make every change backwards compatible to cater for all user
 
 **Added**
 
-* **Multiple Shortcodes** - Add Shortcodes anywhere they are supported. Customize your content using Shortcode parameters (e.g. `[auction-nudge tool="listings" lang="french" maxentries="100" search_box="0"]`).
+* **Multiple Shortcodes** - Add Shortcodes anywhere they are supported. Customize your content using Shortcode parameters (e.g. `[auction-nudge lang="french" maxentries="100" search_box="0"]`).
 * **Shortcode Generator** - This tool allows you to preview and customize your eBay content, providing you with the appropriate Shortcode.
 
 **Removed**

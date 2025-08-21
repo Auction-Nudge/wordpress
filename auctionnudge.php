@@ -3,7 +3,7 @@
 /*
 Plugin Name: Auction Nudge
 Plugin URI: https://www.auctionnudge.com/wordpress-plugin
-Description: Set a default eBay Username in Settings, then use the Your eBay Listings Block or Shortcode [auction-nudge tool="listings"].
+Description: Set a default eBay Username in Settings, then use the Your eBay Listings Block or Shortcode [auction-nudge].
 Version: 8.2.0
 Author: Joe Hawes
 Author URI: https://www.auctionnudge.com/
