@@ -150,9 +150,12 @@ const an_ebay_user = typeof an_block_js.an_ebay_user !== "undefined" ? an_block_
 // Lightweight helper to build a label with a help tooltip (hover/focus on ?)
 const helpLabel = (label, helpText) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
   className: "an-field-label",
-  children: [label, helpText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
+  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+    className: "an-field-text",
+    children: label
+  }), helpText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
     text: helpText,
-    position: "top",
+    position: "right",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
       className: "an-help",
       tabIndex: "0",
@@ -168,10 +171,24 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
   const style = document.createElement("style");
   style.id = "an-block-help-styles";
   style.textContent = `
-    .an-field-label { display: inline-flex; align-items: center; gap: 4px; }
-    .an-field-label .an-help { cursor: help; display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; line-height:16px; font-size:11px; font-weight:600; border-radius:50%; background:#f0f0f0; color:#555; border:1px solid #d0d0d0; }
-    .an-field-label .an-help:focus { outline: 2px solid #2271b1; outline-offset:2px; }
-    .an-field-label .an-help:hover { background:#e2e2e2; }
+    .components-flex-item { 
+      max-width: 100% !important; 
+    }
+    .an-field-label .an-help { 
+      cursor: help;
+      display: inline-block;
+      float: right;
+      text-align: center;
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 50%;
+      background: #f0f0f0;
+      color: #555;
+      border: 1px solid #d0d0d0;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -343,6 +360,58 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
           title: "Display Options",
           initialOpen: false,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+            label: helpLabel("Pagination", "If you enable this option and have more items listed than the value for the 'Items per Page' option above, users can paginate between multiple pages of items."),
+            value: page,
+            options: [{
+              label: "Yes",
+              value: "init"
+            }, {
+              label: "No",
+              value: ""
+            }],
+            onChange: value => setAttributes({
+              page: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+            label: helpLabel("Search", "If enabled, a search box will appear above the items which will allow users to search all of your active eBay items. Note: Only item titles are searched, not descriptions."),
+            value: search_box,
+            options: [{
+              label: "Yes",
+              value: "1"
+            }, {
+              label: "No",
+              value: "0"
+            }],
+            onChange: value => setAttributes({
+              search_box: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+            label: helpLabel("User Profile", "If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings."),
+            value: user_profile,
+            options: [{
+              label: "Yes",
+              value: "1"
+            }, {
+              label: "No",
+              value: "0"
+            }],
+            onChange: value => setAttributes({
+              user_profile: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+            label: helpLabel("View Details", "When View Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a 'View on eBay' button. The Advertising Disclosure is displayed above the details."),
+            value: add_details,
+            options: [{
+              label: "Yes",
+              value: "1"
+            }, {
+              label: "No",
+              value: "0"
+            }],
+            onChange: value => setAttributes({
+              add_details: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
             label: helpLabel("Theme", "Your items will display differently on your site depending on which theme you choose. You can change how these themes displaying your listings using CSS rules."),
             value: theme,
             options: [{
@@ -414,32 +483,6 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             onChange: value => setAttributes({
               MaxEntries: value
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: helpLabel("Show Multiple Pages?", "If you enable this option and have more items listed than the value for the 'Items per Page' option above, users can paginate between multiple pages of items."),
-            value: page,
-            options: [{
-              label: "Yes",
-              value: "init"
-            }, {
-              label: "No",
-              value: ""
-            }],
-            onChange: value => setAttributes({
-              page: value
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: helpLabel("Show Search Box?", "If enabled, a search box will appear above the items which will allow users to search all of your active eBay items. Note: Only item titles are searched, not descriptions."),
-            value: search_box,
-            options: [{
-              label: "Yes",
-              value: "1"
-            }, {
-              label: "No",
-              value: "0"
-            }],
-            onChange: value => setAttributes({
-              search_box: value
-            })
           }), theme === "grid" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
             label: helpLabel("Grid Columns", "Use this option to specify how many columns to display in grid view."),
             value: grid_cols,
@@ -451,32 +494,6 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             value: grid_width,
             onChange: value => setAttributes({
               grid_width: value
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: helpLabel("Show User Profile?", "If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings."),
-            value: user_profile,
-            options: [{
-              label: "Yes",
-              value: "1"
-            }, {
-              label: "No",
-              value: "0"
-            }],
-            onChange: value => setAttributes({
-              user_profile: value
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: helpLabel("Show Additional Item Details?", "When Show Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a 'View on eBay' button. The Advertising Disclosure is displayed above the details."),
-            value: add_details,
-            options: [{
-              label: "Yes",
-              value: "1"
-            }, {
-              label: "No",
-              value: "0"
-            }],
-            onChange: value => setAttributes({
-              add_details: value
             })
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
