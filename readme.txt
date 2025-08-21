@@ -47,6 +47,22 @@ Add Auction Nudge to your site either as a Block (called "Your eBay Listings") o
 
 = Display Options =
 
+* **View Details** - Once enabled, the following item details are displayed when an item is clicked:
+	* Additional images
+	* Your User Profile (feedback score & % positive)
+	* Item title
+	* Item price (and bids)
+	* Item description (a shortened version, not the full <abbr title="HyperText Markup Language">HTML</abbr> description)
+	* Time remaining (if applicable)
+	* Item condition
+	* Listing type
+	* Pickup available (if applicable)
+	* Item location (if applicable)
+
+* **User Profile** - Display your eBay username, positive feedback percentage, feedback score and feedback star (if applicable) at the top of the Your eBay Listings tool
+* **Pagination** - Multiple pages can show all of your items for sale
+* **Search Box** - Allow your site visitors to search all of your active eBay items by keyword
+
 * **Theme** - There are a number of themes and options to choose from, including a responsive design theme
 * **Language** - All tools support the following languages: 
 	* English
@@ -56,11 +72,9 @@ Add Auction Nudge to your site either as a Block (called "Your eBay Listings") o
 	* Italian
 * **Category List** - Allow visitors to your site to filter your items by category
 * **Items per Page** - How many items you wish to show per page
-* **Show Multiple Pages?** - Multiple pages can show all of your items for sale
-* **Show Search Box?** - Allow your site visitors to search all of your active eBay items by keyword
 * **Open Links in New Tab?** - Decide if your visitors should be taken to eBay in a new tab or the current one
 * **Image Size** - Large item images can be displayed (up to 500px by 500px)
-* **User Profile** - Display your eBay username, positive feedback percentage, feedback score and feedback star (if applicable) at the top of the Your eBay Listings tool
+
 
 = Advanced Options =
 
