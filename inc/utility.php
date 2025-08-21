@@ -10,8 +10,8 @@
  * Remove the prefix from a parameter name
  */
 function an_unprefix($key) {
-	$search = ['item_', 'ad_', 'profile_', 'feedback_'];
-	$replace = ['', '', '', ''];
+	$search = ['item_'];
+	$replace = [''];
 
 	return str_replace($search, $replace, $key);
 }
@@ -170,37 +170,18 @@ function an_update_settings($values = []) {
 	update_option('an_options', $settings);
 }
 
-function an_validate_tool_key($tool_key) {
-	if (! is_string($tool_key)) {
-		return false;
-	}
-
-	if (! in_array($tool_key, an_get_config('tool_keys'))) {
-		return false;
-	}
-
-	return $tool_key;
-}
-
-function an_build_shortcode($tool_key = 'item', $tool_data = [], $wrap = true) {
-	if (! an_validate_tool_key($tool_key)) {
-		return false;
-	}
-
+function an_build_shortcode($tool_data = [], $wrap = true) {
 	if ($wrap) {
-		$out = '<div class="an-shortcode-container" id="an-shortcode-' . $tool_key . '">' . "\n";
+		$out = '<div class="an-shortcode-container" id="an-shortcode-item">' . "\n";
 	} else {
 		$out = '';
 	}
 
 	//Parse
-	$tool_data = an_request_parameters_from_assoc_array($tool_key, $tool_data);
-
-	//Legacy
-	$tool_key = ($tool_key == 'item') ? 'listings' : $tool_key;
+	$tool_data = an_request_parameters_from_assoc_array($tool_data);
 
 	//Output
-	$out .= '[' . an_get_config('shortcode') . ' tool="' . $tool_key . '"';
+	$out .= '[' . an_get_config('shortcode');
 
 	foreach ($tool_data as $key => $value) {
 		$out .= ' ' . esc_attr(strtolower($key)) . '="' . esc_attr($value) . '"';
@@ -310,7 +291,7 @@ function an_iframe_wrap($html = '', $title = '') {
 					font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 					background: #fff;
 				}
-				iframe {
+				body > iframe {
 					width: 100%;
 					height: 100%;
 					border: none;

@@ -9,20 +9,17 @@
 /**
  * Perform a local request
  */
-function an_perform_local_request($tool_key, $request_string) {
+function an_perform_local_request($request_string) {
 	//Get request parameters
 	$request_parameters = an_request_parameters_from_request_string($request_string);
 
 	//Do we have valid parameters?
 	if (sizeof($request_parameters) > 1) {
 		//Modify request string
-		$request_string = an_modify_request_string($request_string, $tool_key, $request_parameters);
+		$request_string = an_modify_request_string($request_string, $request_parameters);
 
 		//Get request config
-		$request_config = an_get_config($tool_key . '_request');
-
-		//Modify request config
-		$request_config = an_modify_request_config($request_config, $tool_key, $request_parameters);
+		$request_config = an_get_config('item_request');
 
 		//Build request URL
 		$request_url = an_build_request_url($request_config, $request_string);
@@ -39,7 +36,7 @@ function an_perform_local_request($tool_key, $request_string) {
 		}
 
 		//Modify response
-		$response = an_modify_response($response, $tool_key, $request_config);
+		$response = an_modify_response($response, $request_config);
 
 		//Output response
 		an_output_response($response, $request_config);
@@ -51,50 +48,28 @@ function an_perform_local_request($tool_key, $request_string) {
 /**
  * Modify the request
  */
-function an_modify_request_string($request_string, $tool_key, $request_parameters) {
+function an_modify_request_string($request_string, $request_parameters) {
 	//Re-encode some parameters, because it automatically gets decoded in the $_GET superglobal
-	if ($tool_key == 'item') {
-		//Keyword string
-		if (array_key_exists('keyword', $request_parameters)) {
-			$request_string = str_replace($request_parameters['keyword'], an_keyword_encode($request_parameters['keyword']), $request_string);
-		}
 
-		//Grid width
-		if (array_key_exists('grid_width', $request_parameters)) {
-			$request_string = str_replace($request_parameters['grid_width'], str_replace("%", "%25", $request_parameters['grid_width']), $request_string);
-		}
+	//Keyword string
+	if (array_key_exists('keyword', $request_parameters)) {
+		$request_string = str_replace($request_parameters['keyword'], an_keyword_encode($request_parameters['keyword']), $request_string);
+	}
+
+	//Grid width
+	if (array_key_exists('grid_width', $request_parameters)) {
+		$request_string = str_replace($request_parameters['grid_width'], str_replace("%", "%25", $request_parameters['grid_width']), $request_string);
 	}
 
 	return $request_string;
 }
 
 /**
- * Modify the tool request config
- */
-function an_modify_request_config($request_config, $tool_key, $request_parameters) {
-	switch ($tool_key) {
-	case 'profile':
-		//Iframe
-		if (array_key_exists('theme', $request_parameters) && $request_parameters['theme'] == 'overview' || array_key_exists('profile_theme', $request_parameters) && $request_parameters['profile_theme'] == 'overview') {
-			$request_config['content_type'] = 'text/html';
-			$request_config['endpoint'] = str_replace('profile/js', 'profile/iframe', $request_config['endpoint']);
-		}
-
-		break;
-	}
-
-	return $request_config;
-}
-
-/**
  * Build the request URL
  */
 function an_build_request_url($request_config, $request_string) {
-	//Protocol
-	$protocol = 'https';
-
 	//Remote endpoint
-	$endpoint = $protocol . ':' . $request_config['endpoint'];
+	$endpoint = 'https:' . $request_config['endpoint'];
 
 	//Put it together
 	return $endpoint . '/' . $request_string;
@@ -103,24 +78,22 @@ function an_build_request_url($request_config, $request_string) {
 /**
  * Modify the response
  */
-function an_modify_response($response, $tool_key, $request_config) {
+function an_modify_response($response, $request_config) {
+	//Remote endpoint
+	$remote_endpoint = 'https:' . $request_config['endpoint'];
 
-	switch ($tool_key) {
-	case 'item':
-		//Protocol
-		$protocol = 'https';
+	//Local endpoint
+	$local_endpoint = trim(add_query_arg(['an_action' => 'item_request', 'an_request' => '/'], home_url('/')), '/');
 
-		//Remote endpoint
-		$remote_endpoint = $protocol . ':' . $request_config['endpoint'];
+	//Replace Endpoint
+	$response = str_replace($remote_endpoint, $local_endpoint, $response);
 
-		//Local endpoint
-		$local_endpoint = trim(add_query_arg(['an_tool_key' => 'item', 'an_request' => '/'], home_url('/')), '/');
-
-		//Replace
-		$response = str_replace($remote_endpoint, $local_endpoint, $response);
-
-		break;
-	}
+	// Replace View Details iframe URL
+	$response = str_replace(
+		'auctionnudge.com/feed/details/iframe',
+		'auctionnudge.app/feed/details/iframe',
+		$response
+	);
 
 	return $response;
 }
@@ -133,11 +106,8 @@ function an_perform_remote_request($request_url, $request_config) {
 
 	//We can make remote file requests?
 	if (ini_get('allow_url_fopen')) {
-		//Protocol
-		$protocol = 'https';
-
 		//Build cache ID
-		$cache_id = 'an_' . md5($request_url . $protocol);
+		$cache_id = 'an_' . md5($request_url . 'https');
 
 		//Do we have a copy in the cache?
 		if (false === ($response = get_transient($cache_id))) {
