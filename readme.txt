@@ -4,11 +4,11 @@ Tags: ebay, feed, listings, embed, store
 Requires at least: 3.2
 Tested up to: 6.8
 Requires PHP: 5.2
-Stable tag: 8.1.1
+Stable tag: 8.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Display your active eBay items on your WordPress site using Auction Nudge, an approved eBay Compatible Application. Once added, your active eBay items will be updated automatically.
+Display your active eBay items on your WordPress site using Auction Nudge, an approved eBay Compatible Application.
 
 == Description ==
 
@@ -177,7 +177,9 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 = 8.2.0 =
 
+* **View Details** - The Your eBay Listings tool now supports a View Details option, which allows you to display additional item information without leaving your site.
 * Block selection bug fix.
+* Other bug fixes and improvements.
 
 = 8.1.1 =
 
