@@ -87,6 +87,78 @@ $an_plugin_config = [
 			'title' => 'eBay Site',
 		],
 		//Step two
+
+		'item_add_details' => [
+			'name' => 'item_add_details',
+			'id' => 'item_add_details',
+			'tip' => 'When View Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a \'View on Bay\' button. The Advertising Disclosure is displayed above the details.',
+			'type' => 'radio',
+			'group' => 'display',
+			'title' => 'View Details',
+			'default' => '0',
+			'options' => [
+				'1' => 'Yes',
+				'0' => 'No',
+			],
+		],
+		'item_user_profile' => [
+			'name' => 'item_user_profile',
+			'id' => 'item_user_profile',
+			'tip' => 'If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings.',
+
+			'type' => 'radio',
+			'group' => 'display',
+			'title' => 'User Profile',
+			'default' => '0',
+			'options' => [
+				'1' => 'Yes',
+				'0' => 'No',
+			],
+		],
+		'item_page' => [
+			'name' => 'item_page',
+			'id' => 'item_page',
+			'tip' => 'If you enable this option and have more items listed than the value for the \'Items per Page\' option above, users can paginate between multiple pages of items.',
+			'type' => 'radio',
+			'group' => 'display',
+			'title' => 'Pagination',
+			'default' => 'init',
+			'options' => [
+				'init' => 'Yes',
+				'' => 'No',
+			],
+		],
+		'search_box' => [
+			'name' => 'search_box',
+			'id' => 'search_box',
+			'tip' => 'If enabled, a search box will appear above the items which will allow users to search all of your active eBay items. Note: Only item titles are searched, not descriptions.',
+			'tip_link' => 'https://www.auctionnudge.com/help/options#search-box',
+			'type' => 'radio',
+			'group' => 'display',
+			'title' => 'Search Box',
+			'default' => '1',
+			'options' => [
+				'1' => 'Yes',
+				'0' => 'No',
+			],
+		],
+
+		'item_cats_output' => [
+			'name' => 'cats_output',
+			'id' => 'cats_output',
+			'tip' => 'Once enabled, a list of categories for your items (if you have items for sale in more than one category) will be displayed above your items. This allows users to filter your items by category. The categories shown are eBay categories and not custom/store categories which can not be displayed. Use the Category ID option (Advanced Options) to specify a starting category.',
+			'tip_link' => 'https://www.auctionnudge.com/help/options#category-list',
+			'type' => 'select',
+			'options' => [
+				'dropdown' => 'Dropdown',
+				'unstyled' => 'Unstyled (advanced)',
+				'' => 'None',
+			],
+			'default' => 'dropdown',
+			'group' => 'display',
+			'title' => 'Category List',
+		],
+
 		'item_theme' => [
 			'name' => 'item_theme',
 			'id' => 'item_theme',
@@ -106,38 +178,7 @@ $an_plugin_config = [
 			'group' => 'display',
 			'title' => 'Theme',
 		],
-		'item_lang' => [
-			'name' => 'item_lang',
-			'id' => 'item_lang',
-			'tip' => 'The language option allows you to specify which language Auction Nudge tools display on your site. This option will not modify eBay item titles, which will remain unchanged.',
-			'tip_link' => 'https://www.auctionnudge.com/help/options#language',
-			'type' => 'select',
-			'options' => [
-				'english' => 'English',
-				'french' => 'French',
-				'german' => 'German',
-				'italian' => 'Italian',
-				'spanish' => 'Spanish',
-			],
-			'default' => 'english',
-			'group' => 'display',
-			'title' => 'Language',
-		],
-		'item_cats_output' => [
-			'name' => 'cats_output',
-			'id' => 'cats_output',
-			'tip' => 'Once enabled, a list of categories for your items (if you have items for sale in more than one category) will be displayed above your items. This allows users to filter your items by category. The categories shown are eBay categories and not custom/store categories which can not be displayed. Use the Category ID option (Advanced Options) to specify a starting category.',
-			'tip_link' => 'https://www.auctionnudge.com/help/options#category-list',
-			'type' => 'select',
-			'options' => [
-				'dropdown' => 'Dropdown',
-				'unstyled' => 'Unstyled (advanced)',
-				'' => 'None',
-			],
-			'default' => 'dropdown',
-			'group' => 'display',
-			'title' => 'Category List',
-		],
+
 		'item_MaxEntries' => [
 			'name' => 'item_MaxEntries',
 			'id' => 'item_MaxEntries',
@@ -146,33 +187,7 @@ $an_plugin_config = [
 			'title' => 'Items per Page',
 			'default' => '6',
 		],
-		'item_page' => [
-			'name' => 'item_page',
-			'id' => 'item_page',
-			'tip' => 'If you enable this option and have more items listed than the value for the \'Items per Page\' option above, users can paginate between multiple pages of items.',
-			'type' => 'radio',
-			'group' => 'display',
-			'title' => 'Show Multiple Pages?',
-			'default' => 'init',
-			'options' => [
-				'init' => 'Yes',
-				'' => 'No',
-			],
-		],
-		'search_box' => [
-			'name' => 'search_box',
-			'id' => 'search_box',
-			'tip' => 'If enabled, a search box will appear above the items which will allow users to search all of your active eBay items. Note: Only item titles are searched, not descriptions.',
-			'tip_link' => 'https://www.auctionnudge.com/help/options#search-box',
-			'type' => 'radio',
-			'group' => 'display',
-			'title' => 'Show Search Box?',
-			'default' => '1',
-			'options' => [
-				'1' => 'Yes',
-				'0' => 'No',
-			],
-		],
+
 		/* Legacy Carousel options */
 		'item_carousel_scroll' => [
 			'name' => 'item_carousel_scroll',
@@ -217,34 +232,38 @@ $an_plugin_config = [
 				'replace_percent',
 			],
 		],
-		'item_user_profile' => [
-			'name' => 'item_user_profile',
-			'id' => 'item_user_profile',
-			'tip' => 'If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings.',
+		'item_show_logo' => [
+			'name' => 'item_show_logo',
+			'id' => 'item_show_logo',
+			'tip' => 'This option specifies if you want to display the eBay logo alongside your listings.',
+			'type' => 'radio',
+			'group' => 'display',
+			'title' => 'Show eBay Logo?',
+			'default' => '1',
+			'options' => [
+				'1' => 'Yes',
+				'0' => 'No',
+			],
+		],
 
-			'type' => 'radio',
-			'group' => 'display',
-			'title' => 'Show User Profile?',
-			'default' => '0',
-			'options' => [
-				'1' => 'Yes',
-				'0' => 'No',
-			],
-		],
-		'item_add_details' => [
-			'name' => 'item_add_details',
-			'id' => 'item_add_details',
-			'tip' => 'When View Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a "View on Bay" button. The Advertising Disclosure is displayed above the details.',
-			'type' => 'radio',
-			'group' => 'display',
-			'title' => 'Add Item Details?',
-			'default' => '0',
-			'options' => [
-				'1' => 'Yes',
-				'0' => 'No',
-			],
-		],
 		//Advanced
+		'item_lang' => [
+			'name' => 'item_lang',
+			'id' => 'item_lang',
+			'tip' => 'The language option allows you to specify which language Auction Nudge tools display on your site. This option will not modify eBay item titles, which will remain unchanged.',
+			'tip_link' => 'https://www.auctionnudge.com/help/options#language',
+			'type' => 'select',
+			'options' => [
+				'english' => 'English',
+				'french' => 'French',
+				'german' => 'German',
+				'italian' => 'Italian',
+				'spanish' => 'Spanish',
+			],
+			'default' => 'english',
+			'group' => 'advanced',
+			'title' => 'Language',
+		],
 		'item_sortOrder' => [
 			'name' => 'item_sortOrder',
 			'id' => 'item_sortOrder',
@@ -260,19 +279,7 @@ $an_plugin_config = [
 			'group' => 'advanced',
 			'title' => 'Sort Order',
 		],
-		'item_show_logo' => [
-			'name' => 'item_show_logo',
-			'id' => 'item_show_logo',
-			'tip' => 'This option specifies if you want to display the eBay logo alongside your listings.',
-			'type' => 'radio',
-			'group' => 'advanced',
-			'title' => 'Show eBay Logo?',
-			'default' => '1',
-			'options' => [
-				'1' => 'Yes',
-				'0' => 'No',
-			],
-		],
+
 		'item_blank' => [
 			'name' => 'item_blank',
 			'id' => 'item_blank',
