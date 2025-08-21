@@ -360,6 +360,18 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
           title: "Display Options",
           initialOpen: false,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+            label: helpLabel("View Details", "When View Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a 'View on eBay' button. The Advertising Disclosure is displayed above the details."),
+            checked: add_details === "1",
+            onChange: isChecked => setAttributes({
+              add_details: isChecked ? "1" : "0"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+            label: helpLabel("User Profile", "If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings."),
+            checked: user_profile === "1",
+            onChange: isChecked => setAttributes({
+              user_profile: isChecked ? "1" : "0"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
             label: helpLabel("Pagination", "If you enable this option and have more items listed than the value for the 'Items per Page' option above, users can paginate between multiple pages of items."),
             checked: page === "init",
             onChange: isChecked => setAttributes({
@@ -370,18 +382,6 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             checked: search_box === "1",
             onChange: isChecked => setAttributes({
               search_box: isChecked ? "1" : "0"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: helpLabel("User Profile", "If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings."),
-            checked: user_profile === "1",
-            onChange: isChecked => setAttributes({
-              user_profile: isChecked ? "1" : "0"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: helpLabel("View Details", "When View Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a 'View on eBay' button. The Advertising Disclosure is displayed above the details."),
-            checked: add_details === "1",
-            onChange: isChecked => setAttributes({
-              add_details: isChecked ? "1" : "0"
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
             label: helpLabel("Category List", "Once enabled, a list of categories for your items (if you have items for sale in more than one category) will be displayed above your items. This allows users to filter your items by category. The categories shown are eBay categories and not custom/store categories which can not be displayed. Use the Category ID option (Advanced Options) to specify a starting category."),
@@ -428,7 +428,7 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
               theme: value
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-            label: helpLabel("Items per Page", "This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the 'show multiple pages' option below. Note: The 'Carousel' theme can load a maximum of 100 items in total, as it does not support the 'show multiple pages' option."),
+            label: helpLabel("Items per Page", "This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the 'Pagination' option."),
             value: MaxEntries,
             onChange: value => setAttributes({
               MaxEntries: value

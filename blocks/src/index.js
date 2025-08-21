@@ -159,6 +159,28 @@ registerBlockType("your-ebay-listings/block", {
 
           {/* Step Two */}
           <PanelBody title="Display Options" initialOpen={false}>
+            {/* add_details toggle */}
+            <ToggleControl
+              label={helpLabel(
+                "View Details",
+                "When View Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a 'View on eBay' button. The Advertising Disclosure is displayed above the details.",
+              )}
+              checked={add_details === "1"}
+              onChange={(isChecked) =>
+                setAttributes({ add_details: isChecked ? "1" : "0" })
+              }
+            />
+            {/* user_profile toggle */}
+            <ToggleControl
+              label={helpLabel(
+                "User Profile",
+                "If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings.",
+              )}
+              checked={user_profile === "1"}
+              onChange={(isChecked) =>
+                setAttributes({ user_profile: isChecked ? "1" : "0" })
+              }
+            />
             {/* page toggle */}
             <ToggleControl
               label={helpLabel(
@@ -179,28 +201,6 @@ registerBlockType("your-ebay-listings/block", {
               checked={search_box === "1"}
               onChange={(isChecked) =>
                 setAttributes({ search_box: isChecked ? "1" : "0" })
-              }
-            />
-            {/* user_profile toggle */}
-            <ToggleControl
-              label={helpLabel(
-                "User Profile",
-                "If enabled, your eBay Username, positive feedback percentage, feedback score and feedback star (if applicable) will be displayed above your listings.",
-              )}
-              checked={user_profile === "1"}
-              onChange={(isChecked) =>
-                setAttributes({ user_profile: isChecked ? "1" : "0" })
-              }
-            />
-            {/* add_details toggle */}
-            <ToggleControl
-              label={helpLabel(
-                "View Details",
-                "When View Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a 'View on eBay' button. The Advertising Disclosure is displayed above the details.",
-              )}
-              checked={add_details === "1"}
-              onChange={(isChecked) =>
-                setAttributes({ add_details: isChecked ? "1" : "0" })
               }
             />
 
@@ -242,7 +242,7 @@ registerBlockType("your-ebay-listings/block", {
             <TextControl
               label={helpLabel(
                 "Items per Page",
-                "This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the 'show multiple pages' option below. Note: The 'Carousel' theme can load a maximum of 100 items in total, as it does not support the 'show multiple pages' option.",
+                "This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the 'Pagination' option.",
               )}
               value={MaxEntries}
               onChange={(value) => setAttributes({ MaxEntries: value })}
