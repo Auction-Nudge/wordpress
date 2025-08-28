@@ -84,7 +84,7 @@ From your site, your visitors can:
 * **Sort Order** - Choose in which order your items are displayed (items ending first, newly-listed first, price + shipping: lowest first, price + shipping: highest first or best match)
 * **Listing Type** - Choose to only display items listed as either Auction or Buy It Now.
 * **Filter by Keyword** - Specify to only show items which match a certain keyword query
-* **Filter by Category ID** - Specify to only show items listed in a certain category/categories
+* **Filter by Category ID** - Specify to only show items listed in a certain eBay category
 
 *Auction Nudge is an approved eBay Compatible Application. Auction Nudge is not owned or operated by eBay Inc. eBay and the eBay logo are trademarks of eBay Inc. As a member of the eBay Partner Network, Auction Nudge may receive anonymous referral commissions from eBay if a successful transaction occurs after clicking a link to eBay, at no cost to the user.*
 
