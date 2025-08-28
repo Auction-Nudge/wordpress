@@ -45,11 +45,7 @@ function an_show_theme_options(theme, context) {
 	jQuery("#grid_width-container", context).hide();
 	jQuery("#grid_cols-container", context).hide();
 	//Common options
-	jQuery("#search_box-container", context).hide();
-	jQuery("#cats_output-container", context).hide();
 	jQuery("#page-container", context).hide();
-	jQuery("#img_size-container", context).hide();
-	jQuery("#show_logo-container", context).hide();
 	switch (theme) {
 		case "carousel":
 			jQuery("#carousel_scroll-container", context).show();
@@ -61,17 +57,9 @@ function an_show_theme_options(theme, context) {
 			jQuery("#page-container", context).show();
 			jQuery("#grid_width-container", context).show();
 			jQuery("#grid_cols-container", context).show();
-			jQuery("#cats_output-container", context).show();
-			jQuery("#img_size-container", context).show();
-			jQuery("#show_logo-container", context).show();
-
 			break;
 		default:
 			jQuery("#page-container", context).show();
-			jQuery("#cats_output-container", context).show();
-			jQuery("#img_size-container", context).show();
-			jQuery("#show_logo-container", context).show();
-			jQuery("#search_box-container", context).show();
 
 			break;
 	}

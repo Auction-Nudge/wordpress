@@ -8,7 +8,7 @@
 
 $an_plugin_config = [
 	'plugin_name' => 'Auction Nudge',
-	'plugin_version' => '8.2.0',
+	'plugin_version' => '8.2.1',
 	'custom_field_prefix' => 'an',
 	'shortcode' => 'auction-nudge',
 	'username_bad' => ['.', "\$", '!', '*'],
@@ -167,35 +167,25 @@ $an_plugin_config = [
 			'type' => 'select',
 			'options' => [
 				'responsive' => 'Responsive',
+				'grid' => 'Grid View',
 				'columns' => 'Column View',
+				'carousel' => 'Carousel',
 				'simple_list' => 'Simple List',
 				'details' => 'Image and Details',
 				'images_only' => 'Images Only',
-				'grid' => 'Grid View',
 				'unstyled' => 'Unstyled (advanced)',
 			],
 			'default' => 'responsive',
 			'group' => 'display',
 			'title' => 'Theme',
 		],
-
-		'item_MaxEntries' => [
-			'name' => 'item_MaxEntries',
-			'id' => 'item_MaxEntries',
-			'tip' => 'This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the \'Pagination\' option.',
-			'group' => 'display',
-			'title' => 'Items per Page',
-			'default' => '6',
-		],
-
-		/* Legacy Carousel options */
 		'item_carousel_scroll' => [
 			'name' => 'item_carousel_scroll',
 			'id' => 'item_carousel_scroll',
 			'tip' => 'This option specifies how may items will be visible in the carousel at one time. Use in conjunction with \'Item width\' to set the overall carousel width, i.e. 140px * 4 = 560px.',
 			'group' => 'display',
 			'title' => 'Number of Items to Scroll',
-			'default' => '4',
+			'default' => '2',
 		],
 		'item_carousel_width' => [
 			'name' => 'item_carousel_width',
@@ -203,7 +193,7 @@ $an_plugin_config = [
 			'tip' => 'Specify in pixels how wide each item in the carousel will be. Use in conjunction with \'Number of items to scroll\' to set the overall carousel width, i.e. 140 * 4 = 560px.',
 			'group' => 'display',
 			'title' => 'Item Width',
-			'default' => '140',
+			'default' => '240',
 		],
 		'item_carousel_auto' => [
 			'name' => 'item_carousel_auto',
@@ -231,6 +221,23 @@ $an_plugin_config = [
 			'output_processing' => [
 				'replace_percent',
 			],
+		],
+		'item_MaxEntries' => [
+			'name' => 'item_MaxEntries',
+			'id' => 'item_MaxEntries',
+			'tip' => 'This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the \'Pagination\' option.',
+			'group' => 'display',
+			'title' => 'Items per Page',
+			'default' => '6',
+		],
+		'item_img_size' => [
+			'name' => 'item_img_size',
+			'id' => 'item_img_size',
+			'tip' => 'Specify in pixels the maximum image size. Depending on the image ratio, the image width or height will not exceed this size. At larger sizes, higher quality images (and therefore a larger file size) are used.',
+			'tip_link' => 'https://www.auctionnudge.com/customize/appearance#image-size',
+			'group' => 'display',
+			'title' => 'Image Size',
+			'default' => '140',
 		],
 		'item_show_logo' => [
 			'name' => 'item_show_logo',
@@ -279,29 +286,6 @@ $an_plugin_config = [
 			'group' => 'advanced',
 			'title' => 'Sort Order',
 		],
-
-		'item_blank' => [
-			'name' => 'item_blank',
-			'id' => 'item_blank',
-			'tip' => 'Enabling this option will open item links in a new browser tab.',
-			'type' => 'radio',
-			'group' => 'advanced',
-			'title' => 'Open Links in New Tab?',
-			'default' => '0',
-			'options' => [
-				'1' => 'Yes',
-				'0' => 'No',
-			],
-		],
-		'item_img_size' => [
-			'name' => 'item_img_size',
-			'id' => 'item_img_size',
-			'tip' => 'Specify in pixels the maximum image size. Depending on the image ratio, the image width or height will not exceed this size. At larger sizes, higher quality images (and therefore a larger file size) are used.',
-			'tip_link' => 'https://www.auctionnudge.com/customize/appearance#image-size',
-			'group' => 'advanced',
-			'title' => 'Image Size',
-			'default' => '120',
-		],
 		'item_listing_type' => [
 			'name' => 'item_listing_type',
 			'id' => 'item_listing_type',
@@ -329,7 +313,7 @@ $an_plugin_config = [
 		'item_categoryId' => [
 			'name' => 'item_categoryId',
 			'id' => 'item_categoryId',
-			'tip' => 'By specifying an eBay category ID, only items which are listed in this category will be displayed. You can specify up to 3 different category IDs by separating with a colon (:) for example 123:456:789.',
+			'tip' => 'By specifying an eBay category ID, only items which are listed in this category will be displayed.',
 			'tip_link' => 'https://www.auctionnudge.com/help/options#category-filter',
 			'group' => 'advanced',
 			'title' => 'Filter by Category ID',

@@ -81,11 +81,12 @@ function your_ebay_listings_render_callback($attributes) {
 
 	// Backend (preview)
 	if (wp_is_serving_rest_request()) {
-		// Open links in parent window
-		$request_parameters['blank'] = '1';
-
 		// Height based on number of items
-		$iframe_height = ($request_parameters['MaxEntries'] / 2) * 250 + 200;
+		if ($request_parameters['theme'] !== 'carousel') {
+			$iframe_height = ($request_parameters['MaxEntries'] / 2) * 250 + 200;
+		} else {
+			$iframe_height = 400;
+		}
 
 		$html = '<iframe src="' . home_url('/') . '?an_action=block_preview&an_request=' . urlencode(an_request_parameters_to_request_string($request_parameters)) . '" width="100%" height="' . $iframe_height . 'px" frameborder="0"></iframe>';
 		// Frontend

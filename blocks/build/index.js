@@ -146,9 +146,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const an_ebay_site = typeof an_block_js.an_ebay_site !== "undefined" ? an_block_js.an_ebay_site : "0";
 const an_ebay_user = typeof an_block_js.an_ebay_user !== "undefined" ? an_block_js.an_ebay_user : "";
-
-// Lightweight helper to build a label with a help tooltip (hover/focus on ?)
-const helpLabel = (label, helpText) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+const helpLabel = (label, helpText, helpURL) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
   className: "an-field-label",
   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
     className: "an-field-text",
@@ -156,6 +154,7 @@ const helpLabel = (label, helpText) => /*#__PURE__*/(0,react_jsx_runtime__WEBPAC
   }), helpText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
     text: helpText,
     position: "right",
+    delay: 0,
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
       className: "an-help",
       tabIndex: "0",
@@ -163,6 +162,11 @@ const helpLabel = (label, helpText) => /*#__PURE__*/(0,react_jsx_runtime__WEBPAC
       role: "note",
       children: "?"
     })
+  }), helpURL && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+    href: helpURL,
+    target: "_blank",
+    rel: "noopener noreferrer",
+    children: "HELP"
   })]
 });
 
@@ -189,6 +193,11 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
       color: #555;
       border: 1px solid #d0d0d0;
     }
+    .an-field-label a {
+      float: right;
+      margin-right: 5px;
+      font-size: 11px;
+    } 
   `;
   document.head.appendChild(style);
 }
@@ -241,10 +250,6 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
       type: "string",
       default: "1"
     },
-    blank: {
-      type: "string",
-      default: "0"
-    },
     img_size: {
       type: "number",
       default: 120
@@ -272,6 +277,18 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
     categoryId: {
       type: "string",
       default: ""
+    },
+    carousel_scroll: {
+      type: "number",
+      default: 2
+    },
+    carousel_width: {
+      type: "number",
+      default: 240
+    },
+    carousel_auto: {
+      type: "number",
+      default: 0
     }
   },
   edit({
@@ -290,14 +307,16 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
       grid_cols,
       grid_width,
       show_logo,
-      blank,
       img_size,
       user_profile,
       add_details,
       sortOrder,
       listing_type,
       keyword,
-      categoryId
+      categoryId,
+      carousel_scroll,
+      carousel_width,
+      carousel_auto
     } = attributes;
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
@@ -360,7 +379,7 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
           title: "Display Options",
           initialOpen: false,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: helpLabel("View Details", "When View Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a 'View on eBay' button. The Advertising Disclosure is displayed above the details."),
+            label: helpLabel("View Details", "When View Details is enabled, instead of linking directly to the item on eBay, additional item details will be displayed. Details include extra images, item description, item specifics, your user profile and a 'View on eBay' button. The Advertising Disclosure is displayed above the details.", "https://www.auctionnudge.com/help/options#details"),
             checked: add_details === "1",
             onChange: isChecked => setAttributes({
               add_details: isChecked ? "1" : "0"
@@ -371,20 +390,20 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             onChange: isChecked => setAttributes({
               user_profile: isChecked ? "1" : "0"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+          }), theme !== "carousel" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
             label: helpLabel("Pagination", "If you enable this option and have more items listed than the value for the 'Items per Page' option above, users can paginate between multiple pages of items."),
             checked: page === "init",
             onChange: isChecked => setAttributes({
               page: isChecked ? "init" : ""
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: helpLabel("Search", "If enabled, a search box will appear above the items which will allow users to search all of your active eBay items. Note: Only item titles are searched, not descriptions."),
+            label: helpLabel("Search", "If enabled, a search box will appear above the items which will allow users to search all of your active eBay items. Note: Only item titles are searched, not descriptions.", "https://www.auctionnudge.com/help/options#search-box"),
             checked: search_box === "1",
             onChange: isChecked => setAttributes({
               search_box: isChecked ? "1" : "0"
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: helpLabel("Category List", "Once enabled, a list of categories for your items (if you have items for sale in more than one category) will be displayed above your items. This allows users to filter your items by category. The categories shown are eBay categories and not custom/store categories which can not be displayed. Use the Category ID option (Advanced Options) to specify a starting category."),
+            label: helpLabel("Category List", "Once enabled, a list of categories for your items (if you have items for sale in more than one category) will be displayed above your items. This allows users to filter your items by category. The categories shown are eBay categories and not custom/store categories which can not be displayed. Use the Category ID option (Advanced Options) to specify a starting category.", "https://www.auctionnudge.com/help/options#category-list"),
             value: cats_output,
             options: [{
               label: "Dropdown",
@@ -400,7 +419,7 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
               cats_output: value
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: helpLabel("Theme", "Your items will display differently on your site depending on which theme you choose. You can change how these themes displaying your listings using CSS rules."),
+            label: helpLabel("Theme", "Your items will display differently on your site depending on which theme you choose. You can change how these themes displaying your listings using CSS rules.", "https://www.auctionnudge.com/customize/appearance"),
             value: theme,
             options: [{
               label: "Responsive",
@@ -411,6 +430,9 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             }, {
               label: "Column View",
               value: "columns"
+            }, {
+              label: "Carousel",
+              value: "carousel"
             }, {
               label: "Simple List",
               value: "simple_list"
@@ -427,17 +449,23 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             onChange: value => setAttributes({
               theme: value
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-            label: helpLabel("Items per Page", "This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the 'Pagination' option."),
-            value: MaxEntries,
+          }), theme === "carousel" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: helpLabel("Carousel Scroll", "This option specifies how many items will be visible in the carousel at one time. Use in conjunction with 'Item Width' to set the overall carousel width, i.e. 140px * 4 = 560px."),
+            value: carousel_scroll,
             onChange: value => setAttributes({
-              MaxEntries: value
+              carousel_scroll: value
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: helpLabel("Show eBay Logo?", "This option specifies if you want to display the eBay logo alongside your listings."),
-            checked: show_logo === "1",
-            onChange: isChecked => setAttributes({
-              show_logo: isChecked ? "1" : "0"
+          }), theme === "carousel" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: helpLabel("Item Width", "Specify in pixels how wide each item in the carousel will be. Use in conjunction with 'Number of items to scroll' to set the overall carousel width, i.e. 140 * 4 = 560px."),
+            value: carousel_width,
+            onChange: value => setAttributes({
+              carousel_width: value
+            })
+          }), theme === "carousel" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: helpLabel("Auto Scroll", "This option specifies how often, in seconds the carousel should auto scroll. If set to 0 auto scroll is disabled."),
+            value: carousel_auto,
+            onChange: value => setAttributes({
+              carousel_auto: value
             })
           }), theme === "grid" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
             label: helpLabel("Grid Columns", "Use this option to specify how many columns to display in grid view."),
@@ -451,12 +479,30 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             onChange: value => setAttributes({
               grid_width: value
             })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: helpLabel("Items per Page", "This is the number of items you want display per page, the maximum value is 100. You can display multiple pages of items using the 'Pagination' option."),
+            value: MaxEntries,
+            onChange: value => setAttributes({
+              MaxEntries: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+            label: helpLabel("Image Size", "Specify in pixels the maximum image size. Depending on the image ratio, the image width or height will not exceed this size. At larger sizes, higher quality images (and therefore a larger file size) are used.", "https://www.auctionnudge.com/customize/appearance#image-size"),
+            value: img_size,
+            onChange: value => setAttributes({
+              img_size: value
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+            label: helpLabel("Show eBay Logo?", "This option specifies if you want to display the eBay logo alongside your listings."),
+            checked: show_logo === "1",
+            onChange: isChecked => setAttributes({
+              show_logo: isChecked ? "1" : "0"
+            })
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
           title: "Advanced Options",
           initialOpen: false,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-            label: helpLabel("Language", "The language option allows you to specify which language Auction Nudge tools display on your site. This option will not modify eBay item titles, which will remain unchanged."),
+            label: helpLabel("Language", "The language option allows you to specify which language Auction Nudge tools display on your site. This option will not modify eBay item titles, which will remain unchanged.", "https://www.auctionnudge.com/help/options#language"),
             value: lang,
             options: [{
               label: "English",
@@ -499,18 +545,6 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             onChange: value => setAttributes({
               sortOrder: value
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-            label: helpLabel("Open Links in New Tab?", "Enabling this option will open item links in a new browser tab."),
-            checked: blank === "1",
-            onChange: isChecked => setAttributes({
-              blank: isChecked ? "1" : "0"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-            label: helpLabel("Image Size", "Specify in pixels the maximum image size. Depending on the image ratio, the image width or height will not exceed this size. At larger sizes, higher quality images (and therefore a larger file size) are used."),
-            value: img_size,
-            onChange: value => setAttributes({
-              img_size: value
-            })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
             label: helpLabel("Listing Type", "Filtering by listing type allows you to choose to only display items listed as either Auction or Buy It Now. Auction listings that have the Buy It Now option available will be displayed both when filtering by Auction and Buy It Now."),
             value: listing_type,
@@ -528,13 +562,13 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
               listing_type: value
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-            label: helpLabel("Filter by Keyword", "By specifying a keyword, only items which contain that keyword in their title will be displayed. The keyword query can contain search operators, allowing for powerful searches to include/exclude certain keywords. Note: it is not possible to just use the minus sign (NOT) operator alone, another operator must be used to include items."),
+            label: helpLabel("Filter by Keyword", "By specifying a keyword, only items which contain that keyword in their title will be displayed. The keyword query can contain search operators, allowing for powerful searches to include/exclude certain keywords. Note: it is not possible to just use the minus sign (NOT) operator alone, another operator must be used to include items.", "https://www.auctionnudge.com/help/options#keyword-filter"),
             value: keyword,
             onChange: value => setAttributes({
               keyword: value
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-            label: helpLabel("Filter by Category ID", "By specifying an eBay category ID, only items which are listed in this category will be displayed. You can specify up to 3 different category IDs by separating with a colon (:) for example 123:456:789."),
+            label: helpLabel("Filter by Category ID", "By specifying an eBay category ID, only items which are listed in this category will be displayed.", "https://www.auctionnudge.com/help/options#category-filter"),
             value: categoryId,
             onChange: value => setAttributes({
               categoryId: value

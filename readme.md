@@ -4,7 +4,7 @@
 **Requires at least:** 3.2  
 **Tested up to:** 6.8  
 **Requires PHP:** 5.2  
-**Stable tag:** 8.2.0  
+**Stable tag:** 8.2.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -184,6 +184,12 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 
 ## Changelog ##
+
+### 8.2.1 ###
+
+* Reintroducing the [Carousel theme](https://www.auctionnudge.com/changes#v2025.5.0).
+* Added Help links to Block options.
+* Minor bug fixes and improvements.
 
 ### 8.2.0 ###
 
