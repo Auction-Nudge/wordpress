@@ -8,7 +8,7 @@
 
 $an_plugin_config = [
 	'plugin_name' => 'Auction Nudge',
-	'plugin_version' => '8.2.1',
+	'plugin_version' => '8.3.0',
 	'custom_field_prefix' => 'an',
 	'shortcode' => 'auction-nudge',
 	'username_bad' => ['.', "\$", '!', '*'],
@@ -81,6 +81,7 @@ $an_plugin_config = [
 				'146' => 'eBay Netherlands',
 				'205' => 'eBay Ireland',
 				'193' => 'eBay Switzerland',
+				'212' => 'eBay Poland',
 			],
 			'default' => '0',
 			'group' => 'feed',
@@ -266,6 +267,8 @@ $an_plugin_config = [
 				'german' => 'German',
 				'italian' => 'Italian',
 				'spanish' => 'Spanish',
+				'polish' => 'Polish',
+				'dutch' => 'Dutch',
 			],
 			'default' => 'english',
 			'group' => 'advanced',

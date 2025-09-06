@@ -165,6 +165,7 @@ registerBlockType("your-ebay-listings/block", {
                 { label: "eBay Netherlands", value: "146" },
                 { label: "eBay Ireland", value: "205" },
                 { label: "eBay Switzerland", value: "193" },
+                { label: "eBay Poland", value: "212" },
               ]}
               onChange={(value) => setAttributes({ siteid: value })}
             />
@@ -365,6 +366,8 @@ registerBlockType("your-ebay-listings/block", {
                 { label: "German", value: "german" },
                 { label: "Italian", value: "italian" },
                 { label: "Spanish", value: "spanish" },
+                { label: "Dutch", value: "dutch" },
+                { label: "Polish", value: "polish" },
               ]}
               onChange={(value) => setAttributes({ lang: value })}
             />

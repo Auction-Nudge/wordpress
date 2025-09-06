@@ -370,6 +370,9 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             }, {
               label: "eBay Switzerland",
               value: "193"
+            }, {
+              label: "eBay Poland",
+              value: "212"
             }],
             onChange: value => setAttributes({
               siteid: value
@@ -519,6 +522,12 @@ if (typeof document !== "undefined" && !document.getElementById("an-block-help-s
             }, {
               label: "Spanish",
               value: "spanish"
+            }, {
+              label: "Dutch",
+              value: "dutch"
+            }, {
+              label: "Polish",
+              value: "polish"
             }],
             onChange: value => setAttributes({
               lang: value

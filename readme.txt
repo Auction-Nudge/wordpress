@@ -4,7 +4,7 @@ Tags: ebay, feed, listings, embed, store
 Requires at least: 3.2
 Tested up to: 6.8
 Requires PHP: 5.2
-Stable tag: 8.2.1
+Stable tag: 8.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,7 @@ From your site, your visitors can:
 	* eBay Netherlands
 	* eBay Ireland
 	* eBay Switzerland
+	* eBay Poland
 
 = Display Options =
 
@@ -70,7 +71,6 @@ From your site, your visitors can:
 * **Category List** - Allow visitors to your site to filter your items by category
 * **Theme** - There are a number of themes and options to choose from, including a responsive design theme
 * **Items per Page** - How many items you wish to show per page
-* **Open Links in New Tab?** - Decide if your visitors should be taken to eBay in a new tab or the current one
 * **Image Size** - Large item images can be displayed (up to 500px by 500px)
 
 = Advanced Options =
@@ -81,6 +81,8 @@ From your site, your visitors can:
 	* German
 	* Spanish
 	* Italian
+	* Polish
+	* Dutch
 * **Sort Order** - Choose in which order your items are displayed (items ending first, newly-listed first, price + shipping: lowest first, price + shipping: highest first or best match)
 * **Listing Type** - Choose to only display items listed as either Auction or Buy It Now.
 * **Filter by Keyword** - Specify to only show items which match a certain keyword query
@@ -174,6 +176,11 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 5. A default eBay username saves time!
 
 == Changelog ==
+
+= 8.3.0 =
+
+* Added eBay Poland support.
+* Added Polish and Dutch language support.
 
 = 8.2.1 =
 

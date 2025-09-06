@@ -501,21 +501,9 @@ function an_ebay_site_setting() {
 		$ebay_site_setting = '0';
 	}
 
-	$siteids = [
-		'0' => 'eBay US',
-		'3' => 'eBay UK',
-		'2' => 'eBay Canada',
-		'15' => 'eBay Australia',
-		'23' => 'eBay Belgium',
-		'77' => 'eBay Germany',
-		'71' => 'eBay France',
-		'186' => 'eBay Spain',
-		'16' => 'eBay Austria',
-		'101' => 'eBay Italy',
-		'146' => 'eBay Netherlands',
-		'205' => 'eBay Ireland',
-		'193' => 'eBay Switzerland',
-	];
+	// Use config version to ensure we are always up to date
+	$item_parameters = an_get_config('item_parameters');
+	$siteids = $item_parameters['item_siteid']['options'];
 
 	echo '<select name="an_options[an_ebay_site]" id="an_ebay_site">' . "\n";
 	foreach ($siteids as $siteid => $description) {
