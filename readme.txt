@@ -4,7 +4,7 @@ Tags: ebay, feed, listings, embed, store
 Requires at least: 3.2
 Tested up to: 6.8
 Requires PHP: 5.2
-Stable tag: 8.3.0
+Stable tag: 8.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,7 +177,11 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 == Changelog ==
 
-= 8.3.0 =
+= 8.3.1 =
+
+* Deploy using GitHub Actions.
+
+= 8.3.0 = 
 
 * Added eBay Poland support.
 * Added Polish and Dutch language support.

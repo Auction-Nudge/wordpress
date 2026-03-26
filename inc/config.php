@@ -8,7 +8,7 @@
 
 $an_plugin_config = [
 	'plugin_name' => 'Auction Nudge',
-	'plugin_version' => '8.3.0',
+	'plugin_version' => '8.3.1',
 	'custom_field_prefix' => 'an',
 	'shortcode' => 'auction-nudge',
 	'username_bad' => ['.', "\$", '!', '*'],

@@ -1,0 +1,58 @@
+name: Deploy to WordPress.org
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    name: Deploy to WordPress.org SVN
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check if version changed
+        id: version_check
+        run: |
+          CURRENT_VERSION=$(grep -m1 'Version:' auctionnudge.php | awk '{print $NF}')
+
+          if git show HEAD~1:auctionnudge.php > /dev/null 2>&1; then
+            PREVIOUS_VERSION=$(git show HEAD~1:auctionnudge.php | grep -m1 'Version:' | awk '{print $NF}')
+          else
+            PREVIOUS_VERSION=""
+          fi
+
+          echo "current=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          echo "previous=$PREVIOUS_VERSION" >> $GITHUB_OUTPUT
+
+          if [ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Version changed: $PREVIOUS_VERSION → $CURRENT_VERSION"
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "Version unchanged ($CURRENT_VERSION), skipping deploy."
+          fi
+
+      - name: Deploy to WordPress.org
+        if: steps.version_check.outputs.changed == 'true'
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.WORDPRESS_PASSWORD }}
+          SLUG: auction-nudge
+          VERSION: ${{ steps.version_check.outputs.current }}
+
+      - name: Create GitHub tag and release
+        if: steps.version_check.outputs.changed == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version_check.outputs.current }}
+          name: v${{ steps.version_check.outputs.current }}
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
