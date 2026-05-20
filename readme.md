@@ -2,7 +2,7 @@
 **Contributors:** [morehawes](https://profiles.wordpress.org/morehawes/)  
 **Tags:** ebay, feed, listings, embed, store  
 **Requires at least:** 3.2  
-**Tested up to:** 6.8  
+**Tested up to:** 7.0  
 **Requires PHP:** 5.2  
 **Stable tag:** 8.3.2  
 **License:** GPLv2 or later  
