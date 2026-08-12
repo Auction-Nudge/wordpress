@@ -8,7 +8,7 @@
 
 $an_plugin_config = [
 	'plugin_name' => 'Auction Nudge',
-	'plugin_version' => '8.3.3',
+	'plugin_version' => '8.4.0',
 	'custom_field_prefix' => 'an',
 	'shortcode' => 'auction-nudge',
 	'username_bad' => ['.', "\$", '!', '*'],
@@ -31,9 +31,8 @@ $an_plugin_config = [
 	],
 	//Requests
 	'item_request' => [
-		'endpoint' => '//www.auctionnudge.com/feed/item/js',
+		'endpoint' => '//www.auctionnudge.app/feed/item/js',
 		'content_type' => 'text/javascript',
-		'cache_minutes' => 15,
 	],
 	//Item tool parameters
 	'item_parameter_groups' => [

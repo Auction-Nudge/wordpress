@@ -1,10 +1,13 @@
 {
   "name": "Auction Nudge",
-  "version": "8.3.3",
+  "version": "8.4.0",
   "homepage": "https://www.auctionnudge.com/wordpress-plugin/about",
   "description": "Auction Nudge for WordPress",
   "author": "Joe Hawes",
   "main": "Gruntfile.js",
+  "scripts": {
+    "dev": "wp-env start && printf '\\n────────────────────────────────────\\n MySQL  127.0.0.1  root / password\\n Admin  http://localhost:8888/wp-admin  admin / password\\n────────────────────────────────────\\n'"
+  },
   "devDependencies": {
     "grunt": "^1.6.1",
     "grunt-contrib-cssmin": "^4.0.0",

@@ -53,25 +53,14 @@ function an_build_snippet($request_parameters = [], $enqueue = true, $inner_html
 	//Request string
 	$request_string = an_request_parameters_to_request_string($request_parameters);
 
-	//Get Settings
-	$an_settings = an_get_settings();
+	//Get request config
+	$request_config = an_get_config('item_request');
 
-	//Local requests
-	if (! array_key_exists('an_local_requests', $an_settings) || $an_settings['an_local_requests'] == '1') {
-		//Request endpoint
-		$request_endpoint = home_url('/');
+	//Process request parameters
+	$request_parameters = an_request_parameters_from_assoc_array($request_parameters, true, true, ['item_target']);
 
-		$request_url = add_query_arg(['an_action' => 'item_request', 'an_request' => $request_string], $request_endpoint);
-		//Remote requests
-	} else {
-		//Get request config
-		$request_config = an_get_config('item_request');
-
-		//Process request parameters
-		$request_parameters = an_request_parameters_from_assoc_array($request_parameters, true, true, ['item_target']);
-
-		$request_url = an_build_request_url($request_config, $request_string);
-	}
+	//Build request URL
+	$request_url = 'https:' . $request_config['endpoint'] . '/' . $request_string;
 
 	//Build snippet
 	$html = '';
@@ -101,7 +90,7 @@ function an_output_version() {
 add_action('wp_head', 'an_output_version');
 
 /**
- * =================== LOCAL REQUESTS =====================
+ * =================== BLOCK PREVIEW =====================
  */
 
 /**
@@ -119,16 +108,7 @@ add_filter('query_vars', 'an_trigger_add');
  * Check for the triggers
  */
 function an_trigger_check() {
-
-	$request_string = get_query_var('an_request');
-
 	switch (get_query_var('an_action')) {
-	case 'item_request':
-		//Perform the local request
-		an_perform_local_request($request_string);
-
-		die;
-
 	case 'block_preview':
 		//Block Preview
 		//Get request parameters

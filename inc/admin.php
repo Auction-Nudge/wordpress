@@ -456,10 +456,6 @@ function an_admin_settings() {
 		add_settings_section('an_ebay_defaults', 'Defaults', 'an_ebay_defaults_text', 'an_general');
 		add_settings_field('an_ebay_user', 'eBay Username', 'an_ebay_user_setting', 'an_general', 'an_ebay_defaults');
 		add_settings_field('an_ebay_site', 'eBay Site', 'an_ebay_site_setting', 'an_general', 'an_ebay_defaults');
-
-		//Requests
-		add_settings_section('an_request', 'Caching', 'an_request_text', 'an_general');
-		add_settings_field('an_local_requests', '', 'an_local_requests_setting', 'an_general', 'an_request');
 	}
 }
 add_action('admin_init', 'an_admin_settings');
@@ -512,31 +508,6 @@ function an_ebay_site_setting() {
 	}
 	echo '</select>' . "\n";
 	echo '<a class="an-tooltip" data-title="This is where your items are usually listed. The site you choose will determine where you link to and what currency is displayed." href="#" onclick="return false;">?</a>' . "\n";
-}
-
-/**
- * Request text
- */
-function an_request_text() {
-	echo '<p class="an-lead">The WordPress cache improves load performance.</p>' . "\n";
-}
-
-/**
- * Local Requests option
- */
-function an_local_requests_setting() {
-	$an_settings = an_get_settings();
-
-	$an_local_requests = isset($an_settings['an_local_requests']) ? $an_settings['an_local_requests'] : '1';
-
-	echo '<select id="an_local_requests" name="an_options[an_local_requests]">' . "\n";
-	$selected = ($an_local_requests == '1') ? ' selected="selected"' : '';
-	echo '	<option value="1"' . esc_attr($selected) . '>Enabled</option>' . "\n";
-	$selected = ($an_local_requests == '0') ? ' selected="selected"' : '';
-	echo '	<option value="0"' . esc_attr($selected) . '>Disabled</option>' . "\n";
-	echo '</select>' . "\n";
-
-	echo '<a class="an-tooltip" data-title="Try disabling if you are experiencing issues with Auction Nudge (like if nothing is displayed). Don\'t worry, other caching mechanisms are still in place." href="#" onclick="return false;">?</a>' . "\n";
 }
 
 function an_admin_notice($text = '', $type = 'info', $tag = 'div') {

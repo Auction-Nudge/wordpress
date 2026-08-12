@@ -4,7 +4,7 @@
 **Requires at least:** 3.2  
 **Tested up to:** 7.0  
 **Requires PHP:** 5.2  
-**Stable tag:** 8.3.3  
+**Stable tag:** 8.4.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -186,6 +186,10 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 
 ## Changelog ##
+
+### 8.4.0 ###
+
+* Removed the Caching option.
 
 ### 8.3.1/2 ###
 
