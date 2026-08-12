@@ -165,8 +165,6 @@ The tools will continue to function as normal until the Shopping API is decommis
 
 The Your eBay Listings tool has already been migrated to the new Browse API and will continue to be supported :)
 
-More information can be found <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.
-
 == Screenshots ==
 
 1. Displaying additional item information.
@@ -192,7 +190,7 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 = 8.2.1 =
 
-* Reintroducing the [Carousel theme](https://www.auctionnudge.com/changes#v2025.5.0).
+* Reintroducing the Carousel theme.
 * Added Help links to Block options.
 * Minor bug fixes and improvements.
 
@@ -209,7 +207,7 @@ More information can be found <a href="https://www.auctionnudge.com/changes#v202
 
 = 8.1.0 =
 
-* The Your eBay Profile and Your eBay Feedback tools have been retired. These tools no longer display any content and output a message in the browser console. More information can be found <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.
+* The Your eBay Profile and Your eBay Feedback tools have been retired. These tools no longer display any content and output a message in the browser console.
 
 = 8.0.0 =
 
@@ -238,7 +236,7 @@ Admin form Cross Site Scripting (XSS) vulnerability fix. Thanks to <a href="http
 
 = 7.2.0 =
 
-- The Your eBay Profile and Your eBay Feedback tools are being retired. The ability to create new snippets for these tools has been removed and existing snippets will soon cease to function. More information can be found <a href="https://www.auctionnudge.com/changes#v2024.4.0">here</a>.
+- The Your eBay Profile and Your eBay Feedback tools are being retired. The ability to create new snippets for these tools has been removed and existing snippets will soon cease to function.
 - Removed Legacy Meta Box and Widget support, please use Shortcodes instead.
 
 = 7.1.5 =
@@ -439,11 +437,11 @@ Small bug fix. Thanks to Orlandoo for bringing this to my attention.
 = 4.3 =
 
 * Added new 'Overview' theme to the Your eBay Profile tool
-* Retired Your eBay Ads tool, see <a href="https://www.auctionnudge.com/changes#v3.8">here</a> for more information
+* Retired Your eBay Ads tool.
 
 = 4.2 =
 
-* Updated Your eBay Feedback tool options, as explained <a href="https://www.auctionnudge.com/changes#v3.7">here</a>
+* Updated Your eBay Feedback tool options.
 * Updated plugin FAQ section
 * Minor updates to admin area pages
 
